@@ -6,4 +6,8 @@ group: navigation
 ---
 {% include JB/setup %}
 
+![my profile](/assets/image/profile/abel.jpg)
+
+张振宇
+
 I am Abel!
