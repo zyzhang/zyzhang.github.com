@@ -6,8 +6,9 @@ group: navigation
 ---
 {% include JB/setup %}
 
+<div style="float:left; margin-right: 15px;" markdown="1">
 ![my profile](/assets/image/profile/abel.jpg)
+</div>
 
-张振宇
+张振宇@ThoughtWorks
 
-I am Abel!

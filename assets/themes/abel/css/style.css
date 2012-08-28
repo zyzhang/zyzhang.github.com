@@ -107,3 +107,7 @@ div.post-footer {
 	clear: both;
 }
 
+.my-avatar img {
+	float: left;
+}
+
