@@ -70,6 +70,20 @@ html, body {
 }
 
 /* customized */
+
+body {
+	font-size: 14px;
+	line-height: 20px;
+}
+
+p {
+	line-height: 20px;
+}
+
+li {
+	line-height: 20px;
+}
+
 .signature {
 	color: #9D9D9D;
 }
@@ -107,7 +121,8 @@ div.post-footer {
 	clear: both;
 }
 
-.my-avatar img {
-	float: left;
+img[alt=avatar] { 
+	float: left; 
+	margin-right: 20px;
 }
 
