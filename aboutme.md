@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "About me"
-description: "Zhang Zhenyu, Blog"
+title: "About Zhenyu"
+description: "Zhang Zhenyu, 张振宇, Developer, 程序员, Geek"
 group: navigation
 ---
 {% include JB/setup %}

@@ -70,3 +70,40 @@ html, body {
 }
 
 /* customized */
+.signature {
+	color: #9D9D9D;
+}
+
+div.home-page-post {
+
+}
+
+div.home-page-post .date {
+	color: #9D9D9D;
+	font-size: 16px;
+}
+
+div.home-page-post label{
+	font-weight: bold;
+	display: inline;
+}
+
+div.home-page-post div.post-header{
+	width: 20%;
+	float: left;
+}
+
+div.home-page-post div.post-content{
+	
+}
+
+div.home-page-post div.post-content div.title{
+	font-size: 16px;
+}
+
+div.post-footer {
+	border-bottom: 1px solid #EAEAEA;
+	margin: 2px 0 2px 0;
+	clear: both;
+}
+
