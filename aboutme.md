@@ -11,7 +11,7 @@ group: navigation
 <div style="line-height: 30px;">
 
 爱<span style="color: #0C7823; font-weight: bold; font-size: 18px;">分享</span>,
-也爱 <span style="color: #677C89; font-weight: bold; font-size: 20px;">钻研</span><br>
+也爱 <span style="color: #677C89; font-weight: bold; font-size: 20px;">钻研</span>,
 爱 <span style="color: #FF8C00; font-weight: bold; font-size: 18px;">开源</span>,
 也爱 <span style="color: #4B0082; font-weight: bold; font-size: 20px;">知识产权</span><br>
 爱闷声 <span style="color: #7B68EE; font-weight: bold; font-size: 21px;">思考</span>,
