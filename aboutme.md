@@ -16,7 +16,7 @@ group: navigation
 也爱 <span style="color: #DC143C; font-weight: bold; font-size: 16px;">满世界乱跑</span>,
 我不是什么 <span style="color: #8A2BE2; font-weight: bold; font-size: 20px;">谢尔顿</span>,
 也不是霸气外露的 <span style="color: #AAAAAA; font-weight: bold; font-size: 16px;">男猪脚</span>,
-我是 <span style="color: #008B8B; font-weight: bold; font-size: 23px;">张振宇</span>,
+我是 <span style="color: #008B8B; font-weight: bold; font-size: 26px;">张振宇</span>,
 Coding for fun的 <span style="color: #FFD700; font-weight: bold; font-size: 20px;">程序员</span>,
 
 ### 我的经历：
@@ -26,12 +26,9 @@ Coding for fun的 <span style="color: #FFD700; font-weight: bold; font-size: 20p
 * 2003 - 2007, BS@[吉林大学](http://www.jlu.edu.cn)
 
 
-### 联系我：
-
-* 邮箱：zhenyucheung@gmail.com
-* 新浪微博：[iamzhenyu](http://weibo.com/iamzhenyu)
-* LinkedIn：[Zhenyu Zhang](http://www.linkedin.com/pub/zhenyu-zhang/57/263/184)
-* GitHub：[zyzhang](https://github.com/zyzhang)
-
+[![gmail](/assets/image/third_party_logo/gmail.png)](mailto:zhenyucheung@gmail.com)
+[![weibo](/assets/image/third_party_logo/weibo.png)](http://weibo.com/iamzhenyu)
+[![linkedin](/assets/image/third_party_logo/linkedin.png)](http://www.linkedin.com/pub/zhenyu-zhang/57/263/184)
+[![github](/assets/image/third_party_logo/github.jpeg)](https://github.com/zyzhang)
 
 

@@ -76,12 +76,9 @@ body {
 	line-height: 20px;
 }
 
-p {
+li, p {
 	line-height: 20px;
-}
-
-li {
-	line-height: 20px;
+	font-size: 14px;
 }
 
 .signature {
