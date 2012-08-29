@@ -19,12 +19,13 @@ group: navigation
 我是 <span style="color: #008B8B; font-weight: bold; font-size: 26px;">张振宇</span>,
 Coding for fun的 <span style="color: #FFD700; font-weight: bold; font-size: 20px;">程序员</span>,
 
-### 我的经历：
+---
 
 * 2010 - now, SeniorConsultant@[ThoughtWorks](http://www.thoughtworks.com)
 * 2007 - 2010, SoftwareEngineer@[Azeus](http://www.azeus.com)
 * 2003 - 2007, BS@[吉林大学](http://www.jlu.edu.cn)
 
+---
 
 [![gmail](/assets/image/third_party_logo/gmail.png)](mailto:zhenyucheung@gmail.com)
 [![weibo](/assets/image/third_party_logo/weibo.png)](http://weibo.com/iamzhenyu)

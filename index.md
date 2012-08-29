@@ -27,7 +27,7 @@ title: Zhenyu's Blog
   	</div>
     <div class="post-content">
     	<div class="title"><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></div>
-    	{{ post.abstract }}
+    	<div class="abstract">{{ post.abstract }}</div>......
     </div>
     <div class="post-footer">&nbsp;</div>
 </div>

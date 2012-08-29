@@ -72,17 +72,29 @@ html, body {
 /* customized */
 
 body {
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 20px;
 }
 
 li, p {
 	line-height: 20px;
-	font-size: 14px;
+	font-size: 12px;
+}
+
+h1 {font-size: 24px; clear: both;}
+h3 {font-size: 16px;}
+h4 {font-size: 14px;}
+
+h3,h4{line-height: 34px; clear: both;}
+
+code {
+	font-size: 11px;
+	color: #5B5B5B;
 }
 
 .signature {
 	color: #9D9D9D;
+	font-style:italic;
 }
 
 div.home-page-post {
@@ -104,12 +116,20 @@ div.home-page-post div.post-header{
 	float: left;
 }
 
+div.home-page-post div.post-header .tags span, div.home-page-post div.post-header .category span {
+	font-size: 12px;
+}
+
 div.home-page-post div.post-content{
-	
+	overflow: hidden;
 }
 
 div.home-page-post div.post-content div.title{
 	font-size: 16px;
+}
+
+div.home-page-post div.post-content div.abstract{
+	color: #444444;
 }
 
 div.post-footer {
