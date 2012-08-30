@@ -85,7 +85,7 @@ h1 {font-size: 24px; clear: both;}
 h3 {font-size: 16px;}
 h4 {font-size: 14px;}
 
-h3,h4{line-height: 34px; clear: both;}
+h3,h4 {line-height: 34px; clear: both;}
 
 code {
 	font-size: 11px;
@@ -141,5 +141,10 @@ div.post-footer {
 img[alt=avatar] { 
 	float: left; 
 	margin-right: 20px;
+}
+
+img[alt="rss feed"] { 
+	float: right; 
+	margin-top: 5px;
 }
 
