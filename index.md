@@ -10,7 +10,7 @@ title: Zhenyu's Blog
   {% endfor %}
 </ul>
 -->
-{% for post in site.posts %}
+{% for post in site.posts limit:10 %}
 <div class="home-page-post">
   	<div class="post-header">
   		<div class="date">{{ post.date | date_to_string }}</div>
