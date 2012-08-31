@@ -29,7 +29,7 @@ Pygments提供了多种样式，比如'native', 'emacs', 'vs'等等，可以在[
 
 {% highlight python %}
 >>> from pygments.styles import STYLE_MAP
->>> STYLE\_MAP.keys()
+>>> STYLE_MAP.keys()
 ['monokai', 'manni', 'rrt', 'perldoc', 'borland', 'colorful', 'default', 'murphy', 'vs', 'trac', 'tango', 'fruity', 'autumn', 'bw', 'emacs', 'vim', 'pastie', 'friendly', 'native']
 {% endhighlight %}
 
@@ -45,9 +45,8 @@ Pygments提供了多种样式，比如'native', 'emacs', 'vs'等等，可以在[
 
 {% highlight html %}
 {{ "{% highlight java " }}%}
-public class HelloWorld
-{
-    public static void main(String args[]){
+public class HelloWorld {
+    public static void main(String args[]) {
       System.out.println("Hello World!");
     }
 }
@@ -56,9 +55,8 @@ public class HelloWorld
 
 效果如下：
 {% highlight java %}
-public class HelloWorld
-{
-    public static void main(String args[]){
+public class HelloWorld {
+    public static void main(String args[]) {
       System.out.println("Hello World!");
     }
 }

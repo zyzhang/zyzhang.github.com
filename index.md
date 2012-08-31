@@ -26,7 +26,7 @@ description: "张振宇的博客"
     <div class="post-content">
     	<div class="title"><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></div>
     	<div class="abstract">{{ post.description | markdownify }}</div>
-    	......
+    	<div style="float:right;"><a href="{{ BASE_PATH }}{{ post.url }}">阅读全文</a></div>
     </div>
     <div class="post-footer">&nbsp;</div>
 </div>
