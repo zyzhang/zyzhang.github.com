@@ -8,3 +8,11 @@ tags: [first, page]
 {% include JB/setup %}
 
 First Post of Abel
+
+{{ page.content | number_of_words }}
+
+{% highlight ruby linenos table %}
+def foo
+  puts 'foo'
+end
+{% endhighlight %}

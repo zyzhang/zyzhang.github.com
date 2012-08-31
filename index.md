@@ -16,10 +16,7 @@ description: "张振宇的博客"
   	<div class="post-header">
   		<div class="date">{{ post.date | date_to_string }}</div>
   		<div class="tags"> 
-  			<label>Tags: </label>
-  			{% for tag in post.tags %}
-    			<span>{{ tag }}</span>;&nbsp;
-  			{% endfor %}
+  			<label>Tags: </label>{{ post.tags | array_to_sentence_string }}
   		</div>
   		<div class="category"> 
   			<label>Category: </label>
@@ -28,7 +25,7 @@ description: "张振宇的博客"
   	</div>
     <div class="post-content">
     	<div class="title"><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></div>
-    	<div class="abstract">{{ post.description }}</div>
+    	<div class="abstract">{{ post.description | markdownify }}</div>
     	......
     </div>
     <div class="post-footer">&nbsp;</div>
