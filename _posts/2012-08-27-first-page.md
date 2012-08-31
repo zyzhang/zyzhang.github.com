@@ -1,10 +1,9 @@
 ---
 layout: post
 title: "First Page"
-description: ""
+description: "This is an abstract for post"
 category: Tech
 tags: [first, page]
-abstract: "This is an abstract for post"
 ---
 {% include JB/setup %}
 

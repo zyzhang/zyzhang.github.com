@@ -28,7 +28,8 @@ description: "张振宇的博客"
   	</div>
     <div class="post-content">
     	<div class="title"><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></div>
-    	<div class="abstract">{{ post.abstract }}</div>......
+    	<div class="abstract">{{ post.description }}</div>
+    	......
     </div>
     <div class="post-footer">&nbsp;</div>
 </div>
