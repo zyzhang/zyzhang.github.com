@@ -97,6 +97,16 @@ code {
 	font-style:italic;
 }
 
+/* post content in post page*/
+div.span8 {
+	width: 650px;
+}
+
+/* right sidebar in post page*/
+div.span4 {
+	width: 250px;
+}
+
 div.home-page-post {
 
 }
