@@ -28,7 +28,7 @@ public class Department
 
 数据库中已有数据如下：
 
-![image](http://pic002.cnblogs.com/images/2012/379137/2012062420173723.jpg)
+![nhibernate_n_1_db_data](/assets/image/posts/nhibernate_n_1_db_data.jpg)
 
 默认情况下，Department.Employees是Lazy Load的，也就是说，当查询Department时，hibernate并不会将对应的employee也从数据库中加载进来，
 而是在第一次调用Department.Employees时加载。
@@ -94,7 +94,7 @@ private ISessionFactory BuildSessionFactory(ModelMapper modelMapper)
 
 运行测试可以发现，hibernate实际执行了如下sql查询：
 
-{% highlight SQL %}
+{% highlight sql %}
 SELECT Id, Name FROM Department
 SELECT Id, Name, IdentityNumber, DepartmentId FROM Employee WHERE DepartmentId=1
 SELECT Id, Name, IdentityNumber, DepartmentId FROM Employee WHERE DepartmentId=2
@@ -102,9 +102,9 @@ SELECT Id, Name, IdentityNumber, DepartmentId FROM Employee WHERE DepartmentId=3
 {% endhighlight %}
 
 当执行`session.QueryOver<Department>().List<Department>()`时， nhibernate执行了1次查询`SELECT Id, Name FROM Department`，
-此时`department.Employees`中并没有加载出对应的`Employee`，而每次调用`department.Employees`时，nhibernate都会从`Employee`表中加载相应的Employee。
+此时*department.Employees*中并没有加载出对应的 *Employee*，而每次调用*department.Employees*时，nhibernate都会从*Employee*表中加载相应的Employee。
 
-因此，对N个Department，实际会执行N+1次查询。这将对性能造成很大影响。
+因此，对N个*Department*，实际会执行*N+1*次查询。这将对性能造成很大影响。
 
 ### 如何解决N+1问题
 
@@ -190,9 +190,9 @@ SELECT ... FROM Department this_ left outer join Employee employees2_ on this_.I
 需要注意的是，这种join fetch会导致重复记录，比如本例中，因为Jim和Rechard同属于Finance部门，所以departments实际查询出4条记录，
 还需用Set过一遍以保证departments集合元素的唯一性。
 
-另外，这种在映射中直接配置join fetch的做法也不够灵活，在某些场景中，可能并不关心`Department.Employees`，join fetch没有必要。
+另外，这种在映射中直接配置join fetch的做法也不够灵活，在某些场景中，可能并不关心*Department.Employees*，join fetch没有必要。
 
-####（3）`Department.Employees`映射仍然是Lazy的，仅在需要时通过join fetch加载
+####（3）*Department.Employees*映射仍然是Lazy的，仅在需要时通过join fetch加载
 
 {% highlight csharp %}
 [Test]
