@@ -11,7 +11,7 @@ description: "张振宇的博客"
   {% endfor %}
 </ul>
 -->
-{% for post in site.posts limit:10 %}
+{% for post in site.posts limit:5 %}
 <div class="home-page-post">
   	<div class="post-header">
   		<div class="date">{{ post.date | date_to_string }}</div>
@@ -31,6 +31,10 @@ description: "张振宇的博客"
     <div class="post-footer">&nbsp;</div>
 </div>
 {% endfor %}
+
+<div style="width:50%;margin-left:auto;margin-right:auto;text-align:center;">
+	<a href="/archive.html">查看所有{{site.posts.size}}篇文章</a>
+</div>
 
 
 
