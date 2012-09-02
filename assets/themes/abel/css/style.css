@@ -97,6 +97,7 @@ code {
 .highlight pre code{color: white;}
 
 .signature {
+	font-size: 15px;
 	color: #9D9D9D;
 	font-style:italic;
 }
