@@ -19,7 +19,7 @@ nHibernate提供两种one to one关联：
 * unique foreign key associations
 
 下面分别用mapping by code的方式配置这两种关联。
-关于如何配置nhibernate使用mapping by code，参考[nHibernate Mapping By Code - Introduction](/Tech/2012/07/01/nHibernateMappingByCode-Introduction)
+关于如何配置nhibernate使用mapping by code，参考[nHibernate Mapping By Code - Introduction](/blog/2012/07/01/nHibernateMappingByCode-Introduction)
 
 ### 1. primary key associations
 

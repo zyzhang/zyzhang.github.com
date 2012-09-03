@@ -55,9 +55,9 @@ public class NHibernateHelper
 
 关于如何编写映射类，参考以下文章：
 
-* [nHibernate Mapping By Code - One to One](/Tech/2012/07/01/nHibernateMappingByCode-OneToOne)
-* [nHibernate Mapping By Code - One to Many and Many to One](/Tech/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne)
-* [nHibernate Mapping By Code - Many to Many](/Tech/2012/07/01/nHibernateMappingByCode-ManyToMany)
+* [nHibernate Mapping By Code - One to One](/blog/2012/07/01/nHibernateMappingByCode-OneToOne)
+* [nHibernate Mapping By Code - One to Many and Many to One](/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne)
+* [nHibernate Mapping By Code - Many to Many](/blog/2012/07/01/nHibernateMappingByCode-ManyToMany)
 
 ### 参考文章：
 

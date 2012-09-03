@@ -10,7 +10,7 @@ tags: [nHibernate]
 Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式
 配置多对多关联的例子。
 
-关于如何配置nhibernate使用mapping by code，参考[nHibernate Mapping By Code - Introduction](/Tech/2012/07/01/nHibernateMappingByCode-Introduction)
+关于如何配置nhibernate使用mapping by code，参考[nHibernate Mapping By Code - Introduction](/blog/2012/07/01/nHibernateMappingByCode-Introduction)
 
 ### 实体类
 
