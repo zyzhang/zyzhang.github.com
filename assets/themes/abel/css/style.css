@@ -93,6 +93,16 @@ code {
 	color: #333333;
 }
 
+blockquote {
+	color: #909090;
+	margin: 0 0 18px 18px;
+}
+
+blockquote p {
+	font-style: italic;
+	font-size: 13px;
+}
+
 .highlight pre {background-color: #505050;}
 .highlight pre code{color: white;}
 
