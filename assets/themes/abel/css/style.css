@@ -73,11 +73,11 @@ html, body {
 
 body {
 	font-size: 14px;
-	line-height: 20px;
+	line-height: 22px;
 }
 
 li, p {
-	line-height: 20px;
+	line-height: 22px;
 	font-size: 14px;
 }
 
@@ -85,7 +85,7 @@ h1 {font-size: 24px; clear: both;}
 h3 {font-size: 18px;}
 h4 {font-size: 16px;}
 
-h3,h4 {line-height: 34px; clear: both;}
+h3,h4 {line-height: 42px; clear: both;}
 
 code {
 	background-color: #D0D0D0;
@@ -100,7 +100,7 @@ blockquote {
 
 blockquote p {
 	font-style: italic;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .highlight pre {background-color: #505050;}
@@ -161,8 +161,9 @@ div.home-page-post div.post-content div.abstract{
 
 div.post-footer {
 	border-bottom: 1px solid #EAEAEA;
-	margin: 2px 0 2px 0;
+	margin: 10px 0;
 	clear: both;
+	line-height: 0;
 }
 
 img[alt=avatar] { 
