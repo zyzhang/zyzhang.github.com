@@ -72,18 +72,18 @@ html, body {
 /* customized */
 
 body {
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 20px;
 }
 
 li, p {
 	line-height: 20px;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 h1 {font-size: 24px; clear: both;}
-h3 {font-size: 16px;}
-h4 {font-size: 14px;}
+h3 {font-size: 18px;}
+h4 {font-size: 16px;}
 
 h3,h4 {line-height: 34px; clear: both;}
 
@@ -139,6 +139,7 @@ div.home-page-post label{
 div.home-page-post div.post-header{
 	width: 20%;
 	float: left;
+	margin-right: 10px;
 }
 
 div.home-page-post div.post-header .tags span, div.home-page-post div.post-header .category span {
