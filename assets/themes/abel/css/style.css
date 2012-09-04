@@ -166,9 +166,9 @@ div.post-footer {
 	line-height: 0;
 }
 
-img[alt=avatar] { 
+img[alt=avatar], img[alt="jekyll-bootstrap-dir-structure"] { 
 	float: left; 
-	margin-right: 20px;
+	margin-right: 30px;
 }
 
 img[alt="rss feed"] { 
