@@ -69,7 +69,7 @@ html, body {
 	color:#FFF;
 }
 
-/* customized */
+/******************* customized *********************/
 
 body {
 	font-size: 14px;
@@ -122,8 +122,9 @@ div.span4 {
 	width: 220px;
 }
 
-div.home-page-post {
-
+/**************** homepage ********************/
+div.home-page-content {
+	
 }
 
 div.home-page-post .date {
@@ -166,6 +167,21 @@ div.post-footer {
 	line-height: 0;
 }
 
+div.home-page-sidebar {
+	/*width: 100%;*/
+	/*float: right;*/
+	margin: 10px;
+}
+
+div.home-page-sidebar .sidebar-title {
+	font-weight: bold;
+	border-radius: 3px 3px 3px 3px;
+	padding: 3px 6px;
+	width: 100%;
+	background-color: #EEEEEE;
+}
+
+/******************* images *******************/
 img[alt=avatar], img[alt="jekyll-bootstrap-dir-structure"] { 
 	float: left; 
 	margin-right: 30px;
