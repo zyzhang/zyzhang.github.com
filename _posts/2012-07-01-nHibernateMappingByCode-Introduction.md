@@ -15,7 +15,7 @@ nHibernate 3.2新增了一种mapping by code的映射策略，很有意思。你
 
 ### 第一步，配置SessionFactory，使nhibernate自动扫描项目中所有继承ClassMapping的类，并将其解释为映射
 
-{% highlight csharp %}
+{% highlight %}
 public class NHibernateHelper
 {
     private static ISessionFactory _sessionFactory;

@@ -9,7 +9,7 @@ tags: [nHibernate, N+1问题]
 
 考虑下面的一对多关系：一个Department包含多个Employee：
 
-{% highlight csharp %}
+{% highlight %}
 public class Employee
 {
 	public virtual int Id { get; set; }
@@ -37,7 +37,7 @@ public class Department
 
 当应用程序需要遍历多个Department及其Employee时，问题就出现了，看测试代码：
 
-{% highlight csharp %}
+{% highlight %}
 [Test]
 public void show_n_plus_1_problem()
 {
@@ -65,7 +65,7 @@ public void show_n_plus_1_problem()
  
 为了能在测试中动态改变nhibernate映射，这里使用了nHibernate 3.2新增的map by code特性。
 
-{% highlight csharp %}
+{% highlight %}
 private void MapEmployee(ModelMapper modelMapper)
 {
      modelMapper.Class<Employee>(cm =>
@@ -110,7 +110,7 @@ SELECT Id, Name, IdentityNumber, DepartmentId FROM Employee WHERE DepartmentId=3
 
 ####（1）采用Batch Load批量加载
 
-{% highlight csharp %}
+{% highlight %}
 [Test]
 public void resolve_n_plus_1_problem_by_batch_load()
 {
@@ -142,7 +142,7 @@ public void resolve_n_plus_1_problem_by_batch_load()
 
 nHibernate实际执行查询：
 
-{% highlight csharp %}
+{% highlight %}
 SELECT this_.Id as Id0_0_, this_.Name as Name0_0_ FROM Department this_
 SELECT ... FROM Employee employees0_ WHERE employees0_.DepartmentId in (1, 2);
 SELECT ... FROM Employee employees0_ WHERE employees0_.DepartmentId = 3 
@@ -152,7 +152,7 @@ SELECT ... FROM Employee employees0_ WHERE employees0_.DepartmentId = 3
 
 ####（2）使用Join Fetch一次性加载所有数据
 
-{% highlight csharp %}
+{% highlight %}
 [Test]
 public void resolve_n_plus_1_problem_by_join_fetch()
 {
@@ -183,7 +183,7 @@ public void resolve_n_plus_1_problem_by_join_fetch()
  
 nHibernate实际执行查询：
 
-{% highlight csharp %}
+{% highlight %}
 SELECT ... FROM Department this_ left outer join Employee employees2_ on this_.Id=employees2_.DepartmentId
 {% endhighlight %}
  
@@ -194,7 +194,7 @@ SELECT ... FROM Department this_ left outer join Employee employees2_ on this_.I
 
 ####（3）*Department.Employees*映射仍然是Lazy的，仅在需要时通过join fetch加载
 
-{% highlight csharp %}
+{% highlight %}
 [Test]
 public void resolve_n_plus_1_problem_by_join_fetch_when_necessary()
 {
@@ -222,7 +222,7 @@ public void resolve_n_plus_1_problem_by_join_fetch_when_necessary()
 
 nHibernate实际执行查询：
 
-{% highlight csharp %}
+{% highlight %}
 select distinct d... from Department department0_ left outer join Employee employees1_ on department0_.Id=employees1_.DepartmentId
 {% endhighlight %}
  
@@ -230,7 +230,7 @@ select distinct d... from Department department0_ left outer join Employee emplo
 上面的例子就很有价值了，默认`department.Employees`为lazy load，在需要遍历`department.Employee`的场景使用另外的方法加载department，
 例如：
 
-{% highlight csharp %}
+{% highlight %}
 public class DepartmentRepository 
 {
     ....

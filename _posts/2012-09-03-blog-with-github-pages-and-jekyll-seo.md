@@ -27,19 +27,19 @@ tags: [Github Pages, Jekyll, SEO]
 
 * 在`<head>`标签中包含描述性强的title
 
-{% highlight html %}
+{% highlight %}
 <title>Github Pages + Jekyll搭建博客之SEO</title>
 {% endhighlight %}
 
 * 在`<meta>`标签中指定准确并且可读性强的描述(description)，它会在搜索结果中显示。
 
-{% highlight html %}
+{% highlight %}
 <meta content="在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，如何提高排名等等。 于是，便有了下面几条简单的总结。" name="description">
 {% endhighlight %}
 
 * [Jekyll-Bootstrap](http://jekyllbootstrap.com)已经帮你做好这个了，只需在每个page和post的开头指定title和description就可以了:
 
-{% highlight html %}
+{% highlight %}
 ---
 layout: post
 title: "Github Pages + Jekyll搭建博客之SEO"

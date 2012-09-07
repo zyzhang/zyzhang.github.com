@@ -25,7 +25,7 @@ nHibernate提供两种one to one关联：
 
 ####实体类
 
-{% highlight csharp %}
+{% highlight %}
 public class Person
 {
     public virtual int Id { get; set; }
@@ -44,7 +44,7 @@ public class PersonInfo
 
 #### 数据库表（基于MS SQL Server 2012）
 
-{% highlight sql %}
+{% highlight %}
 CREATE TABLE [dbo].[Person](
     [Id] [int] IDENTITY(1,1) NOT NULL,
     [Name] [varchar](50) NOT NULL,    
@@ -59,7 +59,7 @@ CREATE TABLE [dbo].[PersonInfo](
 
 #### 映射类
 
-{% highlight csharp %}
+{% highlight %}
 public class PersonMapping : ClassMapping<Person>;
 {
     public PersonMapping()
@@ -88,7 +88,7 @@ public class PersonInfoMapping : ClassMapping<PersonInfo>
 
 #### 实体类
 
-{% highlight csharp %}
+{% highlight %}
 public class Customer
 {
     public virtual int Id { get; set; }
@@ -107,7 +107,7 @@ public class CustomerInfo
  
 #### 数据库表（基于MS SQL Server 2012）
 
-{% highlight sql %}
+{% highlight %}
 CREATE TABLE [dbo].[CustomerInfo](
     [Id] [int] IDENTITY(1,1) NOT NULL,
     [PhoneNumber] [varchar](50) NOT NULL,
@@ -126,7 +126,7 @@ REFERENCES [dbo].[CustomerInfo] ([Id])
 
 #### 映射类
 
-{% highlight csharp %}
+{% highlight %}
 
 public CustomerMapping()
 {
