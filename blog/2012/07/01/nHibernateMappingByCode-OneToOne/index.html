@@ -30,22 +30,6 @@
   	 <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/atom.xml" />
 
   	 
-
-
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34484534-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-
   	 
   </head>
 
@@ -125,7 +109,7 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>nHibernate Mapping By Code - One to One</h1>
+  <h1>nHibernate Mapping By Code - One to One <small>-- 01 July 2012</small></h1>
 </div>
 
 <div class="row">
@@ -142,7 +126,7 @@
 
 <h3 id='1_primary_key_associations'>1. primary key associations</h3>
 
-<h4 id='id46'>实体类</h4>
+<h4 id='id146'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Person</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -172,7 +156,7 @@
  <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_PersonInfo</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
 </code></pre>
 </div>
-<h4 id='id47'>映射类</h4>
+<h4 id='id147'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>PersonMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Person</span><span class='p'>&gt;;</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='nf'>PersonMapping</span><span class='p'>()</span>
@@ -199,7 +183,7 @@
 </div>
 <h3 id='2_unique_foreign_key_associations'>2. unique foreign key associations</h3>
 
-<h4 id='id48'>实体类</h4>
+<h4 id='id148'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Customer</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -235,7 +219,7 @@
 <span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>CustomerInfo</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
 </code></pre>
 </div>
-<h4 id='id49'>映射类</h4>
+<h4 id='id149'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='nf'>CustomerMapping</span><span class='p'>()</span>
 <span class='p'>{</span>
     <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Customer&quot;</span><span class='p'>);</span>
@@ -276,7 +260,7 @@
 
   <div id="disqus_thread"></div>
 <script type="text/javascript">
-    
+    var disqus_developer = 1;
     var disqus_shortname = 'zhenyublog'; // required: replace example with your forum shortname
     
     /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -295,11 +279,9 @@
   </div>
   
   <div class="span4">
-    <h4>Published</h4>
-    <div class="date"><span>01 July 2012</span></div>
-
+    
   
-    <h4>Tags</h4>
+    <div class="sidebar-title">标签</div>
     <ul class="tag_box">
     
     

@@ -4,7 +4,7 @@
  <title>Zhenyu's Blog</title>
  <link href="http://zyzhang.github.com/atom.xml" rel="self"/>
  <link href="http://zyzhang.github.com"/>
- <updated>2012-09-07T12:35:23+08:00</updated>
+ <updated>2012-09-10T14:27:51+08:00</updated>
  <id>http://zyzhang.github.com</id>
  <author>
    <name>张振宇</name>
@@ -21,7 +21,7 @@
 
 &lt;p&gt;在用&lt;a href='http://pages.github.com'&gt;Github Pages&lt;/a&gt; + &lt;a href='http://jekyllrb.com'&gt;Jekyll&lt;/a&gt;搭建博客的过程中， 学到了不少&lt;a href='http://en.wikipedia.org/wiki/Search_engine_optimization'&gt;SEO（Search Engine Optimization）&lt;/a&gt; 的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。&lt;/p&gt;
 
-&lt;h3 id='id57'&gt;让搜索引擎收录&lt;/h3&gt;
+&lt;h3 id='id157'&gt;让搜索引擎收录&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
@@ -33,7 +33,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id58'&gt;为每个页面添加描述性的信息&lt;/h3&gt;
+&lt;h3 id='id158'&gt;为每个页面添加描述性的信息&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;在&lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;标签中包含描述性强的title&lt;/li&gt;
@@ -61,7 +61,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;/div&gt;
 &lt;p&gt;关于&lt;a href='http://pages.github.com'&gt;Github Pages&lt;/a&gt;，&lt;a href='http://jekyllrb.com'&gt;Jekyll&lt;/a&gt;和&lt;a href='http://jekyllbootstrap.com'&gt;Jekyll-Bootstrap&lt;/a&gt;， 请参考我的另一篇文章&lt;a href='/blog/2012/08/29/像极客一样写博客'&gt;像极客一样写博客&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id59'&gt;多用内部链接&lt;/h3&gt;
+&lt;h3 id='id159'&gt;多用内部链接&lt;/h3&gt;
 
 &lt;p&gt;内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“&lt;a href='/blog/2012/08/29/像极客一样写博客'&gt;像极客一样写博客&lt;/a&gt;”。&lt;/p&gt;
 
@@ -71,7 +71,7 @@ tags: [Github Pages, Jekyll, SEO]
 
 &lt;p&gt;相关性高的内部链接除了有助于提高用户体验外，还有助于提高搜索引擎的索引效率，控制站内权重分布，并提升网站的收录率。 &lt;a href='http://bbs.chinaz.com/Shuiba/thread-1683921-1-1.html'&gt;这个文章&lt;/a&gt;对内部链接总结的挺好。&lt;/p&gt;
 
-&lt;h3 id='id60'&gt;避免死链接&lt;/h3&gt;
+&lt;h3 id='id160'&gt;避免死链接&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href='http://baike.baidu.com/view/1880779.htm'&gt;死链接&lt;/a&gt;即无效链接，不仅用户体验不好，还会降低网站在搜索引擎中的权重。&lt;/p&gt;
 
@@ -111,7 +111,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;li&gt;在解压后的Pygments目录中，运行命令：&lt;code&gt;sudo python setup.py install&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id54'&gt;选择一种喜欢的代码高亮样式&lt;/h3&gt;
+&lt;h3 id='id154'&gt;选择一种喜欢的代码高亮样式&lt;/h3&gt;
 
 &lt;p&gt;Pygments提供了多种样式，比如&amp;#8217;native&amp;#8217;, &amp;#8216;emacs&amp;#8217;, &amp;#8216;vs&amp;#8217;等等，可以在&lt;a href='http://pygments.org/demo'&gt;Pygments Demo&lt;/a&gt;中选择某种语言的例子，体验不同的样式。&lt;/p&gt;
 
@@ -131,7 +131,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;li&gt;在layout中引用刚刚加的pygments.css&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id55'&gt;在文章中高亮代码&lt;/h3&gt;
+&lt;h3 id='id155'&gt;在文章中高亮代码&lt;/h3&gt;
 
 &lt;p&gt;现在，可以在博客中高亮代码了：&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% highlight java %}
@@ -151,7 +151,7 @@ public class HelloWorld {
 &lt;span class='o'&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h3 id='id56'&gt;参考文章&lt;/h3&gt;
+&lt;h3 id='id156'&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://pygments.org/docs/styles/'&gt;Pygments Styles&lt;/a&gt;&lt;/li&gt;
@@ -202,7 +202,7 @@ public class HelloWorld {
 &lt;span class='nv'&gt;$ &lt;/span&gt;git push origin master
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src='/assets/image/posts/jekyll-bootstrap-dir-structure.png' alt='jekyll-bootstrap-dir-structure' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='jekyll-bootstrap-dir-structure' src='/assets/image/posts/jekyll-bootstrap-dir-structure.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;上面代码创建了如左图的Jekyll-Bootstrap标准目录结构，各个文件夹的用途在&lt;a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'&gt;Jekyll Introduction&lt;/a&gt;中介绍的很清楚了，这里不再多说。&lt;/p&gt;
 
@@ -230,19 +230,19 @@ public class HelloWorld {
 
 &lt;p&gt;安装完毕后，在${USERNAME}.github.com目录下运行&lt;code&gt;jekyll --server&lt;/code&gt;启动server，然后就可以在本地访问http://localhost:4000预览博客了。&lt;/p&gt;
 
-&lt;h3 id='id50'&gt;自定义主题&lt;/h3&gt;
+&lt;h3 id='id150'&gt;自定义主题&lt;/h3&gt;
 
 &lt;p&gt;Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考&lt;a href='http://jekyllbootstrap.com/usage/jekyll-theming.html'&gt;Using Themes&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id51'&gt;发布博客&lt;/h3&gt;
+&lt;h3 id='id151'&gt;发布博客&lt;/h3&gt;
 
 &lt;p&gt;发布博客和管理代码库一样，可以利用到git的强大功能，只要push上去了，本地更改就发布了。&lt;/p&gt;
 
-&lt;h3 id='id52'&gt;例子&lt;/h3&gt;
+&lt;h3 id='id152'&gt;例子&lt;/h3&gt;
 
 &lt;p&gt;本博客就是依照上述步骤搭建起来的，你可以访问完整&lt;a href='https://github.com/zyzhang/zyzhang.github.com'&gt;源代码&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id53'&gt;参考文章&lt;/h3&gt;
+&lt;h3 id='id153'&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'&gt;Jekyll Introduction&lt;/a&gt;&lt;/li&gt;
@@ -268,7 +268,7 @@ public class HelloWorld {
 
 &lt;h3 id='1_primary_key_associations'&gt;1. primary key associations&lt;/h3&gt;
 
-&lt;h4 id='id46'&gt;实体类&lt;/h4&gt;
+&lt;h4 id='id146'&gt;实体类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Person&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -298,7 +298,7 @@ public class HelloWorld {
  &lt;span class='k'&gt;CONSTRAINT&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;PK_PersonInfo&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;PRIMARY&lt;/span&gt; &lt;span class='k'&gt;KEY&lt;/span&gt; &lt;span class='n'&gt;CLUSTERED&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;ASC&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h4 id='id47'&gt;映射类&lt;/h4&gt;
+&lt;h4 id='id147'&gt;映射类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;PersonMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Person&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;PersonMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -325,7 +325,7 @@ public class HelloWorld {
 &lt;/div&gt;
 &lt;h3 id='2_unique_foreign_key_associations'&gt;2. unique foreign key associations&lt;/h3&gt;
 
-&lt;h4 id='id48'&gt;实体类&lt;/h4&gt;
+&lt;h4 id='id148'&gt;实体类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Customer&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -361,7 +361,7 @@ public class HelloWorld {
 &lt;span class='k'&gt;REFERENCES&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;CustomerInfo&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h4 id='id49'&gt;映射类&lt;/h4&gt;
+&lt;h4 id='id149'&gt;映射类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;CustomerMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='n'&gt;Table&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;Customer&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
@@ -395,7 +395,7 @@ public class HelloWorld {
 
 &lt;p&gt;关于如何配置nhibernate使用mapping by code，参考&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'&gt;nHibernate Mapping By Code - Introduction&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id44'&gt;实体类&lt;/h3&gt;
+&lt;h3 id='id144'&gt;实体类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Employee&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -431,7 +431,7 @@ public class HelloWorld {
 &lt;span class='k'&gt;REFERENCES&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;Department&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h3 id='id45'&gt;映射类&lt;/h3&gt;
+&lt;h3 id='id145'&gt;映射类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;DepartmentMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Department&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;DepartmentMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -467,7 +467,7 @@ public class HelloWorld {
 
 &lt;p&gt;关于如何配置nhibernate使用mapping by code，参考&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'&gt;nHibernate Mapping By Code - Introduction&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id42'&gt;实体类&lt;/h3&gt;
+&lt;h3 id='id142'&gt;实体类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Student&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -508,7 +508,7 @@ public class HelloWorld {
 &lt;/div&gt;
 &lt;p&gt; &lt;/p&gt;
 
-&lt;h3 id='id43'&gt;映射类&lt;/h3&gt;
+&lt;h3 id='id143'&gt;映射类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;CourseMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Course&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;CourseMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -600,7 +600,7 @@ public class HelloWorld {
 &lt;li&gt;&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-ManyToMany'&gt;nHibernate Mapping By Code - Many to Many&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id41'&gt;参考文章：&lt;/h3&gt;
+&lt;h3 id='id141'&gt;参考文章：&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://nhforge.org/blogs/nhibernate/archive/2011/09/12/nh-mapping-by-code-vs-the-untouchable-db.aspx'&gt;NH Mapping by code VS the Untouchable DB&lt;/a&gt;&lt;/li&gt;
@@ -635,7 +635,7 @@ public class HelloWorld {
 &lt;/div&gt;
 &lt;p&gt;数据库中已有数据如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/assets/image/posts/nhibernate_n_1_db_data.jpg' alt='nhibernate_n_1_db_data' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='nhibernate_n_1_db_data' src='/assets/image/posts/nhibernate_n_1_db_data.jpg' /&gt;&lt;/p&gt;
 
 &lt;p&gt;默认情况下，Department.Employees是Lazy Load的，也就是说，当查询Department时，hibernate并不会将对应的employee也从数据库中加载进来， 而是在第一次调用Department.Employees时加载。&lt;/p&gt;
 
@@ -738,9 +738,9 @@ public class HelloWorld {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;nHibernate实际执行查询：&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='n'&gt;SELECT&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='n'&gt;Id0_0_&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Name&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='n'&gt;Name0_0_&lt;/span&gt; &lt;span class='n'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;
-&lt;span class='n'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='n'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt; &lt;span class='n'&gt;WHERE&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt; &lt;span class='k'&gt;in&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;2&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
-&lt;span class='n'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='n'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt; &lt;span class='n'&gt;WHERE&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt; &lt;span class='p'&gt;=&lt;/span&gt; &lt;span class='m'&gt;3&lt;/span&gt; 
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='sql'&gt;&lt;span class='k'&gt;SELECT&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='n'&gt;Id0_0_&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Name&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='n'&gt;Name0_0_&lt;/span&gt; &lt;span class='k'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;
+&lt;span class='k'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='k'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt; &lt;span class='k'&gt;WHERE&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt; &lt;span class='k'&gt;in&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='k'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='k'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt; &lt;span class='k'&gt;WHERE&lt;/span&gt; &lt;span class='n'&gt;employees0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;  这种方式并没有完全解决N+1查询问题，但显著减少了查询次数，实际查询为&lt;code&gt;ceil(n/BatchSize) + 1&lt;/code&gt;次，BatchSize足够大时，查询次数为2次。&lt;/p&gt;
@@ -775,7 +775,7 @@ public class HelloWorld {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;  nHibernate实际执行查询：&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='n'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='n'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt; &lt;span class='n'&gt;left&lt;/span&gt; &lt;span class='n'&gt;outer&lt;/span&gt; &lt;span class='k'&gt;join&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees2_&lt;/span&gt; &lt;span class='n'&gt;on&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;=&lt;/span&gt;&lt;span class='n'&gt;employees2_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='sql'&gt;&lt;span class='k'&gt;SELECT&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='k'&gt;FROM&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt; &lt;span class='k'&gt;left&lt;/span&gt; &lt;span class='k'&gt;outer&lt;/span&gt; &lt;span class='k'&gt;join&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees2_&lt;/span&gt; &lt;span class='k'&gt;on&lt;/span&gt; &lt;span class='n'&gt;this_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;employees2_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;  需要注意的是，这种join fetch会导致重复记录，比如本例中，因为Jim和Rechard同属于Finance部门，所以departments实际查询出4条记录， 还需用Set过一遍以保证departments集合元素的唯一性。&lt;/p&gt;
@@ -809,7 +809,7 @@ public class HelloWorld {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;nHibernate实际执行查询：&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;select&lt;/span&gt; &lt;span class='n'&gt;distinct&lt;/span&gt; &lt;span class='n'&gt;d&lt;/span&gt;&lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='k'&gt;from&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;department0_&lt;/span&gt; &lt;span class='n'&gt;left&lt;/span&gt; &lt;span class='n'&gt;outer&lt;/span&gt; &lt;span class='k'&gt;join&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees1_&lt;/span&gt; &lt;span class='n'&gt;on&lt;/span&gt; &lt;span class='n'&gt;department0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;=&lt;/span&gt;&lt;span class='n'&gt;employees1_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='sql'&gt;&lt;span class='k'&gt;select&lt;/span&gt; &lt;span class='k'&gt;distinct&lt;/span&gt; &lt;span class='n'&gt;d&lt;/span&gt;&lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='k'&gt;from&lt;/span&gt; &lt;span class='n'&gt;Department&lt;/span&gt; &lt;span class='n'&gt;department0_&lt;/span&gt; &lt;span class='k'&gt;left&lt;/span&gt; &lt;span class='k'&gt;outer&lt;/span&gt; &lt;span class='k'&gt;join&lt;/span&gt; &lt;span class='n'&gt;Employee&lt;/span&gt; &lt;span class='n'&gt;employees1_&lt;/span&gt; &lt;span class='k'&gt;on&lt;/span&gt; &lt;span class='n'&gt;department0_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;employees1_&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;  实际应用中，往往有些场景只关心department的数据，而不关心&lt;code&gt;department.Employees&lt;/code&gt;; 而有些场景恰恰相反，关心&lt;code&gt;department.Employees&lt;/code&gt;。 上面的例子就很有价值了，默认&lt;code&gt;department.Employees&lt;/code&gt;为lazy load，在需要遍历&lt;code&gt;department.Employee&lt;/code&gt;的场景使用另外的方法加载department， 例如：&lt;/p&gt;

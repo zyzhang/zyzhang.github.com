@@ -28,22 +28,6 @@
   	 <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/atom.xml" />
 
   	 
-
-
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34484534-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-
   	 
   </head>
 
@@ -123,7 +107,7 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>Hibernate N+1 问题</h1>
+  <h1>Hibernate N+1 问题 <small>-- 24 June 2012</small></h1>
 </div>
 
 <div class="row">
@@ -147,7 +131,7 @@
 </div>
 <p>数据库中已有数据如下：</p>
 
-<p><img src='/assets/image/posts/nhibernate_n_1_db_data.jpg' alt='nhibernate_n_1_db_data' /></p>
+<p><img alt='nhibernate_n_1_db_data' src='/assets/image/posts/nhibernate_n_1_db_data.jpg' /></p>
 
 <p>默认情况下，Department.Employees是Lazy Load的，也就是说，当查询Department时，hibernate并不会将对应的employee也从数据库中加载进来， 而是在第一次调用Department.Employees时加载。</p>
 
@@ -250,9 +234,9 @@
 </code></pre>
 </div>
 <p>nHibernate实际执行查询：</p>
-<div class='highlight'><pre><code class='csharp'><span class='n'>SELECT</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Id</span> <span class='k'>as</span> <span class='n'>Id0_0_</span><span class='p'>,</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Name</span> <span class='k'>as</span> <span class='n'>Name0_0_</span> <span class='n'>FROM</span> <span class='n'>Department</span> <span class='n'>this_</span>
-<span class='n'>SELECT</span> <span class='p'>...</span> <span class='n'>FROM</span> <span class='n'>Employee</span> <span class='n'>employees0_</span> <span class='n'>WHERE</span> <span class='n'>employees0_</span><span class='p'>.</span><span class='n'>DepartmentId</span> <span class='k'>in</span> <span class='p'>(</span><span class='m'>1</span><span class='p'>,</span> <span class='m'>2</span><span class='p'>);</span>
-<span class='n'>SELECT</span> <span class='p'>...</span> <span class='n'>FROM</span> <span class='n'>Employee</span> <span class='n'>employees0_</span> <span class='n'>WHERE</span> <span class='n'>employees0_</span><span class='p'>.</span><span class='n'>DepartmentId</span> <span class='p'>=</span> <span class='m'>3</span> 
+<div class='highlight'><pre><code class='sql'><span class='k'>SELECT</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Id</span> <span class='k'>as</span> <span class='n'>Id0_0_</span><span class='p'>,</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Name</span> <span class='k'>as</span> <span class='n'>Name0_0_</span> <span class='k'>FROM</span> <span class='n'>Department</span> <span class='n'>this_</span>
+<span class='k'>SELECT</span> <span class='p'>...</span> <span class='k'>FROM</span> <span class='n'>Employee</span> <span class='n'>employees0_</span> <span class='k'>WHERE</span> <span class='n'>employees0_</span><span class='p'>.</span><span class='n'>DepartmentId</span> <span class='k'>in</span> <span class='p'>(</span><span class='mi'>1</span><span class='p'>,</span> <span class='mi'>2</span><span class='p'>);</span>
+<span class='k'>SELECT</span> <span class='p'>...</span> <span class='k'>FROM</span> <span class='n'>Employee</span> <span class='n'>employees0_</span> <span class='k'>WHERE</span> <span class='n'>employees0_</span><span class='p'>.</span><span class='n'>DepartmentId</span> <span class='o'>=</span> <span class='mi'>3</span> 
 </code></pre>
 </div>
 <p>  这种方式并没有完全解决N+1查询问题，但显著减少了查询次数，实际查询为<code>ceil(n/BatchSize) + 1</code>次，BatchSize足够大时，查询次数为2次。</p>
@@ -287,7 +271,7 @@
 </code></pre>
 </div>
 <p>  nHibernate实际执行查询：</p>
-<div class='highlight'><pre><code class='csharp'><span class='n'>SELECT</span> <span class='p'>...</span> <span class='n'>FROM</span> <span class='n'>Department</span> <span class='n'>this_</span> <span class='n'>left</span> <span class='n'>outer</span> <span class='k'>join</span> <span class='n'>Employee</span> <span class='n'>employees2_</span> <span class='n'>on</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Id</span><span class='p'>=</span><span class='n'>employees2_</span><span class='p'>.</span><span class='n'>DepartmentId</span>
+<div class='highlight'><pre><code class='sql'><span class='k'>SELECT</span> <span class='p'>...</span> <span class='k'>FROM</span> <span class='n'>Department</span> <span class='n'>this_</span> <span class='k'>left</span> <span class='k'>outer</span> <span class='k'>join</span> <span class='n'>Employee</span> <span class='n'>employees2_</span> <span class='k'>on</span> <span class='n'>this_</span><span class='p'>.</span><span class='n'>Id</span><span class='o'>=</span><span class='n'>employees2_</span><span class='p'>.</span><span class='n'>DepartmentId</span>
 </code></pre>
 </div>
 <p>  需要注意的是，这种join fetch会导致重复记录，比如本例中，因为Jim和Rechard同属于Finance部门，所以departments实际查询出4条记录， 还需用Set过一遍以保证departments集合元素的唯一性。</p>
@@ -321,7 +305,7 @@
 </code></pre>
 </div>
 <p>nHibernate实际执行查询：</p>
-<div class='highlight'><pre><code class='csharp'><span class='k'>select</span> <span class='n'>distinct</span> <span class='n'>d</span><span class='p'>...</span> <span class='k'>from</span> <span class='n'>Department</span> <span class='n'>department0_</span> <span class='n'>left</span> <span class='n'>outer</span> <span class='k'>join</span> <span class='n'>Employee</span> <span class='n'>employees1_</span> <span class='n'>on</span> <span class='n'>department0_</span><span class='p'>.</span><span class='n'>Id</span><span class='p'>=</span><span class='n'>employees1_</span><span class='p'>.</span><span class='n'>DepartmentId</span>
+<div class='highlight'><pre><code class='sql'><span class='k'>select</span> <span class='k'>distinct</span> <span class='n'>d</span><span class='p'>...</span> <span class='k'>from</span> <span class='n'>Department</span> <span class='n'>department0_</span> <span class='k'>left</span> <span class='k'>outer</span> <span class='k'>join</span> <span class='n'>Employee</span> <span class='n'>employees1_</span> <span class='k'>on</span> <span class='n'>department0_</span><span class='p'>.</span><span class='n'>Id</span><span class='o'>=</span><span class='n'>employees1_</span><span class='p'>.</span><span class='n'>DepartmentId</span>
 </code></pre>
 </div>
 <p>  实际应用中，往往有些场景只关心department的数据，而不关心<code>department.Employees</code>; 而有些场景恰恰相反，关心<code>department.Employees</code>。 上面的例子就很有价值了，默认<code>department.Employees</code>为lazy load，在需要遍历<code>department.Employee</code>的场景使用另外的方法加载department， 例如：</p>
@@ -353,7 +337,7 @@
 
   <div id="disqus_thread"></div>
 <script type="text/javascript">
-    
+    var disqus_developer = 1;
     var disqus_shortname = 'zhenyublog'; // required: replace example with your forum shortname
     
     /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -372,11 +356,9 @@
   </div>
   
   <div class="span4">
-    <h4>Published</h4>
-    <div class="date"><span>24 June 2012</span></div>
-
+    
   
-    <h4>Tags</h4>
+    <div class="sidebar-title">标签</div>
     <ul class="tag_box">
     
     

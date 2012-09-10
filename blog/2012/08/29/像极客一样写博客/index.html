@@ -28,22 +28,6 @@
   	 <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/atom.xml" />
 
   	 
-
-
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34484534-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-
   	 
   </head>
 
@@ -123,7 +107,7 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>像极客一样写博客</h1>
+  <h1>像极客一样写博客 <small>-- 29 August 2012</small></h1>
 </div>
 
 <div class="row">
@@ -165,7 +149,7 @@
 <span class='nv'>$ </span>git push origin master
 </code></pre>
 </div>
-<p><img src='/assets/image/posts/jekyll-bootstrap-dir-structure.png' alt='jekyll-bootstrap-dir-structure' /></p>
+<p><img alt='jekyll-bootstrap-dir-structure' src='/assets/image/posts/jekyll-bootstrap-dir-structure.png' /></p>
 
 <p>上面代码创建了如左图的Jekyll-Bootstrap标准目录结构，各个文件夹的用途在<a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'>Jekyll Introduction</a>中介绍的很清楚了，这里不再多说。</p>
 
@@ -193,19 +177,19 @@
 
 <p>安装完毕后，在${USERNAME}.github.com目录下运行<code>jekyll --server</code>启动server，然后就可以在本地访问http://localhost:4000预览博客了。</p>
 
-<h3 id='id50'>自定义主题</h3>
+<h3 id='id150'>自定义主题</h3>
 
 <p>Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考<a href='http://jekyllbootstrap.com/usage/jekyll-theming.html'>Using Themes</a></p>
 
-<h3 id='id51'>发布博客</h3>
+<h3 id='id151'>发布博客</h3>
 
 <p>发布博客和管理代码库一样，可以利用到git的强大功能，只要push上去了，本地更改就发布了。</p>
 
-<h3 id='id52'>例子</h3>
+<h3 id='id152'>例子</h3>
 
 <p>本博客就是依照上述步骤搭建起来的，你可以访问完整<a href='https://github.com/zyzhang/zyzhang.github.com'>源代码</a></p>
 
-<h3 id='id53'>参考文章</h3>
+<h3 id='id153'>参考文章</h3>
 
 <ul>
 <li><a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'>Jekyll Introduction</a></li>
@@ -230,7 +214,7 @@
 
   <div id="disqus_thread"></div>
 <script type="text/javascript">
-    
+    var disqus_developer = 1;
     var disqus_shortname = 'zhenyublog'; // required: replace example with your forum shortname
     
     /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -249,11 +233,9 @@
   </div>
   
   <div class="span4">
-    <h4>Published</h4>
-    <div class="date"><span>29 August 2012</span></div>
-
+    
   
-    <h4>Tags</h4>
+    <div class="sidebar-title">标签</div>
     <ul class="tag_box">
     
     

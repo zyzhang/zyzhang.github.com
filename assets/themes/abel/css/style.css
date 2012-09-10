@@ -173,7 +173,7 @@ div.home-page-sidebar {
 	margin: 10px;
 }
 
-div.home-page-sidebar .sidebar-title {
+.sidebar-title {
 	font-weight: bold;
 	border-radius: 3px 3px 3px 3px;
 	padding: 3px 6px;

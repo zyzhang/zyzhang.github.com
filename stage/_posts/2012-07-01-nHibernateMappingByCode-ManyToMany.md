@@ -14,7 +14,7 @@ Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的�
 
 ### 实体类
 
-{% highlight %}
+{% highlight csharp %}
 public class Student
 {
     public virtual int Id { get; set; }
@@ -32,7 +32,7 @@ public class Course
 
 ### 数据库表（基于MS SQL Server 2012）
 
-{% highlight %}
+{% highlight sql %}
 CREATE TABLE [dbo].[Student](
     [Id] [int] IDENTITY(1,1) NOT NULL,
     [Name] [varchar](50) NOT NULL,    
@@ -57,7 +57,7 @@ REFERENCES [dbo].[Course] ([Id])
  
 ### 映射类
 
-{% highlight %}
+{% highlight csharp %}
 public class CourseMapping : ClassMapping<Course>
 {
     public CourseMapping()
