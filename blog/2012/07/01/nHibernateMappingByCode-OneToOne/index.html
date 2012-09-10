@@ -109,7 +109,10 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>nHibernate Mapping By Code - One to One <small>-- 01 July 2012</small></h1>
+  	<h1>
+  		【<a href="/categories.html#Tech-ref">Tech</a>】 nHibernate Mapping By Code - One to One 
+  		<small>-- 01 July 2012 </small>
+	</h1>
 </div>
 
 <div class="row">
@@ -126,7 +129,7 @@
 
 <h3 id='1_primary_key_associations'>1. primary key associations</h3>
 
-<h4 id='id246'>实体类</h4>
+<h4 id='id746'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Person</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -156,7 +159,7 @@
  <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_PersonInfo</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
 </code></pre>
 </div>
-<h4 id='id247'>映射类</h4>
+<h4 id='id747'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>PersonMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Person</span><span class='p'>&gt;;</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='nf'>PersonMapping</span><span class='p'>()</span>
@@ -183,7 +186,7 @@
 </div>
 <h3 id='2_unique_foreign_key_associations'>2. unique foreign key associations</h3>
 
-<h4 id='id248'>实体类</h4>
+<h4 id='id748'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Customer</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -219,7 +222,7 @@
 <span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>CustomerInfo</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
 </code></pre>
 </div>
-<h4 id='id249'>映射类</h4>
+<h4 id='id749'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='nf'>CustomerMapping</span><span class='p'>()</span>
 <span class='p'>{</span>
     <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Customer&quot;</span><span class='p'>);</span>
@@ -246,7 +249,7 @@
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne" title="nHibernate Mapping By Code - One to Many and Many to One">&larr; Previous</a></li>
+        <li class="prev"><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne" title="nHibernate Mapping By Code - One to Many & Many to One">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
@@ -307,7 +310,7 @@
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
     
-    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many and Many to One</a></li>
+    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many & Many to One</a></li>
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></li>
     

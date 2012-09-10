@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "nHibernate Mapping By Code - One to Many and Many to One"
+title: "nHibernate Mapping By Code - One to Many & Many to One"
 description: "Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式配置一对多和多对一关联的例子。"
 category: "Tech"
 tags: [nHibernate, Mapping By Code]
