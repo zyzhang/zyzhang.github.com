@@ -3,7 +3,7 @@ layout: post
 title: "nHibernate Mapping By Code - Introduction"
 description: "nHibernate 3.2新增了一种mapping by code的映射策略，很有意思。你可以自定义约定，并且按照约定定制自动映射策略，面对遗留数据库时这个功能往往很有用，另外，由于mapping by code是基于代码的（而不是xml文件），对domain object进行重命名的重构操作会非常方便，不用跑到xml映射文件查找字符串了。"
 category: "Tech"
-tags: [nHibernate]
+tags: [nHibernate, Mapping By Code]
 ---
 {% include JB/setup %}
 

@@ -3,7 +3,7 @@ layout: post
 title: "用Jekyll和Pygments配置代码高亮"
 description: "Jekyll默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具Pygments。Pygments支持超过100种语言，
 并且支持多种输出格式，比如HTML, RTF等等。"
-category: 乱弹
+category: 搭建博客
 tags: [Jekyll, Pygments]
 ---
 {% include JB/setup %}

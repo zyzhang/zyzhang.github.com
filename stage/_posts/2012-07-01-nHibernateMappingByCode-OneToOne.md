@@ -9,7 +9,7 @@ description: "nHibernate提供两种one to one关联：
 下面分别用mapping by code的方式配置这两种关联。关于如何配置nhibernate使用mapping by code，
 参考nHibernate Mapping By Code - Introduction"
 category: "Tech"
-tags: [nHibernate]
+tags: [nHibernate, Mapping By Code]
 ---
 {% include JB/setup %}
 

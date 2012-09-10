@@ -3,7 +3,7 @@ layout: post
 title: "nHibernate Mapping By Code - Many to Many"
 description: "Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式配置多对多关联的例子。"
 category: "Tech"
-tags: [nHibernate]
+tags: [nHibernate, Mapping By Code]
 ---
 {% include JB/setup %}
 

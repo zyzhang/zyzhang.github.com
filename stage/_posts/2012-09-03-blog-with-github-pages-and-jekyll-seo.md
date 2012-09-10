@@ -2,7 +2,7 @@
 layout: post
 title: "Github Pages + Jekyll搭建博客之SEO"
 description: "在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。"
-category: Tech
+category: 搭建博客
 tags: [Github Pages, Jekyll, SEO]
 ---
 {% include JB/setup %}
