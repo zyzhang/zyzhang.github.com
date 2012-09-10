@@ -3,11 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>莫让代码腐化：让营地比你来时更干净</title>
-    <meta name="description" content="你是否遇到过这样的场景呢？Code Review时：
-A：我在XXX类加了一个新方法来实现.....
-B：等等，我觉得这个地方应该改一改，blablabla....
-A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法....">
+    <title>避免依赖Github Pages和Jekyll生成静态文件</title>
+    <meta name="description" content="之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了， 即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决... 最后，我只好采取了终极解决方案了。">
     <meta name="author" content="张振宇">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -111,39 +108,31 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
         
 <div class="page-header">
   	<h1>
-  		【<a href="/categories.html#Tech-ref">Tech</a>】 莫让代码腐化：让营地比你来时更干净 
-  		<small>-- 13 November 2011 </small>
+  		【<a href="/categories.html#搭建博客-ref">搭建博客</a>】 避免依赖Github Pages和Jekyll生成静态文件 
+  		<small>-- 10 September 2012 </small>
 	</h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>你是否遇到过这样的场景呢？Code Review时：</p>
+    <p>之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了， 即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决&#8230; 最后，我只好采取了终极解决方案了。</p>
 
-<p>A：我在XXX类加了一个新方法来实现&#8230;..</p>
+<p><a href='https://help.github.com/articles/using-jekyll-with-pages'>Github Pages的文档</a>上说，当前（2012年9月）使用的是 Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
+<div class='highlight'><pre><code class='bash'><span class='nv'>$ </span>jekyll --pygments --no-lsi --safe
+</code></pre>
+</div>
+<p>很可能是版本问题造成本地行为和Github Server行为不一致，我已经不想深究真正的原因了，Github Pages如何运作，出了什么问题， 对我完全不可见。</p>
 
-<p>B：等等，我觉得这个地方应该改一改，blablabla&#8230;.</p>
-
-<p>A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法&#8230;.</p>
-
-<p>重读Clean Code，忽然对Bob大叔提到的童子军军规深有感触：“让营地比你来时更干净”。</p>
-
-<p>代码总是随着时间的流逝，需求的增加而逐渐腐化（还有架构）！我们不希望我们的代码最终成为别人眼中的Legacy Code，正如我们自己接手如同烂泥一样的code base时心头暗骂一样。</p>
-
-<p>一直保持整洁的代码，我们真的做不到么？进度压力，需求膨胀，经验少的队友，这些真的是原因么？</p>
-
-<p>其实，我们只需做很简单的一件事：让营地比你来时更干净！代码每次check in时都比check out时更干净，每个类甚至每个方法都比你留下痕迹之前更干净，哪怕只是重命名一个变量， 消除了一点点重复代码，拆分了一个有点长的函数&#8230;.</p>
-
-<p>让营地比你来时更干净，营地会越来越干净！</p>
+<p>待续&#8230;</p>
     <hr>
     <div class="pagination">
       <ul>
       
-        <li class="prev disabled"><a>&larr; Previous</a></li>
+        <li class="prev"><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo" title="Github Pages + Jekyll搭建博客之SEO">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/blog/2012/06/24/HibernateN1%E9%97%AE%E9%A2%98" title="Hibernate N+1 问题">Next &rarr;</a></li>
+        <li class="next disabled"><a>Next &rarr;</a>
       
       </ul>
     </div>
@@ -182,9 +171,11 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
 
   
      
-    	<li><a href="/tags.html#Clean Code-ref">Clean Code <span>1</span></a></li>
+    	<li><a href="/tags.html#Github Pages-ref">Github Pages <span>3</span></a></li>
      
-    	<li><a href="/tags.html#Agile-ref">Agile <span>1</span></a></li>
+    	<li><a href="/tags.html#Jekyll-ref">Jekyll <span>4</span></a></li>
+     
+    	<li><a href="/tags.html#Jekyll-Bootstrap-ref">Jekyll-Bootstrap <span>2</span></a></li>
     
   
 
@@ -198,13 +189,13 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll">避免依赖Github Pages和Jekyll生成静态文件</a></li>
+    	<li><a href="/blog/2012/08/29/%E5%83%8F%E6%9E%81%E5%AE%A2%E4%B8%80%E6%A0%B7%E5%86%99%E5%8D%9A%E5%AE%A2">像极客一样写博客</a></li>
     
     	<li><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo">Github Pages + Jekyll搭建博客之SEO</a></li>
     
     	<li><a href="/blog/2012/08/31/%E7%94%A8Jekyll%E5%92%8CPygments%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE">用Jekyll和Pygments配置代码高亮</a></li>
     
-    	<li><a href="/blog/2012/08/29/%E5%83%8F%E6%9E%81%E5%AE%A2%E4%B8%80%E6%A0%B7%E5%86%99%E5%8D%9A%E5%AE%A2">像极客一样写博客</a></li>
+    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></li>
     
