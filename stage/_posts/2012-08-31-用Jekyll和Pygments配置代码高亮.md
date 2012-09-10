@@ -27,11 +27,13 @@ Pygments提供了多种样式，比如'native', 'emacs', 'vs'等等，可以在[
 
 通过下面的命令可以查看当前支持的样式：
 
-{% highlight %}
+### placeholder:
+
+`
 >>> from pygments.styles import STYLE_MAP
 >>> STYLE_MAP.keys()
 ['monokai', 'manni', 'rrt', 'perldoc', 'borland', 'colorful', 'default', 'murphy', 'vs', 'trac', 'tango', 'fruity', 'autumn', 'bw', 'emacs', 'vim', 'pastie', 'friendly', 'native']
-{% endhighlight %}
+`
 
 ### 选择一种样式，应用在Jekyll中
 

@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>用Jekyll和Pygments配置代码高亮</title>
+    <meta name="description" content="Jekyll默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具Pygments。Pygments支持超过100种语言， 并且支持多种输出格式，比如HTML, RTF等等。">
+    <meta name="author" content="张振宇">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/abel/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/themes/abel/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/abel/css/pygments.css?body=1" rel="stylesheet" type="text/css" media="all">    
+
+	<link rel="shortcut icon" href="assets/image/favicon.ico">
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  	 <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/atom.xml" />
+
+  	 
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34484534-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  	 
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Zhenyu's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Zhenyu</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+          <a href="/atom.xml"><img alt="rss feed" src="/assets/image/rss.png"></a>      
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>用Jekyll和Pygments配置代码高亮</h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p><a href='http://jekyllrb.com'>Jekyll</a>默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具<a href='http://pygments.org'>Pygments</a>。Pygments支持超过100种语言， 并且支持多种输出格式，比如HTML, RTF等等。</p>
+
+<h3 id='_configyml'>修改_config.yml</h3>
+
+<p>设置<code>pygments: true</code></p>
+
+<h3 id='pygments'>本地安装Pygments</h3>
+
+<ul>
+<li>Pygments是基于Python的，所以机器上需要<a href='http://www.python.org/download/'>安装Python</a>，我用的是Mac，已默认安装Python。</li>
+
+<li><a href='http://pypi.python.org/pypi/Pygments'>下载</a>最新的Pygments, 本文使用的是Pygments-1.5.tar.gz，下载完成后解压</li>
+
+<li>在解压后的Pygments目录中，运行命令：<code>sudo python setup.py install</code></li>
+</ul>
+
+<h3 id='id54'>选择一种喜欢的代码高亮样式</h3>
+
+<p>Pygments提供了多种样式，比如&#8217;native&#8217;, &#8216;emacs&#8217;, &#8216;vs&#8217;等等，可以在<a href='http://pygments.org/demo'>Pygments Demo</a>中选择某种语言的例子，体验不同的样式。</p>
+
+<p>通过下面的命令可以查看当前支持的样式：</p>
+<div class='highlight'><pre><code class='python'><span class='o'>&gt;&gt;&gt;</span> <span class='kn'>from</span> <span class='nn'>pygments.styles</span> <span class='kn'>import</span> <span class='n'>STYLE_MAP</span>
+<span class='o'>&gt;&gt;&gt;</span> <span class='n'>STYLE_MAP</span><span class='o'>.</span><span class='n'>keys</span><span class='p'>()</span>
+<span class='p'>[</span><span class='s'>&#39;monokai&#39;</span><span class='p'>,</span> <span class='s'>&#39;manni&#39;</span><span class='p'>,</span> <span class='s'>&#39;rrt&#39;</span><span class='p'>,</span> <span class='s'>&#39;perldoc&#39;</span><span class='p'>,</span> <span class='s'>&#39;borland&#39;</span><span class='p'>,</span> <span class='s'>&#39;colorful&#39;</span><span class='p'>,</span> <span class='s'>&#39;default&#39;</span><span class='p'>,</span> <span class='s'>&#39;murphy&#39;</span><span class='p'>,</span> <span class='s'>&#39;vs&#39;</span><span class='p'>,</span> <span class='s'>&#39;trac&#39;</span><span class='p'>,</span> <span class='s'>&#39;tango&#39;</span><span class='p'>,</span> <span class='s'>&#39;fruity&#39;</span><span class='p'>,</span> <span class='s'>&#39;autumn&#39;</span><span class='p'>,</span> <span class='s'>&#39;bw&#39;</span><span class='p'>,</span> <span class='s'>&#39;emacs&#39;</span><span class='p'>,</span> <span class='s'>&#39;vim&#39;</span><span class='p'>,</span> <span class='s'>&#39;pastie&#39;</span><span class='p'>,</span> <span class='s'>&#39;friendly&#39;</span><span class='p'>,</span> <span class='s'>&#39;native&#39;</span><span class='p'>]</span>
+</code></pre>
+</div>
+<h3 id='jekyll'>选择一种样式，应用在Jekyll中</h3>
+
+<ul>
+<li><code>cd /dev/projects/zyzhang.github.com/assets/themes/abel/css</code></li>
+
+<li><code>pygmentize -S native -f html &gt; pygments.css</code>, “native”是样式名，“html”是formatter</li>
+
+<li>在layout中引用刚刚加的pygments.css</li>
+</ul>
+
+<h3 id='id55'>在文章中高亮代码</h3>
+
+<p>现在，可以在博客中高亮代码了：</p>
+<div class='highlight'><pre><code class='html'>{% highlight java %}
+public class HelloWorld {
+    public static void main(String args[]) {
+      System.out.println(&quot;Hello World!&quot;);
+    }
+}
+{% endhighlight %}
+</code></pre>
+</div>
+<p>效果如下：</p>
+<div class='highlight'><pre><code class='java'><span class='kd'>public</span> <span class='kd'>class</span> <span class='nc'>HelloWorld</span> <span class='o'>{</span>
+    <span class='kd'>public</span> <span class='kd'>static</span> <span class='kt'>void</span> <span class='nf'>main</span><span class='o'>(</span><span class='n'>String</span> <span class='n'>args</span><span class='o'>[])</span> <span class='o'>{</span>
+      <span class='n'>System</span><span class='o'>.</span><span class='na'>out</span><span class='o'>.</span><span class='na'>println</span><span class='o'>(</span><span class='s'>&quot;Hello World!&quot;</span><span class='o'>);</span>
+    <span class='o'>}</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<h3 id='id56'>参考文章</h3>
+
+<ul>
+<li><a href='http://pygments.org/docs/styles/'>Pygments Styles</a></li>
+
+<li><a href='https://github.com/mojombo/jekyll/wiki/Liquid-Extensions/'>Liquid Extensions</a></li>
+</ul>
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/blog/2012/08/29/%E5%83%8F%E6%9E%81%E5%AE%A2%E4%B8%80%E6%A0%B7%E5%86%99%E5%8D%9A%E5%AE%A2" title="像极客一样写博客">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo" title="Github Pages + Jekyll搭建博客之SEO">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_shortname = 'zhenyublog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>31 August 2012</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="/tags.html#Jekyll-ref">Jekyll <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Pygments-ref">Pygments <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  
+    <hr>
+  
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style">
+    	<span class="jiathis_txt">分享到：</span><br>
+    	<a class="jiathis_button_tools_1"></a>
+	  	<a class="jiathis_button_tools_2"></a><br>
+  		<a class="jiathis_button_tools_3"></a>
+  	    <a class="jiathis_button_tools_4"></a><br>
+	    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+	    <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1334916632736926" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+  
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; 张振宇 2012 - 版权所有，转载请注明出处</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
+
