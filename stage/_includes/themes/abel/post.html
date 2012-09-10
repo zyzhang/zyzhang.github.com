@@ -37,6 +37,13 @@
   
     <hr>
   
+  	<div class="sidebar-title">相关文章</div>
+    <ul>
+    {% for related_post in site.related_posts limit:5 %}
+    	<li><a href="{{ BASE_PATH }}{{ related_post.url }}">{{ related_post.title }}</a></li>
+    {% endfor %}
+    </ul>
+    <hr>
     <!-- JiaThis Button BEGIN -->
     <div class="jiathis_style">
     	<span class="jiathis_txt">分享到：</span><br>

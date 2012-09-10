@@ -1,1 +1,1 @@
-cp -r _site/* ..
+cp -r ./_site/* ..
