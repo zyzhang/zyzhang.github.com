@@ -79,7 +79,9 @@ Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官�
 
 ### 例子
 
-本博客就是依照上述步骤搭建起来的，你可以访问完整[源代码](https://github.com/zyzhang/zyzhang.github.com)
+本博客就是依照上述步骤搭建起来的，你可以访问完整[源代码](https://github.com/zyzhang/zyzhang.github.com), 另外，由于Github Pages出于安全原因不支持用户自定义Jekyll插件，并且有时候Pygments代码高亮也有些问题，所以我改变了发布策略，只发布静态文件，详情见
+[避免依赖Github Pages和Jekyll生成静态文件](http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll)。
+如果你不关心上述问题，仍然可以按照上面的步骤搭建标准的Github博客。
 
 ### 参考文章
 * [Jekyll Introduction](http://jekyllbootstrap.com/lessons/jekyll-introduction.html)
