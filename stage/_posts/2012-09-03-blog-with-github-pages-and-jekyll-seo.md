@@ -50,14 +50,14 @@ tags: [Github Pages, Jekyll, SEO]
 {% endhighlight %}
 
 关于[Github Pages](http://pages.github.com)，[Jekyll](http://jekyllrb.com)和[Jekyll-Bootstrap](http://jekyllbootstrap.com)，
-请参考我的另一篇文章[像极客一样写博客](/blog/2012/08/29/像极客一样写博客)
+请参考我的另一篇文章[像极客一样写博客](/blog/2012/08/29/blogging-like-a-geek)
 
 ### 多用内部链接
 
-内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“[像极客一样写博客](/blog/2012/08/29/像极客一样写博客)”。
+内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“[像极客一样写博客](/blog/2012/08/29/blogging-like-a-geek)”。
 
 > 关于[Github Pages](http://pages.github.com)，[Jekyll](http://jekyllrb.com)和[Jekyll-Bootstrap](http://jekyllbootstrap.com)，
-> 请参考我的另一篇文章[像极客一样写博客](/blog/2012/08/29/像极客一样写博客)
+> 请参考我的另一篇文章[像极客一样写博客](/blog/2012/08/29/blogging-like-a-geek)
 
 相关性高的内部链接除了有助于提高用户体验外，还有助于提高搜索引擎的索引效率，控制站内权重分布，并提升网站的收录率。
 [这个文章](http://bbs.chinaz.com/Shuiba/thread-1683921-1-1.html)对内部链接总结的挺好。
