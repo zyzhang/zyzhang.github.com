@@ -8,6 +8,7 @@ http://zyzhang.github.com/pages.html
 http://zyzhang.github.com/sitemap.txt
 http://zyzhang.github.com/tags.html
 
+http://zyzhang.github.com/blog/2013/01/28/z-team-memorise
 http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll
 http://zyzhang.github.com/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo
 http://zyzhang.github.com/blog/2012/08/31/highlight-with-Jekyll-and-Pygments

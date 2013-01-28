@@ -129,7 +129,7 @@
 
 <h3 id='1_primary_key_associations'>1. primary key associations</h3>
 
-<h4 id='id26'>实体类</h4>
+<h4 id='id771'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Person</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -159,7 +159,7 @@
  <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_PersonInfo</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
 </code></pre>
 </div>
-<h4 id='id27'>映射类</h4>
+<h4 id='id772'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>PersonMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Person</span><span class='p'>&gt;;</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='nf'>PersonMapping</span><span class='p'>()</span>
@@ -186,7 +186,7 @@
 </div>
 <h3 id='2_unique_foreign_key_associations'>2. unique foreign key associations</h3>
 
-<h4 id='id28'>实体类</h4>
+<h4 id='id773'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Customer</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -222,7 +222,7 @@
 <span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>CustomerInfo</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
 </code></pre>
 </div>
-<h4 id='id29'>映射类</h4>
+<h4 id='id774'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='nf'>CustomerMapping</span><span class='p'>()</span>
 <span class='p'>{</span>
     <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Customer&quot;</span><span class='p'>);</span>
@@ -316,7 +316,7 @@
     
     	<li><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem">Hibernate N+1 问题</a></li>
     
-    	<li><a href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll">避免依赖Github Pages和Jekyll生成静态文件</a></li>
+    	<li><a href="/blog/2013/01/28/z-team-memorise">缅怀Z Team</a></li>
     
     </ul>
     <hr>
