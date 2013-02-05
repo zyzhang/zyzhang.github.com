@@ -119,7 +119,7 @@
 
 <p>关于如何配置nhibernate使用mapping by code，参考<a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'>nHibernate Mapping By Code - Introduction</a></p>
 
-<h3 id='id769'>实体类</h3>
+<h3 id='id25'>实体类</h3>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Employee</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -155,7 +155,7 @@
 <span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Department</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
 </code></pre>
 </div>
-<h3 id='id770'>映射类</h3>
+<h3 id='id26'>映射类</h3>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>DepartmentMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Department</span><span class='p'>&gt;</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='nf'>DepartmentMapping</span><span class='p'>()</span>

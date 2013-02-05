@@ -6,6 +6,10 @@ category: 自说自话
 tags: [ThoughtWorks]
 ---
 {% include JB/setup %}
+<script type="text/javascript" src="../scripts/tagline.js"></script>
+<script type="text/javascript">
+
+</script>
 
 ![z_team](/assets/image/posts/z_team.png)
 
@@ -36,3 +40,8 @@ Z Team从前年几个人到LA做Inception，到巅峰时期两个Stream近二十
 
 晓蕴姐总是很小心，不停地问你问题。 <br>
 徐晨是无意翻相片，介绍你妹给恩玉。
+
+![z_team](/assets/image/posts/2013-newyear-z-team-1.JPG)
+![z_team](/assets/image/posts/2013-newyear-z-team-2.JPG)
+![z_team](/assets/image/posts/2013-newyear-z-team-3.JPG)
+![z_team](/assets/image/posts/2013-newyear-z-team-4.JPG)
