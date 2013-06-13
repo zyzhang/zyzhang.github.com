@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "IntelliJ中ava8编译错误-‘source release 8 requires target release 1.8’"
+title: "IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’"
 description: "在IntelliJ的Java8项目中，尽管已经将Project SDK和Project Launguage Level设置为Java 8，编译测试时仍然会出现编译错误： \n>java: javacTask: source release 8 requires target release 1.8 \n这里列出了两种解决方案..."
 category: Tech
 tags: [Java, Java8, IntelliJ]
