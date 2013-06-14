@@ -7,9 +7,6 @@ tags: [ThoughtWorks]
 ---
 {% include JB/setup %}
 <script type="text/javascript" src="../scripts/tagline.js"></script>
-<script type="text/javascript">
-
-</script>
 
 ![z_team](/assets/image/posts/z_team.png)
 
