@@ -129,7 +129,7 @@
 
 <h3 id='1_primary_key_associations'>1. primary key associations</h3>
 
-<h4 id='id190'>实体类</h4>
+<h4 id='id6'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Person</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -157,7 +157,7 @@
     <span class='p'>[</span><span class='n'>Remarks</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>varchar</span><span class='p'>](</span><span class='mi'>100</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
  <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_PersonInfo</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
 </code></pre></div>
-<h4 id='id191'>映射类</h4>
+<h4 id='id7'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>PersonMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Person</span><span class='p'>&gt;;</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='nf'>PersonMapping</span><span class='p'>()</span>
@@ -183,7 +183,7 @@
 </code></pre></div>
 <h3 id='2_unique_foreign_key_associations'>2. unique foreign key associations</h3>
 
-<h4 id='id192'>实体类</h4>
+<h4 id='id8'>实体类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Customer</span>
 <span class='p'>{</span>
     <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
@@ -217,7 +217,7 @@
  <span class='k'>ALTER</span> <span class='k'>TABLE</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Customer</span><span class='p'>]</span> <span class='k'>ADD</span> <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>FK_Customer_CustomerInfoId</span><span class='p'>]</span> <span class='k'>FOREIGN</span> <span class='k'>KEY</span><span class='p'>([</span><span class='n'>CustomerInfoId</span><span class='p'>])</span>
 <span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>CustomerInfo</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
 </code></pre></div>
-<h4 id='id193'>映射类</h4>
+<h4 id='id9'>映射类</h4>
 <div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='nf'>CustomerMapping</span><span class='p'>()</span>
 <span class='p'>{</span>
     <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Customer&quot;</span><span class='p'>);</span>
@@ -302,15 +302,15 @@
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2011/11/13/%E8%8E%AB%E8%AE%A9%E4%BB%A3%E7%A0%81%E8%85%90%E5%8C%96%EF%BC%9A%E8%AE%A9%E8%90%A5%E5%9C%B0%E6%AF%94%E4%BD%A0%E6%9D%A5%E6%97%B6%E6%9B%B4%E5%B9%B2%E5%87%80">莫让代码腐化：让营地比你来时更干净</a></li>
-    
-    	<li><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem">Hibernate N+1 问题</a></li>
+    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></li>
     
-    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
-    
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many & Many to One</a></li>
+    
+    	<li><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem">Hibernate N+1 问题</a></li>
+    
+    	<li><a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8">IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’</a></li>
     
     </ul>
     <hr>

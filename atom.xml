@@ -4,7 +4,7 @@
  <title>Zhenyu's Blog</title>
  <link href="http://zyzhang.github.com/atom.xml" rel="self"/>
  <link href="http://zyzhang.github.com"/>
- <updated>2013-06-14T15:57:31+08:00</updated>
+ <updated>2013-06-14T18:20:59+08:00</updated>
  <id>http://zyzhang.github.com</id>
  <author>
    <name>张振宇</name>
@@ -79,7 +79,7 @@
 
 &lt;p&gt;这里列出了两种解决方案&amp;#8230;&lt;/p&gt;
 
-&lt;h3 id='id206'&gt;环境：&lt;/h3&gt;
+&lt;h3 id='id22'&gt;环境：&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;JDK Version: 1.8.0-ea&lt;/li&gt;
@@ -100,7 +100,7 @@
     &lt;span class='nt'&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
 &lt;span class='nt'&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id='id207'&gt;问题描述&lt;/h3&gt;
+&lt;h3 id='id23'&gt;问题描述&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;IntelliJ中无编译错误，运行测试时报错：&lt;code&gt;java: javacTask: source release 8 requires target release 1.8&lt;/code&gt;&lt;/li&gt;
@@ -199,7 +199,7 @@
 
 &lt;p&gt;Z Team从前年几个人到LA做Inception，到巅峰时期两个Stream近二十人的团队，再到现在算上在美国的大哥一共六个人。就像人的一生，从出生后蹒跚学步咿呀学语，到少年时充满梦想挥洒青春，最后垂垂老矣闲时缅怀旧日时光。我们都知道，总有一天，Z Team会最终消失，但我相信，那些我们共同度过的时光，会在每个人心里慢慢发酵成美好的回忆。下面的歌词改编自《同桌的你》，缅怀那些我们共同拥有的欢笑和泪水。&lt;/p&gt;
 
-&lt;h3 id='id205'&gt;同桌的你&lt;/h3&gt;
+&lt;h3 id='id21'&gt;同桌的你&lt;/h3&gt;
 
 &lt;p&gt;明天你是否会想起，曾经弱爆了的你。&lt;br /&gt; 明天你是否还惦记，昨天年轻的自己。&lt;/p&gt;
 
@@ -260,7 +260,7 @@
 
 &lt;p&gt;在用&lt;a href='http://pages.github.com'&gt;Github Pages&lt;/a&gt; + &lt;a href='http://jekyllrb.com'&gt;Jekyll&lt;/a&gt;搭建博客的过程中， 学到了不少&lt;a href='http://en.wikipedia.org/wiki/Search_engine_optimization'&gt;SEO（Search Engine Optimization）&lt;/a&gt; 的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。&lt;/p&gt;
 
-&lt;h3 id='id201'&gt;让搜索引擎收录&lt;/h3&gt;
+&lt;h3 id='id17'&gt;让搜索引擎收录&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;
@@ -272,7 +272,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id202'&gt;为每个页面添加描述性的信息&lt;/h3&gt;
+&lt;h3 id='id18'&gt;为每个页面添加描述性的信息&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;在&lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;标签中包含描述性强的title&lt;/li&gt;
@@ -297,7 +297,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;关于&lt;a href='http://pages.github.com'&gt;Github Pages&lt;/a&gt;，&lt;a href='http://jekyllrb.com'&gt;Jekyll&lt;/a&gt;和&lt;a href='http://jekyllbootstrap.com'&gt;Jekyll-Bootstrap&lt;/a&gt;， 请参考我的另一篇文章&lt;a href='/blog/2012/08/29/blogging-like-a-geek'&gt;像极客一样写博客&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id203'&gt;多用内部链接&lt;/h3&gt;
+&lt;h3 id='id19'&gt;多用内部链接&lt;/h3&gt;
 
 &lt;p&gt;内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“&lt;a href='/blog/2012/08/29/blogging-like-a-geek'&gt;像极客一样写博客&lt;/a&gt;”。&lt;/p&gt;
 
@@ -307,7 +307,7 @@ tags: [Github Pages, Jekyll, SEO]
 
 &lt;p&gt;相关性高的内部链接除了有助于提高用户体验外，还有助于提高搜索引擎的索引效率，控制站内权重分布，并提升网站的收录率。 &lt;a href='http://bbs.chinaz.com/Shuiba/thread-1683921-1-1.html'&gt;这个文章&lt;/a&gt;对内部链接总结的挺好。&lt;/p&gt;
 
-&lt;h3 id='id204'&gt;避免死链接&lt;/h3&gt;
+&lt;h3 id='id20'&gt;避免死链接&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href='http://baike.baidu.com/view/1880779.htm'&gt;死链接&lt;/a&gt;即无效链接，不仅用户体验不好，还会降低网站在搜索引擎中的权重。&lt;/p&gt;
 
@@ -347,7 +347,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;li&gt;在解压后的Pygments目录中，运行命令：&lt;code&gt;sudo python setup.py install&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id198'&gt;选择一种喜欢的代码高亮样式&lt;/h3&gt;
+&lt;h3 id='id14'&gt;选择一种喜欢的代码高亮样式&lt;/h3&gt;
 
 &lt;p&gt;Pygments提供了多种样式，比如&amp;#8217;native&amp;#8217;, &amp;#8216;emacs&amp;#8217;, &amp;#8216;vs&amp;#8217;等等，可以在&lt;a href='http://pygments.org/demo'&gt;Pygments Demo&lt;/a&gt;中选择某种语言的例子，体验不同的样式。&lt;/p&gt;
 
@@ -366,7 +366,7 @@ tags: [Github Pages, Jekyll, SEO]
 &lt;li&gt;在layout中引用刚刚加的pygments.css&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id199'&gt;在文章中高亮代码&lt;/h3&gt;
+&lt;h3 id='id15'&gt;在文章中高亮代码&lt;/h3&gt;
 
 &lt;p&gt;现在，可以在博客中高亮代码了：&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% highlight java %}
@@ -384,7 +384,7 @@ public class HelloWorld {
     &lt;span class='o'&gt;}&lt;/span&gt;
 &lt;span class='o'&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id='id200'&gt;参考文章&lt;/h3&gt;
+&lt;h3 id='id16'&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://pygments.org/docs/styles/'&gt;Pygments Styles&lt;/a&gt;&lt;/li&gt;
@@ -468,19 +468,19 @@ public class HelloWorld {
 
 &lt;p&gt;安装完毕后，在${USERNAME}.github.com目录下运行&lt;code&gt;jekyll --server&lt;/code&gt;启动server，然后就可以在本地访问http://localhost:4000预览博客了。&lt;/p&gt;
 
-&lt;h3 id='id194'&gt;自定义主题&lt;/h3&gt;
+&lt;h3 id='id10'&gt;自定义主题&lt;/h3&gt;
 
 &lt;p&gt;Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考&lt;a href='http://jekyllbootstrap.com/usage/jekyll-theming.html'&gt;Using Themes&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id195'&gt;发布博客&lt;/h3&gt;
+&lt;h3 id='id11'&gt;发布博客&lt;/h3&gt;
 
 &lt;p&gt;发布博客和管理代码库一样，可以利用到git的强大功能，只要push上去了，本地更改就发布了。&lt;/p&gt;
 
-&lt;h3 id='id196'&gt;例子&lt;/h3&gt;
+&lt;h3 id='id12'&gt;例子&lt;/h3&gt;
 
 &lt;p&gt;本博客就是依照上述步骤搭建起来的，你可以访问完整&lt;a href='https://github.com/zyzhang/zyzhang.github.com'&gt;源代码&lt;/a&gt;, 另外，由于Github Pages出于安全原因不支持用户自定义Jekyll插件，并且有时候Pygments代码高亮也有些问题，所以我改变了发布策略，只发布静态文件，详情见 &lt;a href='http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll'&gt;避免依赖Github Pages和Jekyll生成静态文件&lt;/a&gt;。 如果你不关心上述问题，仍然可以按照上面的步骤搭建标准的Github博客。&lt;/p&gt;
 
-&lt;h3 id='id197'&gt;参考文章&lt;/h3&gt;
+&lt;h3 id='id13'&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'&gt;Jekyll Introduction&lt;/a&gt;&lt;/li&gt;
@@ -506,7 +506,7 @@ public class HelloWorld {
 
 &lt;h3 id='1_primary_key_associations'&gt;1. primary key associations&lt;/h3&gt;
 
-&lt;h4 id='id190'&gt;实体类&lt;/h4&gt;
+&lt;h4 id='id6'&gt;实体类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Person&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -534,7 +534,7 @@ public class HelloWorld {
     &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;Remarks&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nb'&gt;varchar&lt;/span&gt;&lt;span class='p'&gt;](&lt;/span&gt;&lt;span class='mi'&gt;100&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;NOT&lt;/span&gt; &lt;span class='k'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
  &lt;span class='k'&gt;CONSTRAINT&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;PK_PersonInfo&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;PRIMARY&lt;/span&gt; &lt;span class='k'&gt;KEY&lt;/span&gt; &lt;span class='n'&gt;CLUSTERED&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;ASC&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id='id191'&gt;映射类&lt;/h4&gt;
+&lt;h4 id='id7'&gt;映射类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;PersonMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Person&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;PersonMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -560,7 +560,7 @@ public class HelloWorld {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id='2_unique_foreign_key_associations'&gt;2. unique foreign key associations&lt;/h3&gt;
 
-&lt;h4 id='id192'&gt;实体类&lt;/h4&gt;
+&lt;h4 id='id8'&gt;实体类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Customer&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -594,7 +594,7 @@ public class HelloWorld {
  &lt;span class='k'&gt;ALTER&lt;/span&gt; &lt;span class='k'&gt;TABLE&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;Customer&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;ADD&lt;/span&gt; &lt;span class='k'&gt;CONSTRAINT&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;FK_Customer_CustomerInfoId&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;FOREIGN&lt;/span&gt; &lt;span class='k'&gt;KEY&lt;/span&gt;&lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;CustomerInfoId&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;span class='k'&gt;REFERENCES&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;CustomerInfo&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id='id193'&gt;映射类&lt;/h4&gt;
+&lt;h4 id='id9'&gt;映射类&lt;/h4&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;CustomerMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='n'&gt;Table&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;Customer&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
@@ -627,7 +627,7 @@ public class HelloWorld {
 
 &lt;p&gt;关于如何配置nhibernate使用mapping by code，参考&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'&gt;nHibernate Mapping By Code - Introduction&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id188'&gt;实体类&lt;/h3&gt;
+&lt;h3 id='id4'&gt;实体类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Employee&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -661,7 +661,7 @@ public class HelloWorld {
 &lt;span class='k'&gt;ALTER&lt;/span&gt; &lt;span class='k'&gt;TABLE&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;Employee&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;ADD&lt;/span&gt; &lt;span class='k'&gt;CONSTRAINT&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;FK_Employee_DepartmentId&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='k'&gt;FOREIGN&lt;/span&gt; &lt;span class='k'&gt;KEY&lt;/span&gt;&lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;DepartmentId&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;span class='k'&gt;REFERENCES&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='n'&gt;dbo&lt;/span&gt;&lt;span class='p'&gt;].[&lt;/span&gt;&lt;span class='n'&gt;Department&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='n'&gt;Id&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id='id189'&gt;映射类&lt;/h3&gt;
+&lt;h3 id='id5'&gt;映射类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;DepartmentMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Department&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;DepartmentMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -696,7 +696,7 @@ public class HelloWorld {
 
 &lt;p&gt;关于如何配置nhibernate使用mapping by code，参考&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'&gt;nHibernate Mapping By Code - Introduction&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id='id186'&gt;实体类&lt;/h3&gt;
+&lt;h3 id='id2'&gt;实体类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Student&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;virtual&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;Id&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;get&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='k'&gt;set&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -735,7 +735,7 @@ public class HelloWorld {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt; &lt;/p&gt;
 
-&lt;h3 id='id187'&gt;映射类&lt;/h3&gt;
+&lt;h3 id='id3'&gt;映射类&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='csharp'&gt;&lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;CourseMapping&lt;/span&gt; &lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;ClassMapping&lt;/span&gt;&lt;span class='p'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;Course&lt;/span&gt;&lt;span class='p'&gt;&amp;gt;&lt;/span&gt;
 &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='nf'&gt;CourseMapping&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
@@ -825,7 +825,7 @@ public class HelloWorld {
 &lt;li&gt;&lt;a href='/blog/2012/07/01/nHibernateMappingByCode-ManyToMany'&gt;nHibernate Mapping By Code - Many to Many&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id='id185'&gt;参考文章：&lt;/h3&gt;
+&lt;h3 id='id1'&gt;参考文章：&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href='http://nhforge.org/blogs/nhibernate/archive/2011/09/12/nh-mapping-by-code-vs-the-untouchable-db.aspx'&gt;NH Mapping by code VS the Untouchable DB&lt;/a&gt;&lt;/li&gt;
