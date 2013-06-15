@@ -13,7 +13,7 @@ Java 8为这样的接口引入了一个新概念——功能接口（**Functiona
 
 ### 何为功能接口
 
-JSR335中这样描述功能接口:
+[JSR 335](http://www.jcp.org/en/jsr/detail?id=335)中这样描述功能接口:
 > A functional interface is an interface that has just one abstract method, and thus represents a single function contract. (In some cases, this "single" method may take the form of multiple abstract methods with override-equivalent signatures (8.4.2) inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)
 
 功能接口和所谓的Single Abstract Method interfaces一样，就是只包含一个抽象方法的接口，表达的是**逻辑上**的单一功能，例如：

@@ -11,7 +11,7 @@ tags: [Java, Java8, Lambda]
 
 ### 何为Default Method
 
-默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是JSR 335 ([Lambda Project](http://openjdk.java.net/projects/lambda/))的一部分。让我们先看一下JDK中的实际例子：
+默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是[JSR 335](http://www.jcp.org/en/jsr/detail?id=335)的一部分。让我们先看一下JDK中的实际例子：
 {% highlight java %}
 public interface Iterable<T> {
     Iterator<T> iterator();
