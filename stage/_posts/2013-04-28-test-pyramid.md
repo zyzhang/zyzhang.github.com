@@ -1,13 +1,13 @@
 ---
 layout: post
 title: "测试金字塔（Test Pyramid）"
-description: "本文翻译自Martin Fowller的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构"
+description: "本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构"
 category: 翻译
 tags: [Agile,Testing]
 ---
 {% include JB/setup %}
 
-本文翻译自Martin Fowller的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构。
+本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构。
 
 * 原文： [Test Pyramid](http://martinfowler.com/bliki/TestPyramid.html) 
 * 作者： [Martin Fowler](http://martinfowler.com/) 
