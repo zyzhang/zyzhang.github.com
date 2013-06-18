@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java 8 预览之Functional Interface"
-description: "在JDK的类库中，有很多只声明了一个方法的接口，比如`java.lang.Iterable<T>`和`java.lang.Runnable`。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。"
+description: "在JDK的类库中，有很多只声明了一个方法的接口，比如`java.lang.Iterable<T>`和`java.lang.Runnable`。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。Java 8为这样的接口引入了一个新概念——函数式接口（**Functional Interface**），同时引入注解`@FunctionalInterface`以帮助编译器检查函数式接口的合法性。"
 category: Tech
 tags: [Java, Java8, Lambda]
 ---
@@ -9,23 +9,23 @@ tags: [Java, Java8, Lambda]
 
 在JDK的类库中，有很多只声明了一个方法的接口，比如`java.lang.Iterable<T>`和`java.lang.Runnable`。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。
 
-Java 8为这样的接口引入了一个新概念——功能接口（**Functional Interface**），同时引入注解`@FunctionalInterface`以帮助编译器检查功能接口的合法性。
+Java 8为这样的接口引入了一个新概念——函数式接口（**Functional Interface**），同时引入注解`@FunctionalInterface`以帮助编译器检查函数式接口的合法性。
 
-### 何为功能接口
+### 何为函数式接口
 
-[JSR 335](http://www.jcp.org/en/jsr/detail?id=335)中这样描述功能接口:
+[JSR 335](http://www.jcp.org/en/jsr/detail?id=335)中这样描述函数式接口:
 > A functional interface is an interface that has just one abstract method, and thus represents a single function contract. (In some cases, this "single" method may take the form of multiple abstract methods with override-equivalent signatures (8.4.2) inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)
 
-功能接口和所谓的Single Abstract Method interfaces一样，就是只包含一个抽象方法的接口，表达的是**逻辑上**的单一功能，例如：
+函数式接口和所谓的Single Abstract Method interfaces一样，就是只包含一个抽象方法的接口，表达的是**逻辑上**的单一功能，例如：
 
-* `java.lang.Runnable`就是一个功能接口, 因为它只有一个抽象方法：
+* `java.lang.Runnable`就是一个函数式接口, 因为它只有一个抽象方法：
 {% highlight java %}
 public interface Runnable {
     public abstract void run();
 }
 {% endhighlight %}
 
-* `java.lang.Iterable<T>`虽然有两个方法，但它仍然是功能接口，因为forEach方法是一个[Default Method](/blog/2013/06/13/java8previewdefaultmethod/)，它有其默认实现，且不强制要求实现该接口的类或继承该接口的子接口重写（Override）该方法，因此，在逻辑上，`java.lang.Iterable<T>`仍然是只约定一个iterator方法的功能接口。
+* `java.lang.Iterable<T>`虽然有两个方法，但它仍然是函数式接口，因为forEach方法是一个[Default Method](/blog/2013/06/13/java8previewdefaultmethod/)，它有其默认实现，且不强制要求实现该接口的类或继承该接口的子接口重写（Override）该方法，因此，在逻辑上，`java.lang.Iterable<T>`仍然是只约定一个iterator方法的函数式接口。
 {% highlight java %}
 public interface Iterable<T> {
     Iterator<T> iterator();
@@ -35,9 +35,9 @@ public interface Iterable<T> {
 }
 {% endhighlight %}
 
-### 功能接口与Lambda
+### 函数式接口与Lambda
 
-功能接口的一个非常重要的用途就是对Lambda提供支持，看下面的例子：
+函数式接口的一个非常重要的用途就是对Lambda提供支持，看下面的例子：
 
 {% highlight java %}
 public class Book {
@@ -79,11 +79,11 @@ public class BookStore {
 bookStore.list(book -> book.price > 15.0) 
 {% endhighlight %}
 
-因为BookFilter是一个功能接口，只具有一个抽象方法，所以在编译期可以很容易推断Lambda表达式和BookFilter是否匹配，于是Lambda表达式的实现就简单了。
+因为BookFilter是一个函数式接口，只具有一个抽象方法，所以在编译期可以很容易推断Lambda表达式和BookFilter是否匹配，于是Lambda表达式的实现就简单了。
 
-### JDK提供的通用功能接口
+### JDK提供的通用函数式接口
 
-上面代码中的BookFilter实际上只是一个断言：如果Book符合某种条件则返回true，否则返回false。我们完全可以将这个概念抽象成**Predicate**供所有人使用，这样项目中就不会充斥过量的仅为Lambda服务的功能接口了。Java 8的设计者同样考虑到了这个问题，于是新增了**java.util.function**包，提供通用的功能接口。`Predicate<T>`就是其中之一。
+上面代码中的BookFilter实际上只是一个断言：如果Book符合某种条件则返回true，否则返回false。我们完全可以将这个概念抽象成**Predicate**供所有人使用，这样项目中就不会充斥过量的仅为Lambda服务的函数式接口了。Java 8的设计者同样考虑到了这个问题，于是新增了**java.util.function**包，提供通用的函数式接口。`Predicate<T>`就是其中之一。
 
 于是，上面的list方法使用Predicate就足够了，我们可以痛快的把BookFilter扔进回收站了。
 {% highlight java %}
