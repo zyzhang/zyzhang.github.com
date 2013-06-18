@@ -8,6 +8,7 @@ http://zyzhang.github.com/pages.html
 http://zyzhang.github.com/sitemap.txt
 http://zyzhang.github.com/tags.html
 
+http://zyzhang.github.com/blog/2013/06/15/java8-preview-method-reference
 http://zyzhang.github.com/blog/2013/06/15/java8-preview-functional-interface
 http://zyzhang.github.com/blog/2013/06/13/java8previewdefaultmethod
 http://zyzhang.github.com/blog/2013/06/13/intellij-java8-compile-require-target-1-8
