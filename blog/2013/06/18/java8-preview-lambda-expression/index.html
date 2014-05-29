@@ -3,11 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>莫让代码腐化：让营地比你来时更干净</title>
-    <meta name="description" content="你是否遇到过这样的场景呢？Code Review时：
-A：我在XXX类加了一个新方法来实现.....
-B：等等，我觉得这个地方应该改一改，blablabla....
-A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法....">
+    <title>Java 8 预览之Lambda表达式</title>
+    <meta name="description" content="我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是，经历了Java 7的跳票之后，Java 8终于很有诚意的包含Lambda了。">
     <meta name="author" content="张振宇">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -111,39 +108,36 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
         
 <div class="page-header">
   	<h1>
-  		【<a href="/categories.html#Tech-ref">Tech</a>】 莫让代码腐化：让营地比你来时更干净 
-  		<small>-- 13 November 2011 </small>
+  		【<a href="/categories.html#Tech-ref">Tech</a>】 Java 8 预览之Lambda表达式 
+  		<small>-- 18 June 2013 </small>
 	</h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>你是否遇到过这样的场景呢？Code Review时：</p>
+    
+<p>我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是，经历了Java 7的跳票之后，Java 8终于很有诚意的包含Lambda了。</p>
 
-<p>A：我在XXX类加了一个新方法来实现&#8230;..</p>
+<p><a href="http://en.wikipedia.org/wiki/Lambda_expression">Lambda表达式</a>其实就是匿名函数，它可以作为参数传递给<a href="http://en.wikipedia.org/wiki/Higher-order_function">高阶函数</a>供其调用。</p>
 
-<p>B：等等，我觉得这个地方应该改一改，blablabla&#8230;.</p>
+<p>Lambda表达式由三部分组成:</p>
 
-<p>A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法&#8230;.</p>
+<ul>
+  <li>参数列表</li>
+  <li>Lambda操作符</li>
+  <li>表达式或语句块</li>
+</ul>
 
-<p>重读Clean Code，忽然对Bob大叔提到的童子军军规深有感触：“让营地比你来时更干净”。</p>
 
-<p>代码总是随着时间的流逝，需求的增加而逐渐腐化（还有架构）！我们不希望我们的代码最终成为别人眼中的Legacy Code，正如我们自己接手如同烂泥一样的code base时心头暗骂一样。</p>
-
-<p>一直保持整洁的代码，我们真的做不到么？进度压力，需求膨胀，经验少的队友，这些真的是原因么？</p>
-
-<p>其实，我们只需做很简单的一件事：让营地比你来时更干净！代码每次check in时都比check out时更干净，每个类甚至每个方法都比你留下痕迹之前更干净，哪怕只是重命名一个变量， 消除了一点点重复代码，拆分了一个有点长的函数&#8230;.</p>
-
-<p>让营地比你来时更干净，营地会越来越干净！</p>
     <hr>
     <div class="pagination">
       <ul>
       
-        <li class="prev disabled"><a>&larr; Previous</a></li>
+        <li class="prev"><a href="/blog/2013/06/15/java8-preview-method-reference" title="Java 8 预览之Method Reference">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem" title="Hibernate N+1 问题">Next &rarr;</a></li>
+        <li class="next disabled"><a>Next &rarr;</a>
       
       </ul>
     </div>
@@ -182,9 +176,11 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
 
   
      
-    	<li><a href="/tags.html#Clean Code-ref">Clean Code <span>1</span></a></li>
+    	<li><a href="/tags.html#Java-ref">Java <span>5</span></a></li>
      
-    	<li><a href="/tags.html#Agile-ref">Agile <span>2</span></a></li>
+    	<li><a href="/tags.html#Java8-ref">Java8 <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#Lambda-ref">Lambda <span>4</span></a></li>
     
   
 
@@ -198,15 +194,15 @@ A：呃，那是以前的代码，所以我没动，我只是在这个类里加�
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2013/04/28/test-pyramid">测试金字塔（Test Pyramid）</a></li>
-    
     	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
     
     	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
     
+    	<li><a href="/blog/2013/06/13/java8previewdefaultmethod">Java 8 预览之Default Method</a></li>
+    
     	<li><a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8">IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’</a></li>
     
-    	<li><a href="/blog/2013/06/13/java8previewdefaultmethod">Java 8 预览之Default Method</a></li>
+    	<li><a href="/blog/2013/04/28/test-pyramid">测试金字塔（Test Pyramid）</a></li>
     
     </ul>
     <hr>

@@ -115,66 +115,67 @@
 
 <div class="row">
   <div class="span8">
-    <p><a href='http://jekyllrb.com'>Jekyll</a>默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具<a href='http://pygments.org'>Pygments</a>。Pygments支持超过100种语言， 并且支持多种输出格式，比如HTML, RTF等等。</p>
+    
+<p><a href="http://jekyllrb.com">Jekyll</a>默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具<a href="http://pygments.org">Pygments</a>。Pygments支持超过100种语言，
+并且支持多种输出格式，比如HTML, RTF等等。</p>
 
-<h3 id='_configyml'>修改_config.yml</h3>
+<h3 id="configyml">修改_config.yml</h3>
 
 <p>设置<code>pygments: true</code></p>
 
-<h3 id='pygments'>本地安装Pygments</h3>
+<h3 id="pygments">本地安装Pygments</h3>
 
 <ul>
-<li>Pygments是基于Python的，所以机器上需要<a href='http://www.python.org/download/'>安装Python</a>，我用的是Mac，已默认安装Python。</li>
-
-<li><a href='http://pypi.python.org/pypi/Pygments'>下载</a>最新的Pygments, 本文使用的是Pygments-1.5.tar.gz，下载完成后解压</li>
-
-<li>在解压后的Pygments目录中，运行命令：<code>sudo python setup.py install</code></li>
+  <li>Pygments是基于Python的，所以机器上需要<a href="http://www.python.org/download/">安装Python</a>，我用的是Mac，已默认安装Python。</li>
+  <li><a href="http://pypi.python.org/pypi/Pygments">下载</a>最新的Pygments, 本文使用的是Pygments-1.5.tar.gz，下载完成后解压</li>
+  <li>在解压后的Pygments目录中，运行命令：<code>sudo python setup.py install</code></li>
 </ul>
 
-<h3 id='id14'>选择一种喜欢的代码高亮样式</h3>
+<h3 id="section">选择一种喜欢的代码高亮样式</h3>
 
-<p>Pygments提供了多种样式，比如&#8217;native&#8217;, &#8216;emacs&#8217;, &#8216;vs&#8217;等等，可以在<a href='http://pygments.org/demo'>Pygments Demo</a>中选择某种语言的例子，体验不同的样式。</p>
+<p>Pygments提供了多种样式，比如’native’, ‘emacs’, ‘vs’等等，可以在<a href="http://pygments.org/demo">Pygments Demo</a>中选择某种语言的例子，体验不同的样式。</p>
 
 <p>通过下面的命令可以查看当前支持的样式：</p>
-<div class='highlight'><pre><code class='python'><span class='o'>&gt;&gt;&gt;</span> <span class='kn'>from</span> <span class='nn'>pygments.styles</span> <span class='kn'>import</span> <span class='n'>STYLE_MAP</span>
-<span class='o'>&gt;&gt;&gt;</span> <span class='n'>STYLE_MAP</span><span class='o'>.</span><span class='n'>keys</span><span class='p'>()</span>
-<span class='p'>[</span><span class='s'>&#39;monokai&#39;</span><span class='p'>,</span> <span class='s'>&#39;manni&#39;</span><span class='p'>,</span> <span class='s'>&#39;rrt&#39;</span><span class='p'>,</span> <span class='s'>&#39;perldoc&#39;</span><span class='p'>,</span> <span class='s'>&#39;borland&#39;</span><span class='p'>,</span> <span class='s'>&#39;colorful&#39;</span><span class='p'>,</span> <span class='s'>&#39;default&#39;</span><span class='p'>,</span> <span class='s'>&#39;murphy&#39;</span><span class='p'>,</span> <span class='s'>&#39;vs&#39;</span><span class='p'>,</span> <span class='s'>&#39;trac&#39;</span><span class='p'>,</span> <span class='s'>&#39;tango&#39;</span><span class='p'>,</span> <span class='s'>&#39;fruity&#39;</span><span class='p'>,</span> <span class='s'>&#39;autumn&#39;</span><span class='p'>,</span> <span class='s'>&#39;bw&#39;</span><span class='p'>,</span> <span class='s'>&#39;emacs&#39;</span><span class='p'>,</span> <span class='s'>&#39;vim&#39;</span><span class='p'>,</span> <span class='s'>&#39;pastie&#39;</span><span class='p'>,</span> <span class='s'>&#39;friendly&#39;</span><span class='p'>,</span> <span class='s'>&#39;native&#39;</span><span class='p'>]</span>
-</code></pre></div>
-<h3 id='jekyll'>选择一种样式，应用在Jekyll中</h3>
+
+<div class="highlight"><pre><code class="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="kn">import</span> <span class="n">STYLE_MAP</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">STYLE_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="p">[</span><span class="s">&#39;monokai&#39;</span><span class="p">,</span> <span class="s">&#39;manni&#39;</span><span class="p">,</span> <span class="s">&#39;rrt&#39;</span><span class="p">,</span> <span class="s">&#39;perldoc&#39;</span><span class="p">,</span> <span class="s">&#39;borland&#39;</span><span class="p">,</span> <span class="s">&#39;colorful&#39;</span><span class="p">,</span> <span class="s">&#39;default&#39;</span><span class="p">,</span> <span class="s">&#39;murphy&#39;</span><span class="p">,</span> <span class="s">&#39;vs&#39;</span><span class="p">,</span> <span class="s">&#39;trac&#39;</span><span class="p">,</span> <span class="s">&#39;tango&#39;</span><span class="p">,</span> <span class="s">&#39;fruity&#39;</span><span class="p">,</span> <span class="s">&#39;autumn&#39;</span><span class="p">,</span> <span class="s">&#39;bw&#39;</span><span class="p">,</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="s">&#39;vim&#39;</span><span class="p">,</span> <span class="s">&#39;pastie&#39;</span><span class="p">,</span> <span class="s">&#39;friendly&#39;</span><span class="p">,</span> <span class="s">&#39;native&#39;</span><span class="p">]</span></code></pre></div>
+
+<h3 id="jekyll">选择一种样式，应用在Jekyll中</h3>
 
 <ul>
-<li><code>cd /dev/projects/zyzhang.github.com/assets/themes/abel/css</code></li>
-
-<li><code>pygmentize -S native -f html &gt; pygments.css</code>, “native”是样式名，“html”是formatter</li>
-
-<li>在layout中引用刚刚加的pygments.css</li>
+  <li><code>cd /dev/projects/zyzhang.github.com/assets/themes/abel/css</code></li>
+  <li><code>pygmentize -S native -f html &gt; pygments.css</code>, “native”是样式名，“html”是formatter</li>
+  <li>在layout中引用刚刚加的pygments.css</li>
 </ul>
 
-<h3 id='id15'>在文章中高亮代码</h3>
+<h3 id="section-1">在文章中高亮代码</h3>
 
 <p>现在，可以在博客中高亮代码了：</p>
-<div class='highlight'><pre><code class='html'>{% highlight java %}
+
+<div class="highlight"><pre><code class="html">{% highlight java %}
 public class HelloWorld {
     public static void main(String args[]) {
       System.out.println(&quot;Hello World!&quot;);
     }
 }
-{% endhighlight %}
-</code></pre></div>
+{% endhighlight %}</code></pre></div>
+
 <p>效果如下：</p>
-<div class='highlight'><pre><code class='java'><span class='kd'>public</span> <span class='kd'>class</span> <span class='nc'>HelloWorld</span> <span class='o'>{</span>
-    <span class='kd'>public</span> <span class='kd'>static</span> <span class='kt'>void</span> <span class='nf'>main</span><span class='o'>(</span><span class='n'>String</span> <span class='n'>args</span><span class='o'>[])</span> <span class='o'>{</span>
-      <span class='n'>System</span><span class='o'>.</span><span class='na'>out</span><span class='o'>.</span><span class='na'>println</span><span class='o'>(</span><span class='s'>&quot;Hello World!&quot;</span><span class='o'>);</span>
-    <span class='o'>}</span>
-<span class='o'>}</span>
-</code></pre></div>
-<h3 id='id16'>参考文章</h3>
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello World!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h3 id="section-2">参考文章</h3>
 
 <ul>
-<li><a href='http://pygments.org/docs/styles/'>Pygments Styles</a></li>
-
-<li><a href='https://github.com/mojombo/jekyll/wiki/Liquid-Extensions/'>Liquid Extensions</a></li>
+  <li><a href="http://pygments.org/docs/styles/">Pygments Styles</a></li>
+  <li><a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions/">Liquid Extensions</a></li>
 </ul>
+
     <hr>
     <div class="pagination">
       <ul>
@@ -244,9 +245,9 @@ public class HelloWorld {
     
     	<li><a href="/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
+    	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
+    	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
     
     </ul>
     <hr>

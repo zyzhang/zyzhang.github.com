@@ -115,67 +115,69 @@
 
 <div class="row">
   <div class="span8">
-    <p>nHibernate 3.2新增了一种mapping by code的映射策略，很有意思。你可以自定义约定，并且按照约定定制自动映射策略， 面对遗留数据库时这个功能往往很有用，另外，由于mapping by code是基于代码的（而不是xml文件）， 对domain object进行重命名的重构操作会非常方便，不用跑到xml映射文件查找字符串了。</p>
+    
+<p>nHibernate 3.2新增了一种mapping by code的映射策略，很有意思。你可以自定义约定，并且按照约定定制自动映射策略，
+面对遗留数据库时这个功能往往很有用，另外，由于mapping by code是基于代码的（而不是xml文件），
+对domain object进行重命名的重构操作会非常方便，不用跑到xml映射文件查找字符串了。</p>
 
 <p>要使用Mapping by Code很简单，</p>
 
-<h3 id='sessionfactorynhibernateclassmapping'>第一步，配置SessionFactory，使nhibernate自动扫描项目中所有继承ClassMapping的类，并将其解释为映射</h3>
-<div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>NHibernateHelper</span>
-<span class='p'>{</span>
-    <span class='k'>private</span> <span class='k'>static</span> <span class='n'>ISessionFactory</span> <span class='n'>_sessionFactory</span><span class='p'>;</span>
+<h3 id="sessionfactorynhibernateclassmapping">第一步，配置SessionFactory，使nhibernate自动扫描项目中所有继承ClassMapping的类，并将其解释为映射</h3>
 
-    <span class='k'>public</span> <span class='k'>static</span> <span class='n'>ISessionFactory</span> <span class='n'>SessionFactory</span>
-    <span class='p'>{</span>
-        <span class='k'>get</span>
-        <span class='p'>{</span>
-            <span class='k'>if</span> <span class='p'>(</span><span class='n'>_sessionFactory</span> <span class='p'>==</span> <span class='k'>null</span><span class='p'>)</span>
-            <span class='p'>{</span>
-                <span class='kt'>var</span> <span class='n'>configuration</span> <span class='p'>=</span> <span class='k'>new</span> <span class='n'>Configuration</span><span class='p'>();</span>
-                <span class='n'>configuration</span><span class='p'>.</span><span class='n'>Configure</span><span class='p'>();</span>
+<div class="highlight"><pre><code class="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">NHibernateHelper</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="n">ISessionFactory</span> <span class="n">_sessionFactory</span><span class="p">;</span>
 
-                <span class='kt'>var</span> <span class='n'>mappers</span> <span class='p'>=</span> <span class='k'>new</span> <span class='n'>ModelMapper</span><span class='p'>();</span>
-                <span class='n'>mappers</span><span class='p'>.</span><span class='n'>AddMappings</span><span class='p'>(</span><span class='n'>Assembly</span><span class='p'>.</span><span class='n'>GetExecutingAssembly</span><span class='p'>().</span><span class='n'>GetExportedTypes</span><span class='p'>());</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="n">ISessionFactory</span> <span class="n">SessionFactory</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">_sessionFactory</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">configuration</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Configuration</span><span class="p">();</span>
+                <span class="n">configuration</span><span class="p">.</span><span class="n">Configure</span><span class="p">();</span>
 
-                <span class='kt'>var</span> <span class='n'>hbmMapping</span> <span class='p'>=</span> <span class='n'>mappers</span><span class='p'>.</span><span class='n'>CompileMappingForAllExplicitlyAddedEntities</span><span class='p'>();</span>
-                <span class='n'>Console</span><span class='p'>.</span><span class='n'>WriteLine</span><span class='p'>(</span><span class='n'>hbmMapping</span><span class='p'>.</span><span class='n'>AsString</span><span class='p'>());</span>
+                <span class="kt">var</span> <span class="n">mappers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+                <span class="n">mappers</span><span class="p">.</span><span class="n">AddMappings</span><span class="p">(</span><span class="n">Assembly</span><span class="p">.</span><span class="n">GetExecutingAssembly</span><span class="p">().</span><span class="n">GetExportedTypes</span><span class="p">());</span>
 
-                <span class='n'>configuration</span><span class='p'>.</span><span class='n'>AddDeserializedMapping</span><span class='p'>(</span><span class='n'>hbmMapping</span><span class='p'>,</span> <span class='s'>&quot;&quot;</span><span class='p'>);</span>
+                <span class="kt">var</span> <span class="n">hbmMapping</span> <span class="p">=</span> <span class="n">mappers</span><span class="p">.</span><span class="n">CompileMappingForAllExplicitlyAddedEntities</span><span class="p">();</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">.</span><span class="n">AsString</span><span class="p">());</span>
 
-                <span class='n'>_sessionFactory</span> <span class='p'>=</span> <span class='n'>configuration</span><span class='p'>.</span><span class='n'>BuildSessionFactory</span><span class='p'>();</span>
-            <span class='p'>}</span>
-            <span class='k'>return</span> <span class='n'>_sessionFactory</span><span class='p'>;</span>
-        <span class='p'>}</span>
-    <span class='p'>}</span>
+                <span class="n">configuration</span><span class="p">.</span><span class="n">AddDeserializedMapping</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
-    <span class='k'>public</span> <span class='k'>static</span> <span class='n'>ISession</span> <span class='nf'>OpenSession</span><span class='p'>()</span>
-    <span class='p'>{</span>
-        <span class='k'>return</span> <span class='n'>SessionFactory</span><span class='p'>.</span><span class='n'>OpenSession</span><span class='p'>();</span>
-    <span class='p'>}</span>
-<span class='p'>}</span>
-</code></pre></div>
+                <span class="n">_sessionFactory</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">.</span><span class="n">BuildSessionFactory</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">_sessionFactory</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">ISession</span> <span class="nf">OpenSession</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">SessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
 <p> </p>
 
-<h3 id='classmappingnhibernate'>第二步，为每个实体类编写映射类，映射类只需继承ClassMapping就可以被nhibernate识别。</h3>
+<h3 id="classmappingnhibernate">第二步，为每个实体类编写映射类，映射类只需继承ClassMapping就可以被nhibernate识别。</h3>
 
 <p>关于如何编写映射类，参考以下文章：</p>
 
 <ul>
-<li><a href='/blog/2012/07/01/nHibernateMappingByCode-OneToOne'>nHibernate Mapping By Code - One to One</a></li>
-
-<li><a href='/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne'>nHibernate Mapping By Code - One to Many and Many to One</a></li>
-
-<li><a href='/blog/2012/07/01/nHibernateMappingByCode-ManyToMany'>nHibernate Mapping By Code - Many to Many</a></li>
+  <li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
+  <li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many and Many to One</a></li>
+  <li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
 </ul>
 
-<h3 id='id1'>参考文章：</h3>
+<h3 id="section">参考文章：</h3>
 
 <ul>
-<li><a href='http://nhforge.org/blogs/nhibernate/archive/2011/09/12/nh-mapping-by-code-vs-the-untouchable-db.aspx'>NH Mapping by code VS the Untouchable DB</a></li>
-
-<li><a href='http://nhforge.org/blogs/nhibernate/archive/2011/09/05/using-nh3-2-mapping-by-code-for-automatic-mapping.aspx'>Using NH3.2 mapping by code for Automatic Mapping</a></li>
-
-<li><a href='http://www.cnblogs.com/lyj/archive/2011/04/10/inside-nh-mapping-by-code-apply.html'>NHibernate剖析：Mapping篇之Mapping-By-Code(2):运用ModelMapper</a></li>
+  <li><a href="http://nhforge.org/blogs/nhibernate/archive/2011/09/12/nh-mapping-by-code-vs-the-untouchable-db.aspx">NH Mapping by code VS the Untouchable DB</a></li>
+  <li><a href="http://nhforge.org/blogs/nhibernate/archive/2011/09/05/using-nh3-2-mapping-by-code-for-automatic-mapping.aspx">Using NH3.2 mapping by code for Automatic Mapping</a></li>
+  <li><a href="http://www.cnblogs.com/lyj/archive/2011/04/10/inside-nh-mapping-by-code-apply.html">NHibernate剖析：Mapping篇之Mapping-By-Code(2):运用ModelMapper</a></li>
 </ul>
+
+
     <hr>
     <div class="pagination">
       <ul>
@@ -239,15 +241,15 @@
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
-    
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many & Many to One</a></li>
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
     
+    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
+    
     	<li><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem">Hibernate N+1 问题</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
+    	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
     
     </ul>
     <hr>

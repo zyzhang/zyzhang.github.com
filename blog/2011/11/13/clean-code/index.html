@@ -3,8 +3,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>避免依赖Github Pages和Jekyll生成静态文件</title>
-    <meta name="description" content="之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了， 即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决... 最后，我只好采取了终极解决方案了。">
+    <title>莫让代码腐化：让营地比你来时更干净</title>
+    <meta name="description" content="你是否遇到过这样的场景呢？Code Review时：
+A：我在XXX类加了一个新方法来实现.....
+B：等等，我觉得这个地方应该改一改，blablabla....
+A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法....">
     <meta name="author" content="张振宇">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -108,46 +111,43 @@
         
 <div class="page-header">
   	<h1>
-  		【<a href="/categories.html#搭建博客-ref">搭建博客</a>】 避免依赖Github Pages和Jekyll生成静态文件 
-  		<small>-- 10 September 2012 </small>
+  		【<a href="/categories.html#Tech-ref">Tech</a>】 莫让代码腐化：让营地比你来时更干净 
+  		<small>-- 13 November 2011 </small>
 	</h1>
 </div>
 
 <div class="row">
   <div class="span8">
     
-<p>之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了，
-即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决… 最后，我只好采取了终极解决方案了。</p>
+<p>你是否遇到过这样的场景呢？Code Review时：</p>
 
-<p><a href="https://help.github.com/articles/using-jekyll-with-pages">Github Pages的文档</a>上说，当前（2012年9月）使用的是
-Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
+<p>A：我在XXX类加了一个新方法来实现…..</p>
 
-<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>jekyll --pygments --no-lsi --safe</code></pre></div>
+<p>B：等等，我觉得这个地方应该改一改，blablabla….</p>
 
-<p>很可能是版本问题造成本地行为和Github Server行为不一致，但我已经不想深究真正的原因了，因为Github Pages如何运作，出了什么问题，
-对我完全不可见。</p>
+<p>A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法….</p>
 
-<p>最后，我采取了下面的方案
-* 在repository根目录（<code>zyzhang.github.com</code>）下创建stage文件夹，所有jekyll相关的文件都在这个文件夹下
-* 在根目录下添加<code>.nojekyll</code>文件，github pages会禁用Jekyll
-* 每次都在stage中启动jekyll预览博客
-* 发布时，将<code>stage/_site</code>中的所有文件copy到根目录下 （命令行中运行stage/publish）
-* git push</p>
+<p>重读Clean Code，忽然对Bob大叔提到的童子军军规深有感触：“让营地比你来时更干净”。</p>
 
-<p>这样，就完全解耦了对Github Pages运行环境的依赖，只要本地是work的，server上就一定是work的，另外，可以在本地随意的
-使用和编写jekyll插件(Github Pages出于安全原因不会运行用户自定义的plugin)</p>
+<p>代码总是随着时间的流逝，需求的增加而逐渐腐化（还有架构）！我们不希望我们的代码最终成为别人眼中的Legacy Code，正如我们自己接手如同烂泥一样的code base时心头暗骂一样。</p>
 
-<p>具体文件结构参见<a href="https://github.com/zyzhang/zyzhang.github.com">源代码</a>。</p>
+<p>一直保持整洁的代码，我们真的做不到么？进度压力，需求膨胀，经验少的队友，这些真的是原因么？</p>
+
+<p>其实，我们只需做很简单的一件事：让营地比你来时更干净！代码每次check in时都比check out时更干净，每个类甚至每个方法都比你留下痕迹之前更干净，哪怕只是重命名一个变量，
+消除了一点点重复代码，拆分了一个有点长的函数….</p>
+
+<p>让营地比你来时更干净，营地会越来越干净！</p>
+
 
     <hr>
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo" title="Github Pages + Jekyll搭建博客之SEO">&larr; Previous</a></li>
+        <li class="prev disabled"><a>&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/blog/2013/01/28/z-team-memorise" title="缅怀Z Team">Next &rarr;</a></li>
+        <li class="next"><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem" title="Hibernate N+1 问题">Next &rarr;</a></li>
       
       </ul>
     </div>
@@ -186,11 +186,9 @@ Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
 
   
      
-    	<li><a href="/tags.html#Github Pages-ref">Github Pages <span>3</span></a></li>
+    	<li><a href="/tags.html#Clean Code-ref">Clean Code <span>1</span></a></li>
      
-    	<li><a href="/tags.html#Jekyll-ref">Jekyll <span>4</span></a></li>
-     
-    	<li><a href="/tags.html#Jekyll-Bootstrap-ref">Jekyll-Bootstrap <span>2</span></a></li>
+    	<li><a href="/tags.html#Agile-ref">Agile <span>2</span></a></li>
     
   
 
@@ -204,15 +202,15 @@ Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></li>
-    
-    	<li><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo">Github Pages + Jekyll搭建博客之SEO</a></li>
-    
-    	<li><a href="/blog/2012/08/31/highlight-with-Jekyll-and-Pygments">用Jekyll和Pygments配置代码高亮</a></li>
+    	<li><a href="/blog/2013/04/28/test-pyramid">测试金字塔（Test Pyramid）</a></li>
     
     	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
     
     	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
+    
+    	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
+    
+    	<li><a href="/blog/2013/06/13/java8previewdefaultmethod">Java 8 预览之Default Method</a></li>
     
     </ul>
     <hr>

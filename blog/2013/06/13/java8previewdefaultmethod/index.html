@@ -115,53 +115,54 @@
 
 <div class="row">
   <div class="span8">
-    <p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
+    
+<p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
 
-<h3 id='default_method'>何为Default Method</h3>
+<h3 id="default-method">何为Default Method</h3>
 
-<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href='http://www.jcp.org/en/jsr/detail?id=335'>JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：</p>
-<div class='highlight'><pre><code class='java'><span class='kd'>public</span> <span class='kd'>interface</span> <span class='nc'>Iterable</span><span class='o'>&lt;</span><span class='n'>T</span><span class='o'>&gt;</span> <span class='o'>{</span>
-    <span class='n'>Iterator</span><span class='o'>&lt;</span><span class='n'>T</span><span class='o'>&gt;</span> <span class='nf'>iterator</span><span class='o'>();</span>
+<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：</p>
 
-    <span class='k'>default</span> <span class='kt'>void</span> <span class='nf'>forEach</span><span class='o'>(</span><span class='n'>Consumer</span><span class='o'>&lt;?</span> <span class='kd'>super</span> <span class='n'>T</span><span class='o'>&gt;</span> <span class='n'>action</span><span class='o'>)</span> <span class='o'>{</span>
-        <span class='n'>Objects</span><span class='o'>.</span><span class='na'>requireNonNull</span><span class='o'>(</span><span class='n'>action</span><span class='o'>);</span>
-        <span class='k'>for</span> <span class='o'>(</span><span class='n'>T</span> <span class='n'>t</span> <span class='o'>:</span> <span class='k'>this</span><span class='o'>)</span> <span class='o'>{</span>
-            <span class='n'>action</span><span class='o'>.</span><span class='na'>accept</span><span class='o'>(</span><span class='n'>t</span><span class='o'>);</span>
-        <span class='o'>}</span>
-    <span class='o'>}</span>
-<span class='o'>}</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
 <p>default关键字标记的<code>forEach</code>方法即是所谓的Default Method，这里有几个有意思的地方：</p>
 
 <ul>
-<li><code>forEach</code>方法虽然定义在接口中，但是却有方法体和实现代码，这在Java 8 之前是无法通过编译的。</li>
-
-<li>即使<code>Iterable</code>接口定义了新方法<code>forEach</code>，其子接口<code>Collection</code>、以及实现这些接口的类（如ArrayList）却没有Override这个方法且无编译错误</li>
+  <li><code>forEach</code>方法虽然定义在接口中，但是却有方法体和实现代码，这在Java 8 之前是无法通过编译的。</li>
+  <li>即使<code>Iterable</code>接口定义了新方法<code>forEach</code>，其子接口<code>Collection</code>、以及实现这些接口的类（如ArrayList）却没有Override这个方法且无编译错误</li>
 </ul>
 
-<h3 id='default_method'>为什么需要Default Method</h3>
+<h3 id="default-method-1">为什么需要Default Method</h3>
 
 <p>看到了上面关于Default Method的描述，作为API设计者的你可能已经开始欢呼了。即使你的API已经发布出去了，你依然可以为接口添加新方法并且无需考虑向后兼容问题。Java 8引入Default Method也正是基于这个原因 <sup>注1</sup>。</p>
 
-<h3 id='default_method'>Default Method将带给我们什么</h3>
+<h3 id="default-method-2">Default Method将带给我们什么</h3>
 
-<p>Ruby的创造者松本行弘在<a href='http://book.douban.com/subject/6756090/'>《松本行弘的程序世界》</a>中提到 <sup>注2</sup>：</p>
+<p>Ruby的创造者松本行弘在<a href="http://book.douban.com/subject/6756090/">《松本行弘的程序世界》</a>中提到 <sup>注2</sup>：
+&gt; 其实继承包含两种含义。一种是“类都有哪些方法”，也就是说这个类都支持些什么操作，即规格的继承。
+&gt;
+&gt; 另外一种是，“类中都用了什么数据结构和什么算法”，也就是实现的继承。
+&gt;
+&gt; 静态语言中，这两者的区别很重要。Java就对这两者有很明确的区分，实现的继承用extends来继承父类，规格的继承用implements来实现接口。</p>
 
-<blockquote>
-<p>其实继承包含两种含义。一种是“类都有哪些方法”，也就是说这个类都支持些什么操作，即规格的继承。</p>
+<p>引入Default Method后，Java接口就具有了“实现继承”的能力，从而更像是一种<a href="http://en.wikipedia.org/wiki/Mixin">mixin</a>，增加了代码重用的能力，同时也使面向对象设计更加灵活。</p>
 
-<p>另外一种是，“类中都用了什么数据结构和什么算法”，也就是实现的继承。</p>
-
-<p>静态语言中，这两者的区别很重要。Java就对这两者有很明确的区分，实现的继承用extends来继承父类，规格的继承用implements来实现接口。</p>
-</blockquote>
-
-<p>引入Default Method后，Java接口就具有了“实现继承”的能力，从而更像是一种<a href='http://en.wikipedia.org/wiki/Mixin'>mixin</a>，增加了代码重用的能力，同时也使面向对象设计更加灵活。</p>
 <hr />
-<ul>
-<li>注1： 可以想象，Java 8对Lambda的支持必然会影响JDK API中的接口，上面的forEach就是很好的例子，如果直接在接口中添加方法，就会导致所有实现该接口的类或接口无法通过编译，而有了Default Method，一切都变得容易了。</li>
 
-<li>注2： 摘自2.3.9 继承的两种含义</li>
+<ul>
+  <li>注1： 可以想象，Java 8对Lambda的支持必然会影响JDK API中的接口，上面的forEach就是很好的例子，如果直接在接口中添加方法，就会导致所有实现该接口的类或接口无法通过编译，而有了Default Method，一切都变得容易了。</li>
+  <li>注2： 摘自2.3.9 继承的两种含义</li>
 </ul>
+
+
     <hr>
     <div class="pagination">
       <ul>
@@ -209,11 +210,11 @@
 
   
      
-    	<li><a href="/tags.html#Java-ref">Java <span>4</span></a></li>
+    	<li><a href="/tags.html#Java-ref">Java <span>5</span></a></li>
      
-    	<li><a href="/tags.html#Java8-ref">Java8 <span>4</span></a></li>
+    	<li><a href="/tags.html#Java8-ref">Java8 <span>5</span></a></li>
      
-    	<li><a href="/tags.html#Lambda-ref">Lambda <span>3</span></a></li>
+    	<li><a href="/tags.html#Lambda-ref">Lambda <span>4</span></a></li>
     
   
 
@@ -227,6 +228,8 @@
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
+    	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
+    
     	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
     
     	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
@@ -234,8 +237,6 @@
     	<li><a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8">IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’</a></li>
     
     	<li><a href="/blog/2013/04/28/test-pyramid">测试金字塔（Test Pyramid）</a></li>
-    
-    	<li><a href="/blog/2013/02/08/z-team-2012-popular-words">Z Team 2012年度热门词汇</a></li>
     
     </ul>
     <hr>

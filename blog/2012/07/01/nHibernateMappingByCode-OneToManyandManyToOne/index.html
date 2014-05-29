@@ -115,68 +115,72 @@
 
 <div class="row">
   <div class="span8">
-    <p>Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式配置一对多和多对一关联的例子。</p>
+    
+<p>Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式配置一对多和多对一关联的例子。</p>
 
-<p>关于如何配置nhibernate使用mapping by code，参考<a href='/blog/2012/07/01/nHibernateMappingByCode-Introduction'>nHibernate Mapping By Code - Introduction</a></p>
+<p>关于如何配置nhibernate使用mapping by code，参考<a href="/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></p>
 
-<h3 id='id4'>实体类</h3>
-<div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Employee</span>
-<span class='p'>{</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>string</span> <span class='n'>Name</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>string</span> <span class='n'>IdentityNumber</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='n'>Department</span> <span class='n'>Department</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-<span class='p'>}</span>
+<h3 id="section">实体类</h3>
 
-<span class='k'>public</span> <span class='k'>class</span> <span class='nc'>Department</span>
-<span class='p'>{</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>int</span> <span class='n'>Id</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='kt'>string</span> <span class='n'>Name</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-    <span class='k'>public</span> <span class='k'>virtual</span> <span class='n'>IList</span><span class='p'>&amp;</span><span class='n'>lt</span><span class='p'>;</span><span class='n'>Employee</span><span class='p'>&amp;</span><span class='n'>gt</span><span class='p'>;</span> <span class='n'>Employees</span> <span class='p'>{</span> <span class='k'>get</span><span class='p'>;</span> <span class='k'>set</span><span class='p'>;</span> <span class='p'>}</span>
-<span class='p'>}</span>
-</code></pre></div>
-<p> </p>
+<div class="highlight"><pre><code class="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">IdentityNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Department</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
 
-<h3 id='ms_sql_server_2012'>数据库表（基于MS SQL Server 2012）</h3>
-<div class='highlight'><pre><code class='sql'><span class='k'>CREATE</span> <span class='k'>TABLE</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Department</span><span class='p'>](</span>
-    <span class='p'>[</span><span class='n'>Id</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>int</span><span class='p'>]</span> <span class='k'>IDENTITY</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>,</span><span class='mi'>1</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
-    <span class='p'>[</span><span class='n'>Name</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>varchar</span><span class='p'>](</span><span class='mi'>50</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
- <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_Department</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Department</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">Employee</span><span class="p">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
-<span class='k'>CREATE</span> <span class='k'>TABLE</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Employee</span><span class='p'>](</span>
-    <span class='p'>[</span><span class='n'>Id</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>int</span><span class='p'>]</span> <span class='k'>IDENTITY</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>,</span><span class='mi'>1</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
-    <span class='p'>[</span><span class='n'>Name</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>varchar</span><span class='p'>](</span><span class='mi'>50</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
-    <span class='p'>[</span><span class='n'>IdentityNumber</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>varchar</span><span class='p'>](</span><span class='mi'>50</span><span class='p'>)</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
-    <span class='p'>[</span><span class='n'>DepartmentId</span><span class='p'>]</span> <span class='p'>[</span><span class='nb'>int</span><span class='p'>]</span> <span class='k'>NOT</span> <span class='k'>NULL</span><span class='p'>,</span>
- <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>PK_Employee</span><span class='p'>]</span> <span class='k'>PRIMARY</span> <span class='k'>KEY</span> <span class='n'>CLUSTERED</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>]</span> <span class='k'>ASC</span><span class='p'>)</span>
+<p> 
+### 数据库表（基于MS SQL Server 2012）</p>
 
-<span class='k'>ALTER</span> <span class='k'>TABLE</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Employee</span><span class='p'>]</span> <span class='k'>ADD</span> <span class='k'>CONSTRAINT</span> <span class='p'>[</span><span class='n'>FK_Employee_DepartmentId</span><span class='p'>]</span> <span class='k'>FOREIGN</span> <span class='k'>KEY</span><span class='p'>([</span><span class='n'>DepartmentId</span><span class='p'>])</span>
-<span class='k'>REFERENCES</span> <span class='p'>[</span><span class='n'>dbo</span><span class='p'>].[</span><span class='n'>Department</span><span class='p'>]</span> <span class='p'>([</span><span class='n'>Id</span><span class='p'>])</span>
-</code></pre></div>
-<h3 id='id5'>映射类</h3>
-<div class='highlight'><pre><code class='csharp'><span class='k'>public</span> <span class='k'>class</span> <span class='nc'>DepartmentMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Department</span><span class='p'>&gt;</span>
-<span class='p'>{</span>
-    <span class='k'>public</span> <span class='nf'>DepartmentMapping</span><span class='p'>()</span>
-    <span class='p'>{</span>
-        <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Department&quot;</span><span class='p'>);</span>
-        <span class='n'>Id</span><span class='p'>(</span><span class='n'>department</span> <span class='p'>=&gt;</span> <span class='n'>department</span><span class='p'>.</span><span class='n'>Id</span><span class='p'>,</span> <span class='n'>map</span> <span class='p'>=&gt;</span> <span class='n'>map</span><span class='p'>.</span><span class='n'>Generator</span><span class='p'>(</span><span class='n'>Generators</span><span class='p'>.</span><span class='n'>Identity</span><span class='p'>));</span>
-        <span class='n'>Property</span><span class='p'>(</span><span class='n'>department</span> <span class='p'>=&gt;</span> <span class='n'>department</span><span class='p'>.</span><span class='n'>Name</span><span class='p'>);</span>
-        <span class='n'>Bag</span><span class='p'>(</span><span class='n'>department</span> <span class='p'>=&gt;</span> <span class='n'>department</span><span class='p'>.</span><span class='n'>Employees</span><span class='p'>,</span> <span class='n'>map</span> <span class='p'>=&gt;</span> <span class='n'>map</span><span class='p'>.</span><span class='n'>Key</span><span class='p'>(</span><span class='n'>k</span> <span class='p'>=&gt;</span> <span class='n'>k</span><span class='p'>.</span><span class='n'>Column</span><span class='p'>(</span><span class='s'>&quot;DepartmentId&quot;</span><span class='p'>)),</span> <span class='n'>rel</span><span class='p'>=&gt;</span> <span class='n'>rel</span><span class='p'>.</span><span class='n'>OneToMany</span><span class='p'>());</span>
-    <span class='p'>}</span>
-<span class='p'>}</span>
+<div class="highlight"><pre><code class="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Department</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Department</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
 
-<span class='k'>public</span> <span class='k'>class</span> <span class='nc'>EmployeeMapping</span> <span class='p'>:</span> <span class='n'>ClassMapping</span><span class='p'>&lt;</span><span class='n'>Employee</span><span class='p'>&gt;</span>
-<span class='p'>{</span>
-    <span class='k'>public</span> <span class='nf'>EmployeeMapping</span><span class='p'>()</span>
-    <span class='p'>{</span>
-        <span class='n'>Table</span><span class='p'>(</span><span class='s'>&quot;Employee&quot;</span><span class='p'>);</span>
-        <span class='n'>Id</span><span class='p'>(</span><span class='n'>employee</span> <span class='p'>=&gt;</span> <span class='n'>employee</span><span class='p'>.</span><span class='n'>Id</span><span class='p'>,</span> <span class='n'>map</span> <span class='p'>=&gt;</span> <span class='n'>map</span><span class='p'>.</span><span class='n'>Generator</span><span class='p'>(</span><span class='n'>Generators</span><span class='p'>.</span><span class='n'>Identity</span><span class='p'>));</span>
-        <span class='n'>Property</span><span class='p'>(</span><span class='n'>employee</span> <span class='p'>=&gt;</span> <span class='n'>employee</span><span class='p'>.</span><span class='n'>Name</span><span class='p'>);</span>
-        <span class='n'>Property</span><span class='p'>(</span><span class='n'>employee</span> <span class='p'>=&gt;</span> <span class='n'>employee</span><span class='p'>.</span><span class='n'>IdentityNumber</span><span class='p'>);</span>
-        <span class='n'>ManyToOne</span><span class='p'>(</span><span class='n'>employee</span> <span class='p'>=&gt;</span> <span class='n'>employee</span><span class='p'>.</span><span class='n'>Department</span><span class='p'>,</span> <span class='n'>map</span> <span class='p'>=&gt;</span> <span class='n'>map</span><span class='p'>.</span><span class='n'>Column</span><span class='p'>(</span><span class='s'>&quot;DepartmentId&quot;</span><span class='p'>));</span>
-    <span class='p'>}</span>
-<span class='p'>}</span>
-</code></pre></div>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Employee</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">IdentityNumber</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">DepartmentId</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Employee</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Employee</span><span class="p">]</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">FK_Employee_DepartmentId</span><span class="p">]</span> <span class="k">FOREIGN</span> <span class="k">KEY</span><span class="p">([</span><span class="n">DepartmentId</span><span class="p">])</span>
+<span class="k">REFERENCES</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Department</span><span class="p">]</span> <span class="p">([</span><span class="n">Id</span><span class="p">])</span></code></pre></div>
+
+<h3 id="section-1">映射类</h3>
+
+<div class="highlight"><pre><code class="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">DepartmentMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">DepartmentMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Bag</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span><span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">EmployeeMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Employee&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">IdentityNumber</span><span class="p">);</span>
+        <span class="n">ManyToOne</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Department</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
     <hr>
     <div class="pagination">
       <ul>
@@ -240,15 +244,15 @@
   	<div class="sidebar-title">相关文章</div>
     <ul>
     
-    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
-    
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
     
     	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></li>
     
+    	<li><a href="/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
+    
     	<li><a href="/blog/2012/06/24/Hibernate-N-plus-one-problem">Hibernate N+1 问题</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
+    	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
     
     </ul>
     <hr>

@@ -4,7 +4,7 @@ permalink: /blog/:year/:month/:day/:title
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 #auto: true
-pygments: true
+highlighter: pygments
 safe: false
 
 # Themes are encouraged to use these universal variables 

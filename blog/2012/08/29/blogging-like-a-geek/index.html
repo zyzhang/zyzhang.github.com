@@ -115,95 +115,90 @@
 
 <div class="row">
   <div class="span8">
-    <p><img alt='blogging' src='/assets/image/posts/blogging.jpg' /></p>
+    
+<p><img src="/assets/image/posts/blogging.jpg" alt="blogging" /></p>
 
-<p>我以前用过csdn，iteye和cnblog的博客，始终不能令我满意。样式不喜欢，广告太多，富文本编辑器局限，等等等等问题， 所以每次更换博客后最终都是一个结果，太监了（好吧，我承认主要是因为懒惰&#8230;）。</p>
+<p>我以前用过csdn，iteye和cnblog的博客，始终不能令我满意。样式不喜欢，广告太多，富文本编辑器局限，等等等等问题，
+所以每次更换博客后最终都是一个结果，太监了（好吧，我承认主要是因为懒惰…）。</p>
 
-<p>也想过学其他同事那样，买个酷酷的域名，租个空间，再用WordPress搭个自己的博客，不过可惜，这种方式对我还是没啥驱动力&#8230;</p>
+<p>也想过学其他同事那样，买个酷酷的域名，租个空间，再用WordPress搭个自己的博客，不过可惜，这种方式对我还是没啥驱动力… </p>
 
 <p>日复一日，年复一年，直到有一天，GitHub Pages和Jekyll横空出世，瞬间点亮了我辈以极客自诩的屌丝程序员的双眼！</p>
 
 <p>最近一周的业余时间都花在了在GitHub上玩博客，并且乐此不疲，为什么这货如此吸引我呢？</p>
 
 <ul>
-<li><strong>DIY的乐趣</strong>：作为一个会写HTML、Javascript、css的程序员，在自己的地盘不能把页面改成喜欢的样式简直是&#8230;抓心挠肝啊。</li>
-
-<li><strong>安全无广告</strong></li>
-
-<li><strong>GitHub空间无极限</strong>：早些时候，GitHub的Public Repository空间已经Unlimited了，给力！</li>
-
-<li><strong>域名够酷</strong>：你可能觉得<code>zhenyu.im</code>之类的域名酷，可偶是程序员，就喜欢<code>zhenyu.github.com</code> (可惜这个已经被人抢先了，偶只好用<code>zyzhang.github.com</code>了)</li>
-
-<li><strong>像写代码一样写博客</strong>：版本控制的思想早已深深印在程序员的骨子里了，commit啦，push啦，pull啦，diff啦，git有的，你都有！</li>
-
-<li><strong>真正动手实践一些以前不了解的技术</strong>：参考我的另一篇文章<a href='/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo'>Github Pages + Jekyll搭建博客之SEO</a></li>
-
-<li><strong>只有你想不到，没有你做不到</strong>：平时用Markdown写博客，简单又方便，需要特殊效果时，有什么是HTML+Javascript+css做不到的呢？</li>
+  <li><strong>DIY的乐趣</strong>：作为一个会写HTML、Javascript、css的程序员，在自己的地盘不能把页面改成喜欢的样式简直是…抓心挠肝啊。</li>
+  <li><strong>安全无广告</strong></li>
+  <li><strong>GitHub空间无极限</strong>：早些时候，GitHub的Public Repository空间已经Unlimited了，给力！</li>
+  <li><strong>域名够酷</strong>：你可能觉得<code>zhenyu.im</code>之类的域名酷，可偶是程序员，就喜欢<code>zhenyu.github.com</code> (可惜这个已经被人抢先了，偶只好用<code>zyzhang.github.com</code>了)</li>
+  <li><strong>像写代码一样写博客</strong>：版本控制的思想早已深深印在程序员的骨子里了，commit啦，push啦，pull啦，diff啦，git有的，你都有！</li>
+  <li><strong>真正动手实践一些以前不了解的技术</strong>：参考我的另一篇文章<a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo">Github Pages + Jekyll搭建博客之SEO</a></li>
+  <li><strong>只有你想不到，没有你做不到</strong>：平时用Markdown写博客，简单又方便，需要特殊效果时，有什么是HTML+Javascript+css做不到的呢？</li>
 </ul>
 
 <p>回到正题，如果你和我一样喜欢这种崭新的博客方式，完成下面几个任务，然后尽情享受写博客的乐趣吧。</p>
 
-<h3 id='githubrepository'>在Github上创建Repository</h3>
+<h3 id="githubrepository">在Github上创建Repository</h3>
 
 <p>名字必须为${USERNAME}.github.com，${USERNAME}替换为你自己的用户名。</p>
 
 <p>现在，你可以向这个repository提交静态文件（比如index.html）, 稍等一会你就可以在浏览器地址栏输入${USERNAME}.github.com访问你的页面了。</p>
 
-<h3 id='repositoryjekyll'>在刚建好的repository中创建Jekyll格式的文件结构</h3>
+<h3 id="repositoryjekyll">在刚建好的repository中创建Jekyll格式的文件结构</h3>
 
-<p>这里，我们借助<a href='http://jekyllbootstrap.com'>Jekyll-Bootstrap</a>，这是一个基于Jekyll的解析引擎，支持模块化的主题(modular theming)。</p>
-<div class='highlight'><pre><code class='bash'><span class='nv'>$ </span>git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com
-<span class='nv'>$ </span><span class='nb'>cd </span>USERNAME.github.com
-<span class='nv'>$ </span>git remote <span class='nb'>set</span>-url origin git@github.com:USERNAME/USERNAME.github.com.git
-<span class='nv'>$ </span>git push origin master
-</code></pre></div>
-<p><img alt='jekyll-bootstrap-dir-structure' src='/assets/image/posts/jekyll-bootstrap-dir-structure.png' /></p>
+<p>这里，我们借助<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，这是一个基于Jekyll的解析引擎，支持模块化的主题(modular theming)。</p>
 
-<p>上面代码创建了如左图的Jekyll-Bootstrap标准目录结构，各个文件夹的用途在<a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'>Jekyll Introduction</a>中介绍的很清楚了，这里不再多说。</p>
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com
+<span class="nv">$ </span><span class="nb">cd </span>USERNAME.github.com
+<span class="nv">$ </span>git remote <span class="nb">set</span>-url origin git@github.com:USERNAME/USERNAME.github.com.git
+<span class="nv">$ </span>git push origin master</code></pre></div>
+
+<p><img src="/assets/image/posts/jekyll-bootstrap-dir-structure.png" alt="jekyll-bootstrap-dir-structure" /></p>
+
+<p>上面代码创建了如左图的Jekyll-Bootstrap标准目录结构，各个文件夹的用途在<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">Jekyll Introduction</a>中介绍的很清楚了，这里不再多说。</p>
 
 <p><strong>需要注意的是：</strong></p>
 
 <ol>
-<li>_includes下的themes文件夹，这是定义主题的地方。</li>
-
-<li>Jekyll支持<a href='http://en.wikipedia.org/wiki/Markdown'>Markdown</a>等轻量级标记语言，所以有很多文件以.md为后缀名。</li>
-
-<li>文章都放在_posts文件夹下，post的文件名必须遵循<code>YEAR-MONTH-DATE-title.后缀名</code>的格式，例如：2012-08-29-像极客一样写博客.md</li>
+  <li>_includes下的themes文件夹，这是定义主题的地方。</li>
+  <li>Jekyll支持<a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a>等轻量级标记语言，所以有很多文件以.md为后缀名。</li>
+  <li>文章都放在_posts文件夹下，post的文件名必须遵循<code>YEAR-MONTH-DATE-title.后缀名</code>的格式，例如：2012-08-29-像极客一样写博客.md</li>
 </ol>
 
-<p>这时候访问你的博客页面，会看到默认的twitter主题样式，更多主题可以访问 <a href='http://themes.jekyllbootstrap.com'>http://themes.jekyllbootstrap.com</a>。</p>
+<p>这时候访问你的博客页面，会看到默认的twitter主题样式，更多主题可以访问 <a href="http://themes.jekyllbootstrap.com">http://themes.jekyllbootstrap.com</a>。</p>
 
-<h3 id='jekyll'>安装Jekyll</h3>
+<h3 id="jekyll">安装Jekyll</h3>
 
 <p>安装Jekyll后，可以很方便的在发布文章之前进行本地预览。下面是安装步骤：</p>
 
 <ul>
-<li>Jekyll是基于Ruby的，所以，要先<a href='http://www.ruby-lang.org/en/downloads'>安装Ruby</a>。</li>
-
-<li>通过ruby gem安装：<code> gem install jekyll</code></li>
+  <li>Jekyll是基于Ruby的，所以，要先<a href="http://www.ruby-lang.org/en/downloads">安装Ruby</a>。</li>
+  <li>通过ruby gem安装：<code> gem install jekyll</code></li>
 </ul>
 
 <p>安装完毕后，在${USERNAME}.github.com目录下运行<code>jekyll --server</code>启动server，然后就可以在本地访问http://localhost:4000预览博客了。</p>
 
-<h3 id='id10'>自定义主题</h3>
+<h3 id="section">自定义主题</h3>
 
-<p>Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考<a href='http://jekyllbootstrap.com/usage/jekyll-theming.html'>Using Themes</a></p>
+<p>Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考<a href="http://jekyllbootstrap.com/usage/jekyll-theming.html">Using Themes</a></p>
 
-<h3 id='id11'>发布博客</h3>
+<h3 id="section-1">发布博客</h3>
 
 <p>发布博客和管理代码库一样，可以利用到git的强大功能，只要push上去了，本地更改就发布了。</p>
 
-<h3 id='id12'>例子</h3>
+<h3 id="section-2">例子</h3>
 
-<p>本博客就是依照上述步骤搭建起来的，你可以访问完整<a href='https://github.com/zyzhang/zyzhang.github.com'>源代码</a>, 另外，由于Github Pages出于安全原因不支持用户自定义Jekyll插件，并且有时候Pygments代码高亮也有些问题，所以我改变了发布策略，只发布静态文件，详情见 <a href='http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll'>避免依赖Github Pages和Jekyll生成静态文件</a>。 如果你不关心上述问题，仍然可以按照上面的步骤搭建标准的Github博客。</p>
+<p>本博客就是依照上述步骤搭建起来的，你可以访问完整<a href="https://github.com/zyzhang/zyzhang.github.com">源代码</a>, 另外，由于Github Pages出于安全原因不支持用户自定义Jekyll插件，并且有时候Pygments代码高亮也有些问题，所以我改变了发布策略，只发布静态文件，详情见
+<a href="http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll">避免依赖Github Pages和Jekyll生成静态文件</a>。
+如果你不关心上述问题，仍然可以按照上面的步骤搭建标准的Github博客。</p>
 
-<h3 id='id13'>参考文章</h3>
-
+<h3 id="section-3">参考文章</h3>
 <ul>
-<li><a href='http://jekyllbootstrap.com/lessons/jekyll-introduction.html'>Jekyll Introduction</a></li>
-
-<li><a href='http://jekyllbootstrap.com/usage/jekyll-quick-start.html'>Jekyll Quick Start</a></li>
+  <li><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">Jekyll Introduction</a></li>
+  <li><a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">Jekyll Quick Start</a></li>
 </ul>
+
     <hr>
     <div class="pagination">
       <ul>
@@ -275,9 +270,9 @@
     
     	<li><a href="/blog/2012/08/31/highlight-with-Jekyll-and-Pygments">用Jekyll和Pygments配置代码高亮</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
+    	<li><a href="/blog/2013/06/18/java8-preview-lambda-expression">Java 8 预览之Lambda表达式</a></li>
     
-    	<li><a href="/blog/2013/06/15/java8-preview-functional-interface">Java 8 预览之Functional Interface</a></li>
+    	<li><a href="/blog/2013/06/15/java8-preview-method-reference">Java 8 预览之Method Reference</a></li>
     
     </ul>
     <hr>
