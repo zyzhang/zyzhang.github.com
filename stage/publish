@@ -1,2 +1,0 @@
-rm -rf ../blog
-cp -r ./_site/* ..
