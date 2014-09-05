@@ -4,7 +4,7 @@
   <title><![CDATA[Zhenyu's Blog]]></title>
   <link href="http://zyzhang.github.io/atom.xml" rel="self"/>
   <link href="http://zyzhang.github.io/"/>
-  <updated>2014-09-05T12:01:07+08:00</updated>
+  <updated>2014-09-05T12:08:45+08:00</updated>
   <id>http://zyzhang.github.io/</id>
   <author>
     <name><![CDATA[张振宇]]></name>
@@ -701,7 +701,12 @@ public class HelloWorld {
     <link href="http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek/"/>
     <updated>2012-08-29T00:00:00+08:00</updated>
     <id>http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek</id>
-    <content type="html"><![CDATA[<p><img src="http://zyzhang.github.io/assets/image/posts/blogging.jpg" alt="blogging" /></p>
+    <content type="html"><![CDATA[<ul>
+<li>Update: 本博客已使用<a href="http://octopress.org/">octopress</a>取代Jekyll。</li>
+</ul>
+
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/blogging.jpg" alt="blogging" /></p>
 
 <p>我以前用过csdn，iteye和cnblog的博客，始终不能令我满意。样式不喜欢，广告太多，富文本编辑器局限，等等等等问题，
 所以每次更换博客后最终都是一个结果，太监了（好吧，我承认主要是因为懒惰&hellip;）。</p>
