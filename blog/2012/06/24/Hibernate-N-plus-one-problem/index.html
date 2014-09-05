@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hibernate N+1 问题 - Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="什么是Hibernate N+1问题，N+1问题应该如何解决，本文以nHibernate为例说明。">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Hibernate N+1 问题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-24T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>考虑下面的一对多关系：一个Department包含多个Employee：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">IdentityNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Department</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Department</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>     
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>数据库中已有数据如下：</p>
+
+<p><img src="/assets/image/posts/nhibernate_n_1_db_data.jpg" alt="nhibernate_n_1_db_data" /></p>
+
+<p>默认情况下，Department.Employees是Lazy Load的，也就是说，当查询Department时，hibernate并不会将对应的employee也从数据库中加载进来，
+而是在第一次调用Department.Employees时加载。</p>
+
+<h3>N+1问题是如何出现的</h3>
+
+<p>当应用程序需要遍历多个Department及其Employee时，问题就出现了，看测试代码：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">show_n_plus_1_problem</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="n">using</span><span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments, got n departments</span>
+          <span class="c1">// n query to retrieve all employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> 
+为了能在测试中动态改变nhibernate映射，这里使用了nHibernate 3.2新增的map by code特性。</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">void</span> <span class="nf">MapEmployee</span><span class="p">(</span><span class="n">ModelMapper</span> <span class="n">modelMapper</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+         <span class="p">{</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Employee&quot;</span><span class="p">);</span>
+              <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">IdentityNumber</span><span class="p">);</span>
+              <span class="n">cm</span><span class="p">.</span><span class="n">ManyToOne</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Department</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+　　　　　<span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="n">ISessionFactory</span> <span class="nf">BuildSessionFactory</span><span class="p">(</span><span class="n">ModelMapper</span> <span class="n">modelMapper</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">configuration</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Configuration</span><span class="p">();</span>
+     <span class="n">configuration</span><span class="p">.</span><span class="n">Configure</span><span class="p">();</span>
+
+     <span class="n">HbmMapping</span> <span class="n">hbmMapping</span> <span class="p">=</span> <span class="n">modelMapper</span><span class="p">.</span><span class="n">CompileMappingForAllExplicitlyAddedEntities</span><span class="p">();</span>
+     <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">.</span><span class="n">AsString</span><span class="p">());</span>
+
+     <span class="n">configuration</span><span class="p">.</span><span class="n">AddDeserializedMapping</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+     <span class="k">return</span> <span class="n">configuration</span><span class="p">.</span><span class="n">BuildSessionFactory</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>运行测试可以发现，hibernate实际执行了如下sql查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span> <span class="k">FROM</span> <span class="n">Department</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">1</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">2</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">3</span></code></pre></div>
+
+
+<p>当执行<code>session.QueryOver&lt;Department&gt;().List&lt;Department&gt;()</code>时， nhibernate执行了1次查询<code>SELECT Id, Name FROM Department</code>，
+此时<em>department.Employees</em>中并没有加载出对应的 <em>Employee</em>，而每次调用<em>department.Employees</em>时，nhibernate都会从<em>Employee</em>表中加载相应的Employee。</p>
+
+<p>因此，对N个<em>Department</em>，实际会执行<em>N+1</em>次查询。这将对性能造成很大影响。</p>
+
+<h3>如何解决N+1问题</h3>
+
+<h4>（1）采用Batch Load批量加载</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_batch_load</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+          <span class="p">{</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">BatchSize</span><span class="p">(</span><span class="m">2</span><span class="p">);</span> <span class="c1">// add batch size to batch load employees</span>
+          <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments, got n departments</span>
+          <span class="c1">// ceil(n/BatchSize) query to retrieve all employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">this_</span><span class="p">.</span><span class="n">Id</span> <span class="k">as</span> <span class="n">Id0_0_</span><span class="p">,</span> <span class="n">this_</span><span class="p">.</span><span class="n">Name</span> <span class="k">as</span> <span class="n">Name0_0_</span> <span class="k">FROM</span> <span class="n">Department</span> <span class="n">this_</span>
+<span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="n">employees0_</span> <span class="k">WHERE</span> <span class="n">employees0_</span><span class="p">.</span><span class="n">DepartmentId</span> <span class="k">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="n">employees0_</span> <span class="k">WHERE</span> <span class="n">employees0_</span><span class="p">.</span><span class="n">DepartmentId</span> <span class="o">=</span> <span class="mi">3</span></code></pre></div>
+
+
+<p> 
+这种方式并没有完全解决N+1查询问题，但显著减少了查询次数，实际查询为<code>ceil(n/BatchSize) + 1</code>次，BatchSize足够大时，查询次数为2次。</p>
+
+<h4>（2）使用Join Fetch一次性加载所有数据</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_join_fetch</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+          <span class="p">{</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="n">CollectionFetchMode</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span> <span class="c1">// eager load employees</span>
+          <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments and employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;()).</span><span class="n">ToList</span><span class="p">();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> 
+nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Department</span> <span class="n">this_</span> <span class="k">left</span> <span class="k">outer</span> <span class="k">join</span> <span class="n">Employee</span> <span class="n">employees2_</span> <span class="k">on</span> <span class="n">this_</span><span class="p">.</span><span class="n">Id</span><span class="o">=</span><span class="n">employees2_</span><span class="p">.</span><span class="n">DepartmentId</span></code></pre></div>
+
+
+<p> 
+需要注意的是，这种join fetch会导致重复记录，比如本例中，因为Jim和Rechard同属于Finance部门，所以departments实际查询出4条记录，
+还需用Set过一遍以保证departments集合元素的唯一性。</p>
+
+<p>另外，这种在映射中直接配置join fetch的做法也不够灵活，在某些场景中，可能并不关心<em>Department.Employees</em>，join fetch没有必要。</p>
+
+<h4>（3）<em>Department.Employees</em>映射仍然是Lazy的，仅在需要时通过join fetch加载</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_join_fetch_when_necessary</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments and all employees</span>
+          <span class="c1">// Note: the retrieved departments will be duplicated if excluding the &#39;distinct&#39; keyword</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">CreateQuery</span><span class="p">(</span><span class="s">&quot;select distinct d from Department d left join fetch d.Employees&quot;</span><span class="p">).</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">select</span> <span class="k">distinct</span> <span class="n">d</span><span class="p">...</span> <span class="k">from</span> <span class="n">Department</span> <span class="n">department0_</span> <span class="k">left</span> <span class="k">outer</span> <span class="k">join</span> <span class="n">Employee</span> <span class="n">employees1_</span> <span class="k">on</span> <span class="n">department0_</span><span class="p">.</span><span class="n">Id</span><span class="o">=</span><span class="n">employees1_</span><span class="p">.</span><span class="n">DepartmentId</span></code></pre></div>
+
+
+<p> 
+实际应用中，往往有些场景只关心department的数据，而不关心<code>department.Employees</code>; 而有些场景恰恰相反，关心<code>department.Employees</code>。
+上面的例子就很有价值了，默认<code>department.Employees</code>为lazy load，在需要遍历<code>department.Employee</code>的场景使用另外的方法加载department，
+例如：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">DepartmentRepository</span> 
+<span class="p">{</span>
+    <span class="p">....</span>
+    <span class="k">public</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;</span> <span class="n">FindAll</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">session</span><span class="p">.</span><span class="n">CreateQuery</span><span class="p">(</span><span class="s">&quot;select distinct d from Department d left join fetch d.Employees&quot;</span><span class="p">).</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">张振宇</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-06-24T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/11/13/clean-code/" title="Previous Post: 莫让代码腐化：让营地比你来时更干净">&laquo; 莫让代码腐化：让营地比你来时更干净</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/07/01/nHibernateMappingByCode-Introduction/" title="Next Post: nHibernate Mapping By Code - Introduction">nHibernate Mapping By Code - Introduction &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem/';
+        var disqus_url = 'http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

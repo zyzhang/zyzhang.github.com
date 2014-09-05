@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java 8 预览之Default Method - Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="打开JDK 8的源代码，你会发现很多接口中多了一些标记为**default**的方法。在Java的早期版本中，**default**关键字只在swith语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：**Default Method**">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java 8 预览之Default Method</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-13T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
+
+<h3>何为Default Method</h3>
+
+<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>default关键字标记的<code>forEach</code>方法即是所谓的Default Method，这里有几个有意思的地方：</p>
+
+<ul>
+<li><code>forEach</code>方法虽然定义在接口中，但是却有方法体和实现代码，这在Java 8 之前是无法通过编译的。</li>
+<li>即使<code>Iterable</code>接口定义了新方法<code>forEach</code>，其子接口<code>Collection</code>、以及实现这些接口的类（如ArrayList）却没有Override这个方法且无编译错误</li>
+</ul>
+
+
+<h3>为什么需要Default Method</h3>
+
+<p>看到了上面关于Default Method的描述，作为API设计者的你可能已经开始欢呼了。即使你的API已经发布出去了，你依然可以为接口添加新方法并且无需考虑向后兼容问题。Java 8引入Default Method也正是基于这个原因 <sup>注1</sup>。</p>
+
+<h3>Default Method将带给我们什么</h3>
+
+<p>Ruby的创造者松本行弘在<a href="http://book.douban.com/subject/6756090/">《松本行弘的程序世界》</a>中提到 <sup>注2</sup>：</p>
+
+<blockquote><p>其实继承包含两种含义。一种是“类都有哪些方法”，也就是说这个类都支持些什么操作，即规格的继承。</p>
+
+<p>另外一种是，“类中都用了什么数据结构和什么算法”，也就是实现的继承。</p>
+
+<p>静态语言中，这两者的区别很重要。Java就对这两者有很明确的区分，实现的继承用extends来继承父类，规格的继承用implements来实现接口。</p></blockquote>
+
+<p>引入Default Method后，Java接口就具有了“实现继承”的能力，从而更像是一种<a href="http://en.wikipedia.org/wiki/Mixin">mixin</a>，增加了代码重用的能力，同时也使面向对象设计更加灵活。</p>
+
+<hr />
+
+<ul>
+<li>注1： 可以想象，Java 8对Lambda的支持必然会影响JDK API中的接口，上面的forEach就是很好的例子，如果直接在接口中添加方法，就会导致所有实现该接口的类或接口无法通过编译，而有了Default Method，一切都变得容易了。</li>
+<li>注2： 摘自2.3.9 继承的两种含义</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">张振宇</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-06-13T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/" title="Previous Post: IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’">&laquo; IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/06/15/java8-preview-functional-interface/" title="Next Post: Java 8 预览之Functional Interface">Java 8 预览之Functional Interface &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/';
+        var disqus_url = 'http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

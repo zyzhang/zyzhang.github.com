@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>莫让代码腐化：让营地比你来时更干净 - Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="你是否遇到过这样的场景呢？Code Review时：
+A：我在XXX类加了一个新方法来实现.....
+B：等等，我觉得这个地方应该改一改，blablabla....
+A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法....">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io/blog/2011/11/13/clean-code">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">莫让代码腐化：让营地比你来时更干净</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-11-13T00:00:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>你是否遇到过这样的场景呢？Code Review时：</p>
+
+<!-- more -->
+
+
+<p>A：我在XXX类加了一个新方法来实现&hellip;..</p>
+
+<p>B：等等，我觉得这个地方应该改一改，blablabla&hellip;.</p>
+
+<p>A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法&hellip;.</p>
+
+<p>重读Clean Code，忽然对Bob大叔提到的童子军军规深有感触：“让营地比你来时更干净”。</p>
+
+<p>代码总是随着时间的流逝，需求的增加而逐渐腐化（还有架构）！我们不希望我们的代码最终成为别人眼中的Legacy Code，正如我们自己接手如同烂泥一样的code base时心头暗骂一样。</p>
+
+<p>一直保持整洁的代码，我们真的做不到么？进度压力，需求膨胀，经验少的队友，这些真的是原因么？</p>
+
+<p>其实，我们只需做很简单的一件事：让营地比你来时更干净！代码每次check in时都比check out时更干净，每个类甚至每个方法都比你留下痕迹之前更干净，哪怕只是重命名一个变量，
+消除了一点点重复代码，拆分了一个有点长的函数&hellip;.</p>
+
+<p>让营地比你来时更干净，营地会越来越干净！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">张振宇</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2011-11-13T00:00:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/06/24/Hibernate-N-plus-one-problem/" title="Next Post: Hibernate N+1 问题">Hibernate N+1 问题 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zyzhang.github.io/blog/2011/11/13/clean-code/';
+        var disqus_url = 'http://zyzhang.github.io/blog/2011/11/13/clean-code/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

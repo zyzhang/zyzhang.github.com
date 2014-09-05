@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>测试金字塔（Test Pyramid） - Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io/blog/2013/04/28/test-pyramid">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">测试金字塔（Test Pyramid）</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-28T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构。</p>
+
+<ul>
+<li>原文： <a href="http://martinfowler.com/bliki/TestPyramid.html">Test Pyramid</a></li>
+<li>作者： <a href="http://martinfowler.com/">Martin Fowler</a></li>
+</ul>
+
+
+<hr />
+
+<p>测试金字塔概念由<a href="http://www.mountaingoatsoftware.com/">Mike Cohn</a>提出，并在其著作<a href="http://www.amazon.com/gp/product/0321579364?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321579364">《Succeeding with Agile》</a><a href="#MyAnnotation1"><sup>译注1</sup></a>中做了详细论述。其核心观点是底层单元测试应多于依赖GUI的高层端到端测试。</p>
+
+<p><img src="/assets/image/posts/TestPyramid.jpeg" alt="Test Pyramid" /></p>
+
+<p>在我职业生涯的大部分时间中，测试自动化就是使用自动化测试工具在用户界面上操控应用程序。这些工具一般都提供录制和回放的功能，并验证应用程序返回了同样的结果。开始时，这种方式工作得很好。测试也很容易录制，即使没有程序设计经验，也可以轻松完成。</p>
+
+<p>但是，这种方法很快就陷入了困境，演变成所谓的<a href="http://watirmelon.com/2012/01/31/introducing-the-software-testing-ice-cream-cone/">蛋卷冰淇淋</a>。主要问题包括：基于UI的测试运行缓慢，增加了构建时间；测试自动化工具往往还需安装授权许可，这意味着这些软件只能在特定的机器上运行；通常这些测试还很难以“傻瓜”模式运行，即通过脚本执行并置入合适的部署流水线（deployment pipeline）。</p>
+
+<!-- more -->
+
+
+<p>更重要的是，这些测试非常脆弱。对系统功能的增强（enhancement）很容易就会破坏大量的测试，导致我们不得不重新录制。当然，可以摒弃录制-回放工具以减少此类问题的发生，但这样又增加了测试编写的难度<a href="#Annotation1"><sup>注1</sup></a>。即便应用一些优秀实践，端到端测试依然会存在<a href="http://martinfowler.com/articles/nonDeterminism.html">不确定性问题（non-determinism problems）</a>，这会破坏测试的可信性。简言之，基于UI的端到端测试具有这样的缺点：脆弱、编写成本高，而且运行耗时。因此，金字塔理论认为，相对于传统的基于GUI的测试，应采用更多的自动化单元测试。</p>
+
+<p>金字塔理论还认为，应该引入面向应用程序服务层的中间层测试，我把它称为<a href="http://martinfowler.com/bliki/SubcutaneousTest.html">皮下测试（Subcutaneous Tests）</a>。这些测试既保持了端到端测试的诸多优势，又避免了许多与UI框架相关的复杂性。在Web应用程序中，皮下测试相当于API层测试，而位于金字塔顶层的UI测试则相当于<a href="http://seleniumhq.org/">Selenium</a>或者Sahi测试。</p>
+
+<p>测试金字塔引申出敏捷测试生命周期的很多核心概念，它更强调建立一个合理的测试组合。现实中的一个常见的问题是：团队将端到端测试、单元测试和面向客户的测试混为一谈，但它们其实是正交的。例如，对于富javascript用户界面来说，应该通过<a href="http://pivotal.github.com/jasmine/">Jasmine</a>之类的工具对绝大多数UI行为进行单元测试；对于复杂的业务规则集合，则应通过面向客户的表单进行测试，而且应像单元测试一样仅涉及相关模块。</p>
+
+<p>特别地，我始终认为高层测试只是测试防护体系的第二防线。如果一个高层测试失败了，不仅仅表明功能代码中存在bug，还意味着单元测试的欠缺。因此，无论何时修复失败的端到端测试，都应该同时添加相应的单元测试。</p>
+
+<hr />
+
+<ul>
+<li>注1: 对任何类型的自动化来说，录制-回放工具几乎都是个糟糕的主意，因为它们会降低易变性并且阻碍我们进行有用的抽象。它们仅值得作为生成脚本片段的工具，以便我们随后使用合适的编程语言进行改写，就像<a href="http://www.thoughtworks-studios.com/twist-agile-testing">Twist</a>和<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Save-Keyboard-Macro.html">Emacs</a>那样 <a href="#MyAnnotation2"><sup>译注2</sup></a> 。 <a id="Annotation1"> </a></li>
+<li>译注1： 全名《Succeeding with Agile: Software Development Using Scrum》，中文版《Scrum敏捷软件开发》<a id="MyAnnotation1"> </a></li>
+<li>译注2：Twist是ThoughtWorks出品的敏捷测试工具，提供录制功能；Emacs是极富盛名的文本编辑器，可以录制宏。<a id="MyAnnotation2"> </a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">张振宇</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-04-28T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/fan-yi/'>翻译</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/08/z-team-2012-popular-words/" title="Previous Post: Z Team 2012年度热门词汇">&laquo; Z Team 2012年度热门词汇</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/" title="Next Post: IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’">IntelliJ中Java8编译错误-‘source release 8 requires target release 1.8’ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zyzhang.github.io/blog/2013/04/28/test-pyramid/';
+        var disqus_url = 'http://zyzhang.github.io/blog/2013/04/28/test-pyramid/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

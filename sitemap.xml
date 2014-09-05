@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression/</loc>
+    <lastmod>2013-06-18T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference/</loc>
+    <lastmod>2013-06-15T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface/</loc>
+    <lastmod>2013-06-15T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/</loc>
+    <lastmod>2013-06-13T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8/</loc>
+    <lastmod>2013-06-13T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/04/28/test-pyramid/</loc>
+    <lastmod>2013-04-28T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/02/08/z-team-2012-popular-words/</loc>
+    <lastmod>2013-02-08T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2013/01/28/z-team-memorise/</loc>
+    <lastmod>2013-01-28T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/</loc>
+    <lastmod>2012-09-10T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/</loc>
+    <lastmod>2012-09-03T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/08/31/highlight-with-Jekyll-and-Pygments/</loc>
+    <lastmod>2012-08-31T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek/</loc>
+    <lastmod>2012-08-29T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToOne/</loc>
+    <lastmod>2012-07-01T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne/</loc>
+    <lastmod>2012-07-01T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-ManyToMany/</loc>
+    <lastmod>2012-07-01T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction/</loc>
+    <lastmod>2012-07-01T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem/</loc>
+    <lastmod>2012-06-24T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/2011/11/13/clean-code/</loc>
+    <lastmod>2011-11-13T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  
+  <url>
+    <loc>http://zyzhang.github.io/blog/archives/</loc>
+    <lastmod>2014-09-05T12:01:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://zyzhang.github.io/</loc>
+    <lastmod>2014-09-05T12:01:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  
+</urlset>

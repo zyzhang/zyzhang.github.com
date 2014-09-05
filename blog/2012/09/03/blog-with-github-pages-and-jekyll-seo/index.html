@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Github Pages + Jekyll搭建博客之SEO - Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Github Pages + Jekyll搭建博客之SEO</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-09-03T00:00:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>对我自己的博客而言，有些内容仅仅是自娱自乐，有没有人看不重要；而有的内容我希望能分享出去被更多的人看到，比如nHibernate Mapping By Code的一系列文章，
+都是项目中实际总结出来的，那时候nHibernate刚刚增加Mapping By Code的方式，官方文档内容几乎没有，google搜索很少能找到精确的结果。所以，如果这些文章能
+被更广泛的传播会帮助更多的人。</p>
+
+<p>在用<a href="http://pages.github.com">Github Pages</a> + <a href="http://jekyllrb.com">Jekyll</a>搭建博客的过程中，
+学到了不少<a href="http://en.wikipedia.org/wiki/Search_engine_optimization">SEO（Search Engine Optimization）</a>
+的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。</p>
+
+<!-- more -->
+
+
+<h3>让搜索引擎收录</h3>
+
+<ul>
+<li><p>如果没有任何超链接指向你的站点，在internet这个浩大的有向图中，站点就成了孤岛，不可能被搜索引擎收录。所以尽一切可能在其他网站上引用你的站点，比如友情链接，
+或者在原博客上添加新博客的超链接。</p></li>
+<li><p><a href="http://www.google.com/webmasters/">Google Webmasters - Google站长工具</a>和<a href="http://zhanzhang.baidu.com/welcome">百度站长工具</a>都提供了提交sitemap，
+提交网站URL要求搜索引擎收录，索引状态查询等功能</p></li>
+</ul>
+
+
+<h3>为每个页面添加描述性的信息</h3>
+
+<ul>
+<li>在<code>&lt;head&gt;</code>标签中包含描述性强的title</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;title&gt;</span>Github Pages + Jekyll搭建博客之SEO<span class="nt">&lt;/title&gt;</span></code></pre></div>
+
+
+<ul>
+<li>在<code>&lt;meta&gt;</code>标签中指定准确并且可读性强的描述(description)，它会在搜索结果中显示。</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">&quot;在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，如何提高排名等等。 于是，便有了下面几条简单的总结。&quot;</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+
+<ul>
+<li><a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>已经帮你做好这个了，只需在每个page和post的开头指定title和description就可以了:</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: post
+title: &quot;Github Pages + Jekyll搭建博客之SEO&quot;
+description: &quot;在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。&quot;
+category: Tech
+tags: [Github Pages, Jekyll, SEO]
+---</code></pre></div>
+
+
+<p>关于<a href="http://pages.github.com">Github Pages</a>，<a href="http://jekyllrb.com">Jekyll</a>和<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，
+请参考我的另一篇文章<a href="/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></p>
+
+<h3>多用内部链接</h3>
+
+<p>内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“<a href="/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a>”。</p>
+
+<blockquote><p>关于<a href="http://pages.github.com">Github Pages</a>，<a href="http://jekyllrb.com">Jekyll</a>和<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，
+请参考我的另一篇文章<a href="/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></p></blockquote>
+
+<p>相关性高的内部链接除了有助于提高用户体验外，还有助于提高搜索引擎的索引效率，控制站内权重分布，并提升网站的收录率。
+<a href="http://bbs.chinaz.com/Shuiba/thread-1683921-1-1.html">这个文章</a>对内部链接总结的挺好。</p>
+
+<h3>避免死链接</h3>
+
+<p><a href="http://baike.baidu.com/view/1880779.htm">死链接</a>即无效链接，不仅用户体验不好，还会降低网站在搜索引擎中的权重。</p>
+
+<p><a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>默认的permalink就是一个造成死链接的隐患：</p>
+
+<p><code>permalink: /:categories/:year/:month/:day/:title</code></p>
+
+<p>Jekyll会按照这个格式为每篇文章生成URL，例如：</p>
+
+<p><code>zyzhang.github.com/tech/2012/01/01/helloworld</code></p>
+
+<p>一旦你重新组织或修改了category，所有的内部链接都要修改，否则就成了死链接，另外，之前被搜索引擎收录的页面也全部失效了。</p>
+
+<p>所以，我把permalink修改成了：</p>
+
+<p><code>permalink: /blog/:year/:month/:day/:title</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">张振宇</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-09-03T00:00:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/da-jian-bo-ke/'>搭建博客</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/31/highlight-with-Jekyll-and-Pygments/" title="Previous Post: 用Jekyll和Pygments配置代码高亮">&laquo; 用Jekyll和Pygments配置代码高亮</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/" title="Next Post: 避免依赖Github Pages和Jekyll生成静态文件">避免依赖Github Pages和Jekyll生成静态文件 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/';
+        var disqus_url = 'http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

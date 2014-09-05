@@ -1,0 +1,1465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Zhenyu's Blog]]></title>
+  <link href="http://zyzhang.github.io/atom.xml" rel="self"/>
+  <link href="http://zyzhang.github.io/"/>
+  <updated>2014-09-05T12:01:07+08:00</updated>
+  <id>http://zyzhang.github.io/</id>
+  <author>
+    <name><![CDATA[张振宇]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Lambda表达式]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression/"/>
+    <updated>2013-06-18T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression</id>
+    <content type="html"><![CDATA[<p>我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是，经历了Java 7的跳票之后，Java 8终于很有诚意的包含Lambda了。</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Lambda_expression">Lambda表达式</a>其实就是匿名函数，它可以作为参数传递给<a href="http://en.wikipedia.org/wiki/Higher-order_function">高阶函数</a>供其调用。</p>
+
+<!-- more -->
+
+
+<p>Lambda表达式由三部分组成:</p>
+
+<ul>
+<li>参数列表</li>
+<li>Lambda操作符</li>
+<li>表达式或语句块</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Method Reference]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference/"/>
+    <updated>2013-06-15T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference</id>
+    <content type="html"><![CDATA[<p>先看一个Lambda表达式的例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">,</span> <span class="s">&quot;Mac OSX&quot;</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">x</span><span class="o">));</span></code></pre></div>
+
+
+<p>既然Lambda表达式<code>x-&gt;System.out.println(x)</code>相当于匿名函数（接受一个String类型的参数，无返回值），那么对于其使用者<code>forEach</code>而言，传给它一个匿名函数还是有名字的函数其实没有区别，只要这个函数满足<code>forEach</code>的参数规约即可。而且很多时候有名字的函数反而可读性更好并且更利于代码重用。如此说来，Java 8 引入方法引用（Method Reference）也就顺理成章了。上面的代码用方法引用可以写成：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">,</span> <span class="s">&quot;Mac OSX&quot;</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span></code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>下面列举了方法引用的几种使用方式，以书店（BookStore）作为示例：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Double</span> <span class="n">price</span><span class="o">;</span>
+    <span class="c1">// 省略部分代码</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">list</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span> <span class="o">});</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// 省略部分代码</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h3>静态方法引用</h3>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">booksOfMartinFowler</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Martin Fowler&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="nl">BookFilter:</span><span class="o">:</span><span class="n">booksOfMartinFowler</span><span class="o">);</span></code></pre></div>
+
+
+<h3>实例方法引用（instance method reference）</h3>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">freeBooks</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">book</span><span class="o">.</span><span class="na">price</span> <span class="o">==</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">BookFilter</span> <span class="n">bookFilter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BookFilter</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="nl">bookFilter:</span><span class="o">:</span><span class="n">freeBooks</span><span class="o">);</span></code></pre></div>
+
+
+<h3>一个有趣的例子</h3>
+
+<p>Java的<a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Tutorial</a>还提供了一个很有意思的例子，很是让我费解了半天。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span><span class="o">[]</span> <span class="n">stringArray</span> <span class="o">=</span> <span class="o">{</span> <span class="s">&quot;Barbara&quot;</span><span class="o">,</span> <span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Mary&quot;</span><span class="o">,</span> <span class="s">&quot;John&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Patricia&quot;</span><span class="o">,</span> <span class="s">&quot;Robert&quot;</span><span class="o">,</span> <span class="s">&quot;Michael&quot;</span><span class="o">,</span> <span class="s">&quot;Linda&quot;</span> <span class="o">};</span>
+<span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">compareToIgnoreCase</span><span class="o">);</span></code></pre></div>
+
+
+<p>问题来了，<code>compareToIgnoreCase</code>方法和<code>compare</code>方法从签名上看完全不匹配啊，编译器在解析方法引用的时候，是怎么判断二者匹配的呢？</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Arrays.sort</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="n">Comparator</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">c</span><span class="o">)</span> 
+<span class="c1">// Comparator</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">T</span> <span class="n">o1</span><span class="o">,</span> <span class="n">T</span> <span class="n">o2</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// String::compareToIgnoreCase</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareToIgnoreCase</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">)</span></code></pre></div>
+
+
+<p>于是我展开了无耻的联想：）既然同样的方式可以用Lambda写也可以用方法引用写，那么编译器很可能将两种方式最终都转化成匿名函数，这样更简单。先把同样的功能用Lambda写一遍：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="o">(</span><span class="n">name1</span><span class="o">,</span> <span class="n">name2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">name1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">name2</span><span class="o">));</span>
+
+<span class="c1">// 更进一步</span>
+<span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="o">(</span><span class="n">name1</span><span class="o">,</span> <span class="n">name2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">name1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">name2</span><span class="o">);</span>
+<span class="o">};</span>
+<span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="n">comparator</span><span class="o">);</span></code></pre></div>
+
+
+<p>编译器最终交给<code>Arrays.sort</code>的很可能就是这样一个东西：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;{</span>
+    <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">String</span> <span class="n">s1</span><span class="o">,</span> <span class="n">String</span> <span class="n">s2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">s1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>编译器在解析<code>String::compareToIgnoreCase</code>时，会试图将<code>compareToIgnoreCase</code>作为<code>Foo.compare</code>的实现体。参数类型和方法引用中指定的类型都是String，返回值都要求是int，恰好匹配！（以上内容纯属猜测，不过帮助我理解了它的行为）</p>
+
+<p>同样的道理，下面的代码将会通过编译并且可以运行，只是结果不是我们期待的罢了：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">indexOf</span><span class="o">);</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Functional Interface]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface/"/>
+    <updated>2013-06-15T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface</id>
+    <content type="html"><![CDATA[<p>在JDK的类库中，有很多只声明了一个方法的接口，比如<code>java.lang.Iterable&lt;T&gt;</code>和<code>java.lang.Runnable</code>。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。</p>
+
+<p>Java 8为这样的接口引入了一个新概念——函数式接口（<strong>Functional Interface</strong>），同时引入注解<code>@FunctionalInterface</code>以帮助编译器检查函数式接口的合法性。</p>
+
+<!-- more -->
+
+
+<h3>何为函数式接口</h3>
+
+<p><a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>中这样描述函数式接口:</p>
+
+<blockquote><p>A functional interface is an interface that has just one abstract method, and thus represents a single function contract. (In some cases, this &ldquo;single&rdquo; method may take the form of multiple abstract methods with override-equivalent signatures (8.4.2) inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)</p></blockquote>
+
+<p>函数式接口和所谓的Single Abstract Method interfaces一样，就是只包含一个抽象方法的接口，表达的是<strong>逻辑上</strong>的单一功能，例如：</p>
+
+<ul>
+<li><code>java.lang.Runnable</code>就是一个函数式接口, 因为它只有一个抽象方法：</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+
+
+<ul>
+<li><code>java.lang.Iterable&lt;T&gt;</code>虽然有两个方法，但它仍然是函数式接口，因为forEach方法是一个<a href="http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/">Default Method</a>，它有其默认实现，且不强制要求实现该接口的类或继承该接口的子接口重写（Override）该方法，因此，在逻辑上，<code>java.lang.Iterable&lt;T&gt;</code>仍然是只约定一个iterator方法的函数式接口。</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 省略实现代码</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h3>函数式接口与Lambda</h3>
+
+<p>函数式接口的一个非常重要的用途就是对Lambda提供支持，看下面的例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">price</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>现在我希望BookStore能够筛选出BookStore中符合某种条件书籍，筛选条件可能多种多样，比如，所有Martin Fowler的著作，或者价格大于某个金额的所有书籍，于是，我们新增了BookFilter接口，并且为BookStore添加了list方法：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="nf">test</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">list</span><span class="o">(</span><span class="n">BookFilter</span> <span class="n">filter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>现在，我们就可以在调用list方法时使用Lambda表达式了：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 筛选出所有价格大于15.0的书籍</span>
+<span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="n">book</span><span class="o">.</span><span class="na">price</span> <span class="o">&gt;</span> <span class="mf">15.0</span><span class="o">)</span></code></pre></div>
+
+
+<p>因为BookFilter是一个函数式接口，只具有一个抽象方法，所以在编译期可以很容易推断Lambda表达式和BookFilter是否匹配，于是Lambda表达式的实现就简单了。</p>
+
+<h3>JDK提供的通用函数式接口</h3>
+
+<p>上面代码中的BookFilter实际上只是一个断言：如果Book符合某种条件则返回true，否则返回false。我们完全可以将这个概念抽象成<strong>Predicate</strong>供所有人使用，这样项目中就不会充斥过量的仅为Lambda服务的函数式接口了。Java 8的设计者同样考虑到了这个问题，于是新增了<strong>java.util.function</strong>包，提供通用的函数式接口。<code>Predicate&lt;T&gt;</code>就是其中之一。</p>
+
+<p>于是，上面的list方法使用Predicate就足够了，我们可以痛快的把BookFilter扔进回收站了。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">list</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">predicate</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">predicate</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Default Method]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/"/>
+    <updated>2013-06-13T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod</id>
+    <content type="html"><![CDATA[<p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
+
+<h3>何为Default Method</h3>
+
+<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>default关键字标记的<code>forEach</code>方法即是所谓的Default Method，这里有几个有意思的地方：</p>
+
+<ul>
+<li><code>forEach</code>方法虽然定义在接口中，但是却有方法体和实现代码，这在Java 8 之前是无法通过编译的。</li>
+<li>即使<code>Iterable</code>接口定义了新方法<code>forEach</code>，其子接口<code>Collection</code>、以及实现这些接口的类（如ArrayList）却没有Override这个方法且无编译错误</li>
+</ul>
+
+
+<h3>为什么需要Default Method</h3>
+
+<p>看到了上面关于Default Method的描述，作为API设计者的你可能已经开始欢呼了。即使你的API已经发布出去了，你依然可以为接口添加新方法并且无需考虑向后兼容问题。Java 8引入Default Method也正是基于这个原因 <sup>注1</sup>。</p>
+
+<h3>Default Method将带给我们什么</h3>
+
+<p>Ruby的创造者松本行弘在<a href="http://book.douban.com/subject/6756090/">《松本行弘的程序世界》</a>中提到 <sup>注2</sup>：</p>
+
+<blockquote><p>其实继承包含两种含义。一种是“类都有哪些方法”，也就是说这个类都支持些什么操作，即规格的继承。</p>
+
+<p>另外一种是，“类中都用了什么数据结构和什么算法”，也就是实现的继承。</p>
+
+<p>静态语言中，这两者的区别很重要。Java就对这两者有很明确的区分，实现的继承用extends来继承父类，规格的继承用implements来实现接口。</p></blockquote>
+
+<p>引入Default Method后，Java接口就具有了“实现继承”的能力，从而更像是一种<a href="http://en.wikipedia.org/wiki/Mixin">mixin</a>，增加了代码重用的能力，同时也使面向对象设计更加灵活。</p>
+
+<hr />
+
+<ul>
+<li>注1： 可以想象，Java 8对Lambda的支持必然会影响JDK API中的接口，上面的forEach就是很好的例子，如果直接在接口中添加方法，就会导致所有实现该接口的类或接口无法通过编译，而有了Default Method，一切都变得容易了。</li>
+<li>注2： 摘自2.3.9 继承的两种含义</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8/"/>
+    <updated>2013-06-13T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8</id>
+    <content type="html"><![CDATA[<p>在IntelliJ的Java8项目中，尽管已经将Project SDK和Project Launguage Level设置为Java 8，编译测试时仍然会出现编译错误：</p>
+
+<blockquote><p>java: javacTask: source release 8 requires target release 1.8
+这里列出了两种解决方案&hellip;</p></blockquote>
+
+<!-- more -->
+
+
+<h3>环境：</h3>
+
+<ul>
+<li>JDK Version: 1.8.0-ea</li>
+<li>IDE: IntelliJ Idea 12.1.4</li>
+<li>IntelliJ SDK Setting: <img src="http://zyzhang.github.io/assets/image/posts/idea-java8-setting.png" alt="IntelliJJava8Setting" /></li>
+<li>Maven Compiler Setting:</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;source&gt;</span>1.8<span class="nt">&lt;/source&gt;</span>
+        <span class="nt">&lt;target&gt;</span>1.8<span class="nt">&lt;/target&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span></code></pre></div>
+
+
+<h3>问题描述</h3>
+
+<ul>
+<li>IntelliJ中无编译错误，运行测试时报错：<code>java: javacTask: source release 8 requires target release 1.8</code></li>
+<li>命令行运行<code>mvn test</code>无错误</li>
+</ul>
+
+
+<h3>解决方案：将<em>Target Bytecode Version</em>设为1.8。</h3>
+
+<ul>
+<li>方法1：在IntelliJ的【Preferences】->【Compiler】->【Java Compiler】中修改：<img src="http://zyzhang.github.io/assets/image/posts/intellij-java-compiler-1-8.png" alt="IntelliJJavaCompiler8" /></li>
+<li>方法2：修改.idea/compiler.xml</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bytecodeTargetLevel&gt;</span>
+  <span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;Java8Preview&quot;</span> <span class="na">target=</span><span class="s">&quot;1.8&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bytecodeTargetLevel&gt;</span></code></pre></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[测试金字塔（Test Pyramid）]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/04/28/test-pyramid/"/>
+    <updated>2013-04-28T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/04/28/test-pyramid</id>
+    <content type="html"><![CDATA[<p>本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构。</p>
+
+<ul>
+<li>原文： <a href="http://martinfowler.com/bliki/TestPyramid.html">Test Pyramid</a></li>
+<li>作者： <a href="http://martinfowler.com/">Martin Fowler</a></li>
+</ul>
+
+
+<hr />
+
+<p>测试金字塔概念由<a href="http://www.mountaingoatsoftware.com/">Mike Cohn</a>提出，并在其著作<a href="http://www.amazon.com/gp/product/0321579364?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321579364">《Succeeding with Agile》</a><a href="#MyAnnotation1"><sup>译注1</sup></a>中做了详细论述。其核心观点是底层单元测试应多于依赖GUI的高层端到端测试。</p>
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/TestPyramid.jpeg" alt="Test Pyramid" /></p>
+
+<p>在我职业生涯的大部分时间中，测试自动化就是使用自动化测试工具在用户界面上操控应用程序。这些工具一般都提供录制和回放的功能，并验证应用程序返回了同样的结果。开始时，这种方式工作得很好。测试也很容易录制，即使没有程序设计经验，也可以轻松完成。</p>
+
+<p>但是，这种方法很快就陷入了困境，演变成所谓的<a href="http://watirmelon.com/2012/01/31/introducing-the-software-testing-ice-cream-cone/">蛋卷冰淇淋</a>。主要问题包括：基于UI的测试运行缓慢，增加了构建时间；测试自动化工具往往还需安装授权许可，这意味着这些软件只能在特定的机器上运行；通常这些测试还很难以“傻瓜”模式运行，即通过脚本执行并置入合适的部署流水线（deployment pipeline）。</p>
+
+<!-- more -->
+
+
+<p>更重要的是，这些测试非常脆弱。对系统功能的增强（enhancement）很容易就会破坏大量的测试，导致我们不得不重新录制。当然，可以摒弃录制-回放工具以减少此类问题的发生，但这样又增加了测试编写的难度<a href="#Annotation1"><sup>注1</sup></a>。即便应用一些优秀实践，端到端测试依然会存在<a href="http://martinfowler.com/articles/nonDeterminism.html">不确定性问题（non-determinism problems）</a>，这会破坏测试的可信性。简言之，基于UI的端到端测试具有这样的缺点：脆弱、编写成本高，而且运行耗时。因此，金字塔理论认为，相对于传统的基于GUI的测试，应采用更多的自动化单元测试。</p>
+
+<p>金字塔理论还认为，应该引入面向应用程序服务层的中间层测试，我把它称为<a href="http://martinfowler.com/bliki/SubcutaneousTest.html">皮下测试（Subcutaneous Tests）</a>。这些测试既保持了端到端测试的诸多优势，又避免了许多与UI框架相关的复杂性。在Web应用程序中，皮下测试相当于API层测试，而位于金字塔顶层的UI测试则相当于<a href="http://seleniumhq.org/">Selenium</a>或者Sahi测试。</p>
+
+<p>测试金字塔引申出敏捷测试生命周期的很多核心概念，它更强调建立一个合理的测试组合。现实中的一个常见的问题是：团队将端到端测试、单元测试和面向客户的测试混为一谈，但它们其实是正交的。例如，对于富javascript用户界面来说，应该通过<a href="http://pivotal.github.com/jasmine/">Jasmine</a>之类的工具对绝大多数UI行为进行单元测试；对于复杂的业务规则集合，则应通过面向客户的表单进行测试，而且应像单元测试一样仅涉及相关模块。</p>
+
+<p>特别地，我始终认为高层测试只是测试防护体系的第二防线。如果一个高层测试失败了，不仅仅表明功能代码中存在bug，还意味着单元测试的欠缺。因此，无论何时修复失败的端到端测试，都应该同时添加相应的单元测试。</p>
+
+<hr />
+
+<ul>
+<li>注1: 对任何类型的自动化来说，录制-回放工具几乎都是个糟糕的主意，因为它们会降低易变性并且阻碍我们进行有用的抽象。它们仅值得作为生成脚本片段的工具，以便我们随后使用合适的编程语言进行改写，就像<a href="http://www.thoughtworks-studios.com/twist-agile-testing">Twist</a>和<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Save-Keyboard-Macro.html">Emacs</a>那样 <a href="#MyAnnotation2"><sup>译注2</sup></a> 。 <a id="Annotation1"> </a></li>
+<li>译注1： 全名《Succeeding with Agile: Software Development Using Scrum》，中文版《Scrum敏捷软件开发》<a id="MyAnnotation1"> </a></li>
+<li>译注2：Twist是ThoughtWorks出品的敏捷测试工具，提供录制功能；Emacs是极富盛名的文本编辑器，可以录制宏。<a id="MyAnnotation2"> </a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Z Team 2012年度热门词汇]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/02/08/z-team-2012-popular-words/"/>
+    <updated>2013-02-08T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/02/08/z-team-2012-popular-words</id>
+    <content type="html"><![CDATA[<p>2013年2月7日，农历腊月廿七。在这辞旧迎新的美好时刻，Z Team 2012年度总结大会在北京隆重召开。参会的有Z Team的阿宝，晨仔，KK, 少年，xiaoyun； Z Team毕业生代表yuheng，张胖纸，风吹PP凉，以及友邻代表王胖纸。各界人士在热烈友好的气氛中就共同关心的问题深入交换意见，达成广泛共识。最后，与会各方一致评选出2012年度十大热门词汇，排名不分先后（据说只有Z Team的人才能看懂）：</p>
+
+<ul>
+<li><strong>这不重要</strong></li>
+<li><strong>你说什么</strong></li>
+<li><strong>API（A读三声）</strong></li>
+<li><strong>反省</strong></li>
+<li><strong>我错了</strong></li>
+<li><strong>转一个</strong></li>
+<li><strong>成功了</strong></li>
+<li><strong>你是最棒的</strong></li>
+<li><strong>弱爆了</strong></li>
+<li><strong>你是对的</strong></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[缅怀Z Team]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/01/28/z-team-memorise/"/>
+    <updated>2013-01-28T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/01/28/z-team-memorise</id>
+    <content type="html"><![CDATA[<script type="text/javascript" src="../scripts/tagline.js"></script>
+
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/z_team.png" alt="z_team" /></p>
+
+<p>Z Team从前年几个人到LA做Inception，到巅峰时期两个Stream近二十人的团队，再到现在算上在美国的大哥一共六个人。就像人的一生，从出生后蹒跚学步咿呀学语，到少年时充满梦想挥洒青春，最后垂垂老矣闲时缅怀旧日时光。我们都知道，总有一天，Z Team会最终消失，但我相信，那些我们共同度过的时光，会在每个人心里慢慢发酵成美好的回忆。下面的歌词改编自《同桌的你》，缅怀那些我们共同拥有的欢笑和泪水。</p>
+
+<!-- more -->
+
+
+<h3>同桌的你</h3>
+
+<p>明天你是否会想起，曾经弱爆了的你。<br>
+明天你是否还惦记，昨天年轻的自己。</p>
+
+<p>冰玉姐都已想不起，这一张卡的AC。 <br>
+希端想翻一翻日记，才发现啥也没记。</p>
+
+<p>谁给你找的TDD，谁给你装的IE。 <br>
+谁的代码让人心碎，谁把它丢在风里。</p>
+
+<p>老曲你是否会想起，无数绰号的振宇。 <br>
+许伟你是否还惦记，陪你修CI的恩玉。</p>
+
+<p>江荣都早已经离去，只留下孤单的&#8221;kiki&#8221;。 <br>
+大哥你总是很霸气，让我们甘为小弟。</p>
+
+<p>谁记得笑靥如花的你，谁熟悉你的脾气 。 <br>
+谁把你的泪水想起，谁把它轻轻擦去。</p>
+
+<p>那时候天总是很蓝，日子总过得太慢。 <br>
+凯峰说项目遥遥无期，转眼就各奔东西。</p>
+
+<p>晓蕴姐总是很小心，不停地问你问题。 <br>
+徐晨是无意翻相片，介绍你妹给恩玉。</p>
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/2013-newyear-z-team-1.JPG" alt="z_team" />
+<img src="http://zyzhang.github.io/assets/image/posts/2013-newyear-z-team-2.JPG" alt="z_team" />
+<img src="http://zyzhang.github.io/assets/image/posts/2013-newyear-z-team-3.JPG" alt="z_team" />
+<img src="http://zyzhang.github.io/assets/image/posts/2013-newyear-z-team-4.JPG" alt="z_team" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[避免依赖Github Pages和Jekyll生成静态文件]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/"/>
+    <updated>2012-09-10T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll</id>
+    <content type="html"><![CDATA[<p>之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了，
+即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决&hellip; 最后，我只好采取了终极解决方案了。</p>
+
+<p><a href="https://help.github.com/articles/using-jekyll-with-pages">Github Pages的文档</a>上说，当前（2012年9月）使用的是
+Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>jekyll --pygments --no-lsi --safe</code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>很可能是版本问题造成本地行为和Github Server行为不一致，但我已经不想深究真正的原因了，因为Github Pages如何运作，出了什么问题，
+对我完全不可见。</p>
+
+<p>最后，我采取了下面的方案
+* 在repository根目录（<code>zyzhang.github.com</code>）下创建stage文件夹，所有jekyll相关的文件都在这个文件夹下
+* 在根目录下添加<code>.nojekyll</code>文件，github pages会禁用Jekyll
+* 每次都在stage中启动jekyll预览博客
+* 发布时，将<code>stage/_site</code>中的所有文件copy到根目录下 （命令行中运行stage/publish）
+* git push</p>
+
+<p>这样，就完全解耦了对Github Pages运行环境的依赖，只要本地是work的，server上就一定是work的，另外，可以在本地随意的
+使用和编写jekyll插件(Github Pages出于安全原因不会运行用户自定义的plugin)</p>
+
+<p>具体文件结构参见<a href="https://github.com/zyzhang/zyzhang.github.com">源代码</a>。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Github Pages + Jekyll搭建博客之SEO]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/"/>
+    <updated>2012-09-03T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo</id>
+    <content type="html"><![CDATA[<p>对我自己的博客而言，有些内容仅仅是自娱自乐，有没有人看不重要；而有的内容我希望能分享出去被更多的人看到，比如nHibernate Mapping By Code的一系列文章，
+都是项目中实际总结出来的，那时候nHibernate刚刚增加Mapping By Code的方式，官方文档内容几乎没有，google搜索很少能找到精确的结果。所以，如果这些文章能
+被更广泛的传播会帮助更多的人。</p>
+
+<p>在用<a href="http://pages.github.com">Github Pages</a> + <a href="http://jekyllrb.com">Jekyll</a>搭建博客的过程中，
+学到了不少<a href="http://en.wikipedia.org/wiki/Search_engine_optimization">SEO（Search Engine Optimization）</a>
+的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。</p>
+
+<!-- more -->
+
+
+<h3>让搜索引擎收录</h3>
+
+<ul>
+<li><p>如果没有任何超链接指向你的站点，在internet这个浩大的有向图中，站点就成了孤岛，不可能被搜索引擎收录。所以尽一切可能在其他网站上引用你的站点，比如友情链接，
+或者在原博客上添加新博客的超链接。</p></li>
+<li><p><a href="http://www.google.com/webmasters/">Google Webmasters - Google站长工具</a>和<a href="http://zhanzhang.baidu.com/welcome">百度站长工具</a>都提供了提交sitemap，
+提交网站URL要求搜索引擎收录，索引状态查询等功能</p></li>
+</ul>
+
+
+<h3>为每个页面添加描述性的信息</h3>
+
+<ul>
+<li>在<code>&lt;head&gt;</code>标签中包含描述性强的title</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;title&gt;</span>Github Pages + Jekyll搭建博客之SEO<span class="nt">&lt;/title&gt;</span></code></pre></div>
+
+
+<ul>
+<li>在<code>&lt;meta&gt;</code>标签中指定准确并且可读性强的描述(description)，它会在搜索结果中显示。</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">&quot;在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，如何提高排名等等。 于是，便有了下面几条简单的总结。&quot;</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+
+<ul>
+<li><a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>已经帮你做好这个了，只需在每个page和post的开头指定title和description就可以了:</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: post
+title: &quot;Github Pages + Jekyll搭建博客之SEO&quot;
+description: &quot;在用Github Pages + Jekyll搭建博客的过程中，学到了不少SEO（Search Engine Optimization）的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。&quot;
+category: Tech
+tags: [Github Pages, Jekyll, SEO]
+---</code></pre></div>
+
+
+<p>关于<a href="http://pages.github.com">Github Pages</a>，<a href="http://jekyllrb.com">Jekyll</a>和<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，
+请参考我的另一篇文章<a href="http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></p>
+
+<h3>多用内部链接</h3>
+
+<p>内部链接指的是同一个网站的内容页面之间的互相链接，比如下面引文中的“<a href="http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a>”。</p>
+
+<blockquote><p>关于<a href="http://pages.github.com">Github Pages</a>，<a href="http://jekyllrb.com">Jekyll</a>和<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，
+请参考我的另一篇文章<a href="http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek">像极客一样写博客</a></p></blockquote>
+
+<p>相关性高的内部链接除了有助于提高用户体验外，还有助于提高搜索引擎的索引效率，控制站内权重分布，并提升网站的收录率。
+<a href="http://bbs.chinaz.com/Shuiba/thread-1683921-1-1.html">这个文章</a>对内部链接总结的挺好。</p>
+
+<h3>避免死链接</h3>
+
+<p><a href="http://baike.baidu.com/view/1880779.htm">死链接</a>即无效链接，不仅用户体验不好，还会降低网站在搜索引擎中的权重。</p>
+
+<p><a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>默认的permalink就是一个造成死链接的隐患：</p>
+
+<p><code>permalink: /:categories/:year/:month/:day/:title</code></p>
+
+<p>Jekyll会按照这个格式为每篇文章生成URL，例如：</p>
+
+<p><code>zyzhang.github.com/tech/2012/01/01/helloworld</code></p>
+
+<p>一旦你重新组织或修改了category，所有的内部链接都要修改，否则就成了死链接，另外，之前被搜索引擎收录的页面也全部失效了。</p>
+
+<p>所以，我把permalink修改成了：</p>
+
+<p><code>permalink: /blog/:year/:month/:day/:title</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用Jekyll和Pygments配置代码高亮]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/08/31/highlight-with-Jekyll-and-Pygments/"/>
+    <updated>2012-08-31T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/08/31/highlight-with-Jekyll-and-Pygments</id>
+    <content type="html"><![CDATA[<p><a href="http://jekyllrb.com">Jekyll</a>默认的代码段样式太丑了，而且不支持语法高亮。不过，Jekyll原生支持语法高亮工具<a href="http://pygments.org">Pygments</a>。Pygments支持超过100种语言，
+并且支持多种输出格式，比如HTML, RTF等等。</p>
+
+<h3>修改_config.yml</h3>
+
+<p>设置<code>pygments: true</code></p>
+
+<h3>本地安装Pygments</h3>
+
+<ul>
+<li>Pygments是基于Python的，所以机器上需要<a href="http://www.python.org/download/">安装Python</a>，我用的是Mac，已默认安装Python。</li>
+<li><a href="http://pypi.python.org/pypi/Pygments">下载</a>最新的Pygments, 本文使用的是Pygments-1.5.tar.gz，下载完成后解压</li>
+<li>在解压后的Pygments目录中，运行命令：<code>sudo python setup.py install</code></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h3>选择一种喜欢的代码高亮样式</h3>
+
+<p>Pygments提供了多种样式，比如&#8217;native&#8217;, &lsquo;emacs&rsquo;, &lsquo;vs&#8217;等等，可以在<a href="http://pygments.org/demo">Pygments Demo</a>中选择某种语言的例子，体验不同的样式。</p>
+
+<p>通过下面的命令可以查看当前支持的样式：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="kn">import</span> <span class="n">STYLE_MAP</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">STYLE_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="p">[</span><span class="s">&#39;monokai&#39;</span><span class="p">,</span> <span class="s">&#39;manni&#39;</span><span class="p">,</span> <span class="s">&#39;rrt&#39;</span><span class="p">,</span> <span class="s">&#39;perldoc&#39;</span><span class="p">,</span> <span class="s">&#39;borland&#39;</span><span class="p">,</span> <span class="s">&#39;colorful&#39;</span><span class="p">,</span> <span class="s">&#39;default&#39;</span><span class="p">,</span> <span class="s">&#39;murphy&#39;</span><span class="p">,</span> <span class="s">&#39;vs&#39;</span><span class="p">,</span> <span class="s">&#39;trac&#39;</span><span class="p">,</span> <span class="s">&#39;tango&#39;</span><span class="p">,</span> <span class="s">&#39;fruity&#39;</span><span class="p">,</span> <span class="s">&#39;autumn&#39;</span><span class="p">,</span> <span class="s">&#39;bw&#39;</span><span class="p">,</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="s">&#39;vim&#39;</span><span class="p">,</span> <span class="s">&#39;pastie&#39;</span><span class="p">,</span> <span class="s">&#39;friendly&#39;</span><span class="p">,</span> <span class="s">&#39;native&#39;</span><span class="p">]</span></code></pre></div>
+
+
+<h3>选择一种样式，应用在Jekyll中</h3>
+
+<ul>
+<li><code>cd /dev/projects/zyzhang.github.com/assets/themes/abel/css</code></li>
+<li><code>pygmentize -S native -f html &gt; pygments.css</code>, “native”是样式名，“html”是formatter</li>
+<li>在layout中引用刚刚加的pygments.css</li>
+</ul>
+
+
+<h3>在文章中高亮代码</h3>
+
+<p>现在，可以在博客中高亮代码了：</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">{% highlight java %}
+public class HelloWorld {
+    public static void main(String args[]) {
+      System.out.println(&quot;Hello World!&quot;);
+    }
+}
+{% endhighlight %}</code></pre></div>
+
+
+<p>效果如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello World!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h3>参考文章</h3>
+
+<ul>
+<li><a href="http://pygments.org/docs/styles/">Pygments Styles</a></li>
+<li><a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions/">Liquid Extensions</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[像极客一样写博客]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek/"/>
+    <updated>2012-08-29T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/08/29/blogging-like-a-geek</id>
+    <content type="html"><![CDATA[<p><img src="http://zyzhang.github.io/assets/image/posts/blogging.jpg" alt="blogging" /></p>
+
+<p>我以前用过csdn，iteye和cnblog的博客，始终不能令我满意。样式不喜欢，广告太多，富文本编辑器局限，等等等等问题，
+所以每次更换博客后最终都是一个结果，太监了（好吧，我承认主要是因为懒惰&hellip;）。</p>
+
+<p>也想过学其他同事那样，买个酷酷的域名，租个空间，再用WordPress搭个自己的博客，不过可惜，这种方式对我还是没啥驱动力&hellip;</p>
+
+<p>日复一日，年复一年，直到有一天，GitHub Pages和Jekyll横空出世，瞬间点亮了我辈以极客自诩的屌丝程序员的双眼！</p>
+
+<!-- more -->
+
+
+<p>最近一周的业余时间都花在了在GitHub上玩博客，并且乐此不疲，为什么这货如此吸引我呢？</p>
+
+<ul>
+<li><strong>DIY的乐趣</strong>：作为一个会写HTML、Javascript、css的程序员，在自己的地盘不能把页面改成喜欢的样式简直是&hellip;抓心挠肝啊。</li>
+<li><strong>安全无广告</strong></li>
+<li><strong>GitHub空间无极限</strong>：早些时候，GitHub的Public Repository空间已经Unlimited了，给力！</li>
+<li><strong>域名够酷</strong>：你可能觉得<code>zhenyu.im</code>之类的域名酷，可偶是程序员，就喜欢<code>zhenyu.github.com</code> (可惜这个已经被人抢先了，偶只好用<code>zyzhang.github.com</code>了)</li>
+<li><strong>像写代码一样写博客</strong>：版本控制的思想早已深深印在程序员的骨子里了，commit啦，push啦，pull啦，diff啦，git有的，你都有！</li>
+<li><strong>真正动手实践一些以前不了解的技术</strong>：参考我的另一篇文章<a href="http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo">Github Pages + Jekyll搭建博客之SEO</a></li>
+<li><strong>只有你想不到，没有你做不到</strong>：平时用Markdown写博客，简单又方便，需要特殊效果时，有什么是HTML+Javascript+css做不到的呢？</li>
+</ul>
+
+
+<p>回到正题，如果你和我一样喜欢这种崭新的博客方式，完成下面几个任务，然后尽情享受写博客的乐趣吧。</p>
+
+<h3>在Github上创建Repository</h3>
+
+<p>名字必须为${USERNAME}.github.com，${USERNAME}替换为你自己的用户名。</p>
+
+<p>现在，你可以向这个repository提交静态文件（比如index.html）, 稍等一会你就可以在浏览器地址栏输入${USERNAME}.github.com访问你的页面了。</p>
+
+<h3>在刚建好的repository中创建Jekyll格式的文件结构</h3>
+
+<p>这里，我们借助<a href="http://jekyllbootstrap.com">Jekyll-Bootstrap</a>，这是一个基于Jekyll的解析引擎，支持模块化的主题(modular theming)。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com
+<span class="nv">$ </span><span class="nb">cd </span>USERNAME.github.com
+<span class="nv">$ </span>git remote <span class="nb">set</span>-url origin git@github.com:USERNAME/USERNAME.github.com.git
+<span class="nv">$ </span>git push origin master</code></pre></div>
+
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/jekyll-bootstrap-dir-structure.png" alt="jekyll-bootstrap-dir-structure" /></p>
+
+<p>上面代码创建了如左图的Jekyll-Bootstrap标准目录结构，各个文件夹的用途在<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">Jekyll Introduction</a>中介绍的很清楚了，这里不再多说。</p>
+
+<p><strong>需要注意的是：</strong></p>
+
+<ol>
+<li>_includes下的themes文件夹，这是定义主题的地方。</li>
+<li>Jekyll支持<a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a>等轻量级标记语言，所以有很多文件以.md为后缀名。</li>
+<li>文章都放在_posts文件夹下，post的文件名必须遵循<code>YEAR-MONTH-DATE-title.后缀名</code>的格式，例如：2012-08-29-像极客一样写博客.md</li>
+</ol>
+
+
+<p>这时候访问你的博客页面，会看到默认的twitter主题样式，更多主题可以访问 <a href="http://themes.jekyllbootstrap.com">http://themes.jekyllbootstrap.com</a>。</p>
+
+<h3>安装Jekyll</h3>
+
+<p>安装Jekyll后，可以很方便的在发布文章之前进行本地预览。下面是安装步骤：</p>
+
+<ul>
+<li>Jekyll是基于Ruby的，所以，要先<a href="http://www.ruby-lang.org/en/downloads">安装Ruby</a>。</li>
+<li>通过ruby gem安装：<code>gem install jekyll</code></li>
+</ul>
+
+
+<p>安装完毕后，在${USERNAME}.github.com目录下运行<code>jekyll --server</code>启动server，然后就可以在本地访问<a href="http://localhost:4000%E9%A2%84%E8%A7%88%E5%8D%9A%E5%AE%A2%E4%BA%86%E3%80%82">http://localhost:4000%E9%A2%84%E8%A7%88%E5%8D%9A%E5%AE%A2%E4%BA%86%E3%80%82</a></p>
+
+<h3>自定义主题</h3>
+
+<p>Jekyll-Bootstrap的主题管理很简单，有两种方式，一种是安装官方提供的主题，一种是自定义主题，详细内容参考<a href="http://jekyllbootstrap.com/usage/jekyll-theming.html">Using Themes</a></p>
+
+<h3>发布博客</h3>
+
+<p>发布博客和管理代码库一样，可以利用到git的强大功能，只要push上去了，本地更改就发布了。</p>
+
+<h3>例子</h3>
+
+<p>本博客就是依照上述步骤搭建起来的，你可以访问完整<a href="https://github.com/zyzhang/zyzhang.github.com">源代码</a>, 另外，由于Github Pages出于安全原因不支持用户自定义Jekyll插件，并且有时候Pygments代码高亮也有些问题，所以我改变了发布策略，只发布静态文件，详情见
+<a href="http://zyzhang.github.com/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll">避免依赖Github Pages和Jekyll生成静态文件</a>。
+如果你不关心上述问题，仍然可以按照上面的步骤搭建标准的Github博客。</p>
+
+<h3>参考文章</h3>
+
+<ul>
+<li><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">Jekyll Introduction</a></li>
+<li><a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">Jekyll Quick Start</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nHibernate Mapping by Code - One to One]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToOne/"/>
+    <updated>2012-07-01T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToOne</id>
+    <content type="html"><![CDATA[<p>nHibernate提供两种one to one关联：</p>
+
+<ul>
+<li>primary key associations</li>
+<li>unique foreign key associations</li>
+</ul>
+
+
+<p>下面分别用mapping by code的方式配置这两种关联。
+关于如何配置nhibernate使用mapping by code，参考<a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></p>
+
+<!-- more -->
+
+
+<h3>1. primary key associations</h3>
+
+<h4>实体类</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">PersonInfo</span> <span class="n">PersonInfo</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PersonInfo</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">PhoneNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Remarks</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Person</span> <span class="n">Person</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+<span class="p">}</span></code></pre></div>
+
+
+<h4>数据库表（基于MS SQL Server 2012）</h4>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Person</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>    
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Person</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">PersonInfo</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">PhoneNumber</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Remarks</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">100</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_PersonInfo</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span></code></pre></div>
+
+
+<h4>映射类</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">PersonMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">PersonMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Person&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">person</span> <span class="p">=&gt;</span> <span class="n">person</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">person</span> <span class="p">=&gt;</span> <span class="n">person</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">OneToOne</span><span class="p">(</span><span class="n">person</span> <span class="p">=&gt;</span> <span class="n">person</span><span class="p">.</span><span class="n">PersonInfo</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Cascade</span><span class="p">(</span><span class="n">Cascade</span><span class="p">.</span><span class="n">All</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PersonInfoMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">PersonInfo</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">PersonInfoMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;PersonInfo&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">personInfo</span> <span class="p">=&gt;</span> <span class="n">personInfo</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Foreign</span><span class="p">&lt;</span><span class="n">PersonInfo</span><span class="p">&gt;(</span><span class="n">personInfo</span> <span class="p">=&gt;</span> <span class="n">personInfo</span><span class="p">.</span><span class="n">Person</span><span class="p">)));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">personInfo</span> <span class="p">=&gt;</span> <span class="n">personInfo</span><span class="p">.</span><span class="n">PhoneNumber</span><span class="p">);</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">personInfo</span> <span class="p">=&gt;</span> <span class="n">personInfo</span><span class="p">.</span><span class="n">Remarks</span><span class="p">);</span>
+        <span class="n">OneToOne</span><span class="p">(</span><span class="n">personInfo</span> <span class="p">=&gt;</span> <span class="n">personInfo</span><span class="p">.</span><span class="n">Person</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">map</span><span class="p">.</span><span class="n">Constrained</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<h3>2. unique foreign key associations</h3>
+
+<h4>实体类</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">CustomerInfo</span> <span class="n">CustomerInfo</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerInfo</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">PhoneNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Remarks</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Customer</span> <span class="n">Customer</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+<span class="p">}</span></code></pre></div>
+
+
+<p> </p>
+
+<h4>数据库表（基于MS SQL Server 2012）</h4>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">CustomerInfo</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">PhoneNumber</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Remarks</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_CustomerInfo</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Customer</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">CustomerInfoId</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">Unique</span><span class="p">,</span>    
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Customer</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+ <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Customer</span><span class="p">]</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">FK_Customer_CustomerInfoId</span><span class="p">]</span> <span class="k">FOREIGN</span> <span class="k">KEY</span><span class="p">([</span><span class="n">CustomerInfoId</span><span class="p">])</span>
+<span class="k">REFERENCES</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">CustomerInfo</span><span class="p">]</span> <span class="p">([</span><span class="n">Id</span><span class="p">])</span></code></pre></div>
+
+
+<h4>映射类</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="nf">CustomerMapping</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Customer&quot;</span><span class="p">);</span>
+    <span class="n">Id</span><span class="p">(</span><span class="n">customer</span> <span class="p">=&gt;</span> <span class="n">customer</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+    <span class="n">Property</span><span class="p">(</span><span class="n">customer</span> <span class="p">=&gt;</span> <span class="n">customer</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+    <span class="n">ManyToOne</span><span class="p">(</span><span class="n">customer</span> <span class="p">=&gt;</span> <span class="n">customer</span><span class="p">.</span><span class="n">CustomerInfo</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="n">map</span><span class="p">.</span><span class="n">Cascade</span><span class="p">(</span><span class="n">Cascade</span><span class="p">.</span><span class="n">All</span><span class="p">);</span>
+            <span class="n">map</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;CustomerInfoId&quot;</span><span class="p">);</span>
+        <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="nf">CustomerInfoMapping</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Table</span><span class="p">(</span><span class="s">&quot;CustomerInfo&quot;</span><span class="p">);</span>
+    <span class="n">Id</span><span class="p">(</span><span class="n">customerInfo</span> <span class="p">=&gt;</span> <span class="n">customerInfo</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+    <span class="n">Property</span><span class="p">(</span><span class="n">customerInfo</span> <span class="p">=&gt;</span> <span class="n">customerInfo</span><span class="p">.</span><span class="n">PhoneNumber</span><span class="p">);</span>
+    <span class="n">Property</span><span class="p">(</span><span class="n">customerInfo</span> <span class="p">=&gt;</span> <span class="n">customerInfo</span><span class="p">.</span><span class="n">Remarks</span><span class="p">);</span>
+    <span class="n">OneToOne</span><span class="p">(</span><span class="n">customerInfo</span> <span class="p">=&gt;</span> <span class="n">customerInfo</span><span class="p">.</span><span class="n">Customer</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">PropertyReference</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">Customer</span><span class="p">).</span><span class="n">GetProperty</span><span class="p">(</span><span class="s">&quot;CustomerInfo&quot;</span><span class="p">)));</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nHibernate Mapping by Code - One to Many & Many to One]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne/"/>
+    <updated>2012-07-01T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne</id>
+    <content type="html"><![CDATA[<p>Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式配置一对多和多对一关联的例子。</p>
+
+<p>关于如何配置nhibernate使用mapping by code，参考<a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></p>
+
+<!-- more -->
+
+
+<h3>实体类</h3>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">IdentityNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Department</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Department</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">Employee</span><span class="p">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> </p>
+
+<h3>数据库表（基于MS SQL Server 2012）</h3>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Department</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Department</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Employee</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">IdentityNumber</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">DepartmentId</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Employee</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Employee</span><span class="p">]</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">FK_Employee_DepartmentId</span><span class="p">]</span> <span class="k">FOREIGN</span> <span class="k">KEY</span><span class="p">([</span><span class="n">DepartmentId</span><span class="p">])</span>
+<span class="k">REFERENCES</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Department</span><span class="p">]</span> <span class="p">([</span><span class="n">Id</span><span class="p">])</span></code></pre></div>
+
+
+<h3>映射类</h3>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">DepartmentMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">DepartmentMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Bag</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span><span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">EmployeeMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Employee&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">IdentityNumber</span><span class="p">);</span>
+        <span class="n">ManyToOne</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">employee</span><span class="p">.</span><span class="n">Department</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nHibernate Mapping by Code - Many to Many]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-ManyToMany/"/>
+    <updated>2012-07-01T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-ManyToMany</id>
+    <content type="html"><![CDATA[<p>Mapping by code是nHibernate3.2新增的功能，网络上及官方doc相关的介绍都很少。下面是如何使用mapping by code的方式
+配置多对多关联的例子。</p>
+
+<p>关于如何配置nhibernate使用mapping by code，参考<a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction">nHibernate Mapping By Code - Introduction</a></p>
+
+<!-- more -->
+
+
+<h3>实体类</h3>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Student</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Course</span><span class="p">&gt;</span> <span class="n">Courses</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Course</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Student</span><span class="p">&gt;</span> <span class="n">Students</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> 
+<span class="p">}</span></code></pre></div>
+
+
+<h3>数据库表（基于MS SQL Server 2012）</h3>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Student</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>    
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Student</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Course</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="nb">varchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>    
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Course</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Student_Course</span><span class="p">](</span>
+    <span class="p">[</span><span class="n">StudentId</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">CourseId</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>    
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Student_Course</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">StudentId</span><span class="p">]</span> <span class="k">ASC</span><span class="p">,</span> <span class="p">[</span><span class="n">CourseId</span><span class="p">]</span> <span class="k">ASC</span><span class="p">)</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Student_Course</span><span class="p">]</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">FK_Student_Course_StudentId</span><span class="p">]</span> <span class="k">FOREIGN</span> <span class="k">KEY</span><span class="p">([</span><span class="n">StudentId</span><span class="p">])</span>
+<span class="k">REFERENCES</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Student</span><span class="p">]</span> <span class="p">([</span><span class="n">Id</span><span class="p">])</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Student_Course</span><span class="p">]</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">FK_Student_Course_CourseId</span><span class="p">]</span> <span class="k">FOREIGN</span> <span class="k">KEY</span><span class="p">([</span><span class="n">CourseId</span><span class="p">])</span>
+<span class="k">REFERENCES</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Course</span><span class="p">]</span> <span class="p">([</span><span class="n">Id</span><span class="p">])</span></code></pre></div>
+
+
+<p> </p>
+
+<h3>映射类</h3>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">CourseMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Course</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">CourseMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Course&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">course</span> <span class="p">=&gt;</span> <span class="n">course</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">course</span> <span class="p">=&gt;</span> <span class="n">course</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Bag</span><span class="p">(</span><span class="n">course</span> <span class="p">=&gt;</span> <span class="n">course</span><span class="p">.</span><span class="n">Students</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="n">map</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Student_Course&quot;</span><span class="p">);</span>
+            <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">keyMapper</span> <span class="p">=&gt;</span> <span class="n">keyMapper</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;CourseId&quot;</span><span class="p">));</span>
+        <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">ManyToMany</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;StudentId&quot;</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">StudentMapping</span> <span class="p">:</span> <span class="n">ClassMapping</span><span class="p">&lt;</span><span class="n">Student</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">StudentMapping</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Table</span><span class="p">(</span><span class="s">&quot;Student&quot;</span><span class="p">);</span>
+        <span class="n">Id</span><span class="p">(</span><span class="n">student</span> <span class="p">=&gt;</span> <span class="n">student</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+        <span class="n">Property</span><span class="p">(</span><span class="n">student</span> <span class="p">=&gt;</span> <span class="n">student</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="n">Bag</span><span class="p">(</span><span class="n">student</span> <span class="p">=&gt;</span> <span class="n">student</span><span class="p">.</span><span class="n">Courses</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">map</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Student_Course&quot;</span><span class="p">);</span>
+                <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">keyMapper</span> <span class="p">=&gt;</span> <span class="n">keyMapper</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;StudentId&quot;</span><span class="p">));</span>
+            <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">ManyToMany</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;CourseId&quot;</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nHibernate Mapping by Code - Introduction]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction/"/>
+    <updated>2012-07-01T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-Introduction</id>
+    <content type="html"><![CDATA[<p>nHibernate 3.2新增了一种mapping by code的映射策略，很有意思。你可以自定义约定，并且按照约定定制自动映射策略，
+面对遗留数据库时这个功能往往很有用，另外，由于mapping by code是基于代码的（而不是xml文件），
+对domain object进行重命名的重构操作会非常方便，不用跑到xml映射文件查找字符串了。</p>
+
+<p>要使用Mapping by Code很简单，</p>
+
+<h3>第一步，配置SessionFactory，使nhibernate自动扫描项目中所有继承ClassMapping的类，并将其解释为映射</h3>
+
+<!-- more -->
+
+
+
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">NHibernateHelper</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="n">ISessionFactory</span> <span class="n">_sessionFactory</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">ISessionFactory</span> <span class="n">SessionFactory</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">_sessionFactory</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">configuration</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Configuration</span><span class="p">();</span>
+                <span class="n">configuration</span><span class="p">.</span><span class="n">Configure</span><span class="p">();</span>
+
+                <span class="kt">var</span> <span class="n">mappers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+                <span class="n">mappers</span><span class="p">.</span><span class="n">AddMappings</span><span class="p">(</span><span class="n">Assembly</span><span class="p">.</span><span class="n">GetExecutingAssembly</span><span class="p">().</span><span class="n">GetExportedTypes</span><span class="p">());</span>
+
+                <span class="kt">var</span> <span class="n">hbmMapping</span> <span class="p">=</span> <span class="n">mappers</span><span class="p">.</span><span class="n">CompileMappingForAllExplicitlyAddedEntities</span><span class="p">();</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">.</span><span class="n">AsString</span><span class="p">());</span>
+
+                <span class="n">configuration</span><span class="p">.</span><span class="n">AddDeserializedMapping</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+                <span class="n">_sessionFactory</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">.</span><span class="n">BuildSessionFactory</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">_sessionFactory</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">ISession</span> <span class="nf">OpenSession</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">SessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> </p>
+
+<h3>第二步，为每个实体类编写映射类，映射类只需继承ClassMapping就可以被nhibernate识别。</h3>
+
+<p>关于如何编写映射类，参考以下文章：</p>
+
+<ul>
+<li><a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToOne">nHibernate Mapping By Code - One to One</a></li>
+<li><a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-OneToManyandManyToOne">nHibernate Mapping By Code - One to Many and Many to One</a></li>
+<li><a href="http://zyzhang.github.io/blog/2012/07/01/nHibernateMappingByCode-ManyToMany">nHibernate Mapping By Code - Many to Many</a></li>
+</ul>
+
+
+<h3>参考文章：</h3>
+
+<ul>
+<li><a href="http://nhforge.org/blogs/nhibernate/archive/2011/09/12/nh-mapping-by-code-vs-the-untouchable-db.aspx">NH Mapping by code VS the Untouchable DB</a></li>
+<li><a href="http://nhforge.org/blogs/nhibernate/archive/2011/09/05/using-nh3-2-mapping-by-code-for-automatic-mapping.aspx">Using NH3.2 mapping by code for Automatic Mapping</a></li>
+<li><a href="http://www.cnblogs.com/lyj/archive/2011/04/10/inside-nh-mapping-by-code-apply.html">NHibernate剖析：Mapping篇之Mapping-By-Code(2):运用ModelMapper</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hibernate N+1 问题]]></title>
+    <link href="http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem/"/>
+    <updated>2012-06-24T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2012/06/24/Hibernate-N-plus-one-problem</id>
+    <content type="html"><![CDATA[<p>考虑下面的一对多关系：一个Department包含多个Employee：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">IdentityNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Department</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Department</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>     
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<!-- more -->
+
+
+<p>数据库中已有数据如下：</p>
+
+<p><img src="http://zyzhang.github.io/assets/image/posts/nhibernate_n_1_db_data.jpg" alt="nhibernate_n_1_db_data" /></p>
+
+<p>默认情况下，Department.Employees是Lazy Load的，也就是说，当查询Department时，hibernate并不会将对应的employee也从数据库中加载进来，
+而是在第一次调用Department.Employees时加载。</p>
+
+<h3>N+1问题是如何出现的</h3>
+
+<p>当应用程序需要遍历多个Department及其Employee时，问题就出现了，看测试代码：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">show_n_plus_1_problem</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="n">using</span><span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments, got n departments</span>
+          <span class="c1">// n query to retrieve all employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> 
+为了能在测试中动态改变nhibernate映射，这里使用了nHibernate 3.2新增的map by code特性。</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">void</span> <span class="nf">MapEmployee</span><span class="p">(</span><span class="n">ModelMapper</span> <span class="n">modelMapper</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+         <span class="p">{</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Employee&quot;</span><span class="p">);</span>
+              <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          　　 <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">IdentityNumber</span><span class="p">);</span>
+              <span class="n">cm</span><span class="p">.</span><span class="n">ManyToOne</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Department</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+　　　　　<span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="n">ISessionFactory</span> <span class="nf">BuildSessionFactory</span><span class="p">(</span><span class="n">ModelMapper</span> <span class="n">modelMapper</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">configuration</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Configuration</span><span class="p">();</span>
+     <span class="n">configuration</span><span class="p">.</span><span class="n">Configure</span><span class="p">();</span>
+
+     <span class="n">HbmMapping</span> <span class="n">hbmMapping</span> <span class="p">=</span> <span class="n">modelMapper</span><span class="p">.</span><span class="n">CompileMappingForAllExplicitlyAddedEntities</span><span class="p">();</span>
+     <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">.</span><span class="n">AsString</span><span class="p">());</span>
+
+     <span class="n">configuration</span><span class="p">.</span><span class="n">AddDeserializedMapping</span><span class="p">(</span><span class="n">hbmMapping</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+     <span class="k">return</span> <span class="n">configuration</span><span class="p">.</span><span class="n">BuildSessionFactory</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>运行测试可以发现，hibernate实际执行了如下sql查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span> <span class="k">FROM</span> <span class="n">Department</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">1</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">2</span>
+<span class="k">SELECT</span> <span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">IdentityNumber</span><span class="p">,</span> <span class="n">DepartmentId</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">WHERE</span> <span class="n">DepartmentId</span><span class="o">=</span><span class="mi">3</span></code></pre></div>
+
+
+<p>当执行<code>session.QueryOver&lt;Department&gt;().List&lt;Department&gt;()</code>时， nhibernate执行了1次查询<code>SELECT Id, Name FROM Department</code>，
+此时<em>department.Employees</em>中并没有加载出对应的 <em>Employee</em>，而每次调用<em>department.Employees</em>时，nhibernate都会从<em>Employee</em>表中加载相应的Employee。</p>
+
+<p>因此，对N个<em>Department</em>，实际会执行<em>N+1</em>次查询。这将对性能造成很大影响。</p>
+
+<h3>如何解决N+1问题</h3>
+
+<h4>（1）采用Batch Load批量加载</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_batch_load</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+          <span class="p">{</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">BatchSize</span><span class="p">(</span><span class="m">2</span><span class="p">);</span> <span class="c1">// add batch size to batch load employees</span>
+          <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments, got n departments</span>
+          <span class="c1">// ceil(n/BatchSize) query to retrieve all employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">this_</span><span class="p">.</span><span class="n">Id</span> <span class="k">as</span> <span class="n">Id0_0_</span><span class="p">,</span> <span class="n">this_</span><span class="p">.</span><span class="n">Name</span> <span class="k">as</span> <span class="n">Name0_0_</span> <span class="k">FROM</span> <span class="n">Department</span> <span class="n">this_</span>
+<span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="n">employees0_</span> <span class="k">WHERE</span> <span class="n">employees0_</span><span class="p">.</span><span class="n">DepartmentId</span> <span class="k">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="n">employees0_</span> <span class="k">WHERE</span> <span class="n">employees0_</span><span class="p">.</span><span class="n">DepartmentId</span> <span class="o">=</span> <span class="mi">3</span></code></pre></div>
+
+
+<p> 
+这种方式并没有完全解决N+1查询问题，但显著减少了查询次数，实际查询为<code>ceil(n/BatchSize) + 1</code>次，BatchSize足够大时，查询次数为2次。</p>
+
+<h4>（2）使用Join Fetch一次性加载所有数据</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_join_fetch</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span>
+          <span class="p">{</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">));</span>
+               <span class="n">map</span><span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="n">CollectionFetchMode</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span> <span class="c1">// eager load employees</span>
+          <span class="p">},</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments and employees</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">session</span><span class="p">.</span><span class="n">QueryOver</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;().</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;()).</span><span class="n">ToList</span><span class="p">();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p> 
+nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="n">Department</span> <span class="n">this_</span> <span class="k">left</span> <span class="k">outer</span> <span class="k">join</span> <span class="n">Employee</span> <span class="n">employees2_</span> <span class="k">on</span> <span class="n">this_</span><span class="p">.</span><span class="n">Id</span><span class="o">=</span><span class="n">employees2_</span><span class="p">.</span><span class="n">DepartmentId</span></code></pre></div>
+
+
+<p> 
+需要注意的是，这种join fetch会导致重复记录，比如本例中，因为Jim和Rechard同属于Finance部门，所以departments实际查询出4条记录，
+还需用Set过一遍以保证departments集合元素的唯一性。</p>
+
+<p>另外，这种在映射中直接配置join fetch的做法也不够灵活，在某些场景中，可能并不关心<em>Department.Employees</em>，join fetch没有必要。</p>
+
+<h4>（3）<em>Department.Employees</em>映射仍然是Lazy的，仅在需要时通过join fetch加载</h4>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="na">[Test]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">resolve_n_plus_1_problem_by_join_fetch_when_necessary</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="kt">var</span> <span class="n">modelMapper</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ModelMapper</span><span class="p">();</span>
+     <span class="n">modelMapper</span><span class="p">.</span><span class="n">Class</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;(</span><span class="n">cm</span> <span class="p">=&gt;</span>
+     <span class="p">{</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Table</span><span class="p">(</span><span class="s">&quot;Department&quot;</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">Generators</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Property</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+          <span class="n">cm</span><span class="p">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Employees</span><span class="p">,</span> <span class="n">map</span> <span class="p">=&gt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">k</span> <span class="p">=&gt;</span> <span class="n">k</span><span class="p">.</span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;DepartmentId&quot;</span><span class="p">)),</span> <span class="n">rel</span> <span class="p">=&gt;</span> <span class="n">rel</span><span class="p">.</span><span class="n">OneToMany</span><span class="p">());</span>
+     <span class="p">});</span>
+     <span class="n">MapEmployee</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">);</span>
+
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sessionFactory</span> <span class="p">=</span> <span class="n">BuildSessionFactory</span><span class="p">(</span><span class="n">modelMapper</span><span class="p">))</span>
+     <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">OpenSession</span><span class="p">())</span>
+     <span class="p">{</span>
+          <span class="c1">// 1 query for retrieve all departments and all employees</span>
+          <span class="c1">// Note: the retrieved departments will be duplicated if excluding the &#39;distinct&#39; keyword</span>
+          <span class="kt">var</span> <span class="n">departments</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">CreateQuery</span><span class="p">(</span><span class="s">&quot;select distinct d from Department d left join fetch d.Employees&quot;</span><span class="p">).</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+          <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">departments</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+          <span class="n">departments</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">department</span> <span class="p">=&gt;</span> <span class="n">department</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">employee</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">)));</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>nHibernate实际执行查询：</p>
+
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">select</span> <span class="k">distinct</span> <span class="n">d</span><span class="p">...</span> <span class="k">from</span> <span class="n">Department</span> <span class="n">department0_</span> <span class="k">left</span> <span class="k">outer</span> <span class="k">join</span> <span class="n">Employee</span> <span class="n">employees1_</span> <span class="k">on</span> <span class="n">department0_</span><span class="p">.</span><span class="n">Id</span><span class="o">=</span><span class="n">employees1_</span><span class="p">.</span><span class="n">DepartmentId</span></code></pre></div>
+
+
+<p> 
+实际应用中，往往有些场景只关心department的数据，而不关心<code>department.Employees</code>; 而有些场景恰恰相反，关心<code>department.Employees</code>。
+上面的例子就很有价值了，默认<code>department.Employees</code>为lazy load，在需要遍历<code>department.Employee</code>的场景使用另外的方法加载department，
+例如：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">DepartmentRepository</span> 
+<span class="p">{</span>
+    <span class="p">....</span>
+    <span class="k">public</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;</span> <span class="n">FindAll</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">session</span><span class="p">.</span><span class="n">CreateQuery</span><span class="p">(</span><span class="s">&quot;select distinct d from Department d left join fetch d.Employees&quot;</span><span class="p">).</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Department</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[莫让代码腐化：让营地比你来时更干净]]></title>
+    <link href="http://zyzhang.github.io/blog/2011/11/13/clean-code/"/>
+    <updated>2011-11-13T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2011/11/13/clean-code</id>
+    <content type="html"><![CDATA[<p>你是否遇到过这样的场景呢？Code Review时：</p>
+
+<!-- more -->
+
+
+<p>A：我在XXX类加了一个新方法来实现&hellip;..</p>
+
+<p>B：等等，我觉得这个地方应该改一改，blablabla&hellip;.</p>
+
+<p>A：呃，那是以前的代码，所以我没动，我只是在这个类里加了个新方法&hellip;.</p>
+
+<p>重读Clean Code，忽然对Bob大叔提到的童子军军规深有感触：“让营地比你来时更干净”。</p>
+
+<p>代码总是随着时间的流逝，需求的增加而逐渐腐化（还有架构）！我们不希望我们的代码最终成为别人眼中的Legacy Code，正如我们自己接手如同烂泥一样的code base时心头暗骂一样。</p>
+
+<p>一直保持整洁的代码，我们真的做不到么？进度压力，需求膨胀，经验少的队友，这些真的是原因么？</p>
+
+<p>其实，我们只需做很简单的一件事：让营地比你来时更干净！代码每次check in时都比check out时更干净，每个类甚至每个方法都比你留下痕迹之前更干净，哪怕只是重命名一个变量，
+消除了一点点重复代码，拆分了一个有点长的函数&hellip;.</p>
+
+<p>让营地比你来时更干净，营地会越来越干净！</p>
+]]></content>
+  </entry>
+  
+</feed>

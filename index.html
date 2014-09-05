@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Zhenyu&#8217;s Blog</title>
+  <meta name="author" content="张振宇">
+
+  
+  <meta name="description" content="我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zyzhang.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Zhenyu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34484534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Zhenyu&#8217;s Blog</a></h1>
+  
+    <h2>陌上发花，可以缓缓醉矣， 忍把浮名，换了浅酌低唱。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zyzhang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-18T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/06/18/java8-preview-lambda-expression/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是，经历了Java 7的跳票之后，Java 8终于很有诚意的包含Lambda了。</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Lambda_expression">Lambda表达式</a>其实就是匿名函数，它可以作为参数传递给<a href="http://en.wikipedia.org/wiki/Higher-order_function">高阶函数</a>供其调用。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/18/java8-preview-lambda-expression/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-15T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/06/15/java8-preview-method-reference/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>先看一个Lambda表达式的例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">,</span> <span class="s">&quot;Mac OSX&quot;</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">x</span><span class="o">));</span></code></pre></div>
+
+
+<p>既然Lambda表达式<code>x-&gt;System.out.println(x)</code>相当于匿名函数（接受一个String类型的参数，无返回值），那么对于其使用者<code>forEach</code>而言，传给它一个匿名函数还是有名字的函数其实没有区别，只要这个函数满足<code>forEach</code>的参数规约即可。而且很多时候有名字的函数反而可读性更好并且更利于代码重用。如此说来，Java 8 引入方法引用（Method Reference）也就顺理成章了。上面的代码用方法引用可以写成：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">,</span> <span class="s">&quot;Mac OSX&quot;</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span></code></pre></div>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/15/java8-preview-method-reference/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-15T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/06/15/java8-preview-functional-interface/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在JDK的类库中，有很多只声明了一个方法的接口，比如<code>java.lang.Iterable&lt;T&gt;</code>和<code>java.lang.Runnable</code>。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。</p>
+
+<p>Java 8为这样的接口引入了一个新概念——函数式接口（<strong>Functional Interface</strong>），同时引入注解<code>@FunctionalInterface</code>以帮助编译器检查函数式接口的合法性。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/15/java8-preview-functional-interface/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-13T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/06/13/java8previewdefaultmethod/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
+
+<h3>何为Default Method</h3>
+
+<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/13/java8previewdefaultmethod/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-13T00:00:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在IntelliJ的Java8项目中，尽管已经将Project SDK和Project Launguage Level设置为Java 8，编译测试时仍然会出现编译错误：</p>
+
+<blockquote><p>java: javacTask: source release 8 requires target release 1.8
+这里列出了两种解决方案&hellip;</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/28/test-pyramid/">测试金字塔（Test Pyramid）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-28T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/04/28/test-pyramid/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/04/28/test-pyramid/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文翻译自Martin Fowler的著名文章‘Test Pyramid’，详细论述了敏捷测试中的金字塔结构。</p>
+
+<ul>
+<li>原文： <a href="http://martinfowler.com/bliki/TestPyramid.html">Test Pyramid</a></li>
+<li>作者： <a href="http://martinfowler.com/">Martin Fowler</a></li>
+</ul>
+
+
+<hr />
+
+<p>测试金字塔概念由<a href="http://www.mountaingoatsoftware.com/">Mike Cohn</a>提出，并在其著作<a href="http://www.amazon.com/gp/product/0321579364?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321579364">《Succeeding with Agile》</a><a href="#MyAnnotation1"><sup>译注1</sup></a>中做了详细论述。其核心观点是底层单元测试应多于依赖GUI的高层端到端测试。</p>
+
+<p><img src="/assets/image/posts/TestPyramid.jpeg" alt="Test Pyramid" /></p>
+
+<p>在我职业生涯的大部分时间中，测试自动化就是使用自动化测试工具在用户界面上操控应用程序。这些工具一般都提供录制和回放的功能，并验证应用程序返回了同样的结果。开始时，这种方式工作得很好。测试也很容易录制，即使没有程序设计经验，也可以轻松完成。</p>
+
+<p>但是，这种方法很快就陷入了困境，演变成所谓的<a href="http://watirmelon.com/2012/01/31/introducing-the-software-testing-ice-cream-cone/">蛋卷冰淇淋</a>。主要问题包括：基于UI的测试运行缓慢，增加了构建时间；测试自动化工具往往还需安装授权许可，这意味着这些软件只能在特定的机器上运行；通常这些测试还很难以“傻瓜”模式运行，即通过脚本执行并置入合适的部署流水线（deployment pipeline）。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/04/28/test-pyramid/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/08/z-team-2012-popular-words/">Z Team 2012年度热门词汇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-02-08T00:00:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/02/08/z-team-2012-popular-words/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/02/08/z-team-2012-popular-words/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2013年2月7日，农历腊月廿七。在这辞旧迎新的美好时刻，Z Team 2012年度总结大会在北京隆重召开。参会的有Z Team的阿宝，晨仔，KK, 少年，xiaoyun； Z Team毕业生代表yuheng，张胖纸，风吹PP凉，以及友邻代表王胖纸。各界人士在热烈友好的气氛中就共同关心的问题深入交换意见，达成广泛共识。最后，与会各方一致评选出2012年度十大热门词汇，排名不分先后（据说只有Z Team的人才能看懂）：</p>
+
+<ul>
+<li><strong>这不重要</strong></li>
+<li><strong>你说什么</strong></li>
+<li><strong>API（A读三声）</strong></li>
+<li><strong>反省</strong></li>
+<li><strong>我错了</strong></li>
+<li><strong>转一个</strong></li>
+<li><strong>成功了</strong></li>
+<li><strong>你是最棒的</strong></li>
+<li><strong>弱爆了</strong></li>
+<li><strong>你是对的</strong></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/z-team-memorise/">缅怀Z Team</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-28T00:00:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2013/01/28/z-team-memorise/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2013/01/28/z-team-memorise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><script type="text/javascript" src="../scripts/tagline.js"></script>
+
+
+<p><img src="/assets/image/posts/z_team.png" alt="z_team" /></p>
+
+<p>Z Team从前年几个人到LA做Inception，到巅峰时期两个Stream近二十人的团队，再到现在算上在美国的大哥一共六个人。就像人的一生，从出生后蹒跚学步咿呀学语，到少年时充满梦想挥洒青春，最后垂垂老矣闲时缅怀旧日时光。我们都知道，总有一天，Z Team会最终消失，但我相信，那些我们共同度过的时光，会在每个人心里慢慢发酵成美好的回忆。下面的歌词改编自《同桌的你》，缅怀那些我们共同拥有的欢笑和泪水。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/z-team-memorise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/">避免依赖Github Pages和Jekyll生成静态文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-09-10T00:00:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前用Github Pages + Jekyll搭建了自己的博客，有一次玩Jekyll插件之后，博客里所有使用Pygments的代码高亮都不工作了，
+即使revert代码也无济于事，更奇怪的是，本地运行jekyll完全没问题，折腾很久都没有解决&hellip; 最后，我只好采取了终极解决方案了。</p>
+
+<p><a href="https://help.github.com/articles/using-jekyll-with-pages">Github Pages的文档</a>上说，当前（2012年9月）使用的是
+Jekyll 0.11.0和Liquid 2.2.2，并且使用下面命令运行：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>jekyll --pygments --no-lsi --safe</code></pre></div>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/09/10/avoid-dependency-of-github-pages-jekyll/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/">Github Pages + Jekyll搭建博客之SEO</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-09-03T00:00:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/#disqus_thread"
+             data-disqus-identifier="http://zyzhang.github.io/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对我自己的博客而言，有些内容仅仅是自娱自乐，有没有人看不重要；而有的内容我希望能分享出去被更多的人看到，比如nHibernate Mapping By Code的一系列文章，
+都是项目中实际总结出来的，那时候nHibernate刚刚增加Mapping By Code的方式，官方文档内容几乎没有，google搜索很少能找到精确的结果。所以，如果这些文章能
+被更广泛的传播会帮助更多的人。</p>
+
+<p>在用<a href="http://pages.github.com">Github Pages</a> + <a href="http://jekyllrb.com">Jekyll</a>搭建博客的过程中，
+学到了不少<a href="http://en.wikipedia.org/wiki/Search_engine_optimization">SEO（Search Engine Optimization）</a>
+的知识，比如如何让博客被搜索引擎收录，需要注意哪些以提高排名等等。于是，便有了下面几条简单的总结。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/09/03/blog-with-github-pages-and-jekyll-seo/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/18/java8-preview-lambda-expression/">Java 8 预览之Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-method-reference/">Java 8 预览之Method Reference</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/15/java8-preview-functional-interface/">Java 8 预览之Functional Interface</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/java8previewdefaultmethod/">Java 8 预览之Default Method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/13/intellij-java8-compile-require-target-1-8/">IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/zyzhang">@zyzhang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zyzhang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 张振宇 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhenyublog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

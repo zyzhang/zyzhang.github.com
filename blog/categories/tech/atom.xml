@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tech | Zhenyu's Blog]]></title>
+  <link href="http://zyzhang.github.io/blog/categories/tech/atom.xml" rel="self"/>
+  <link href="http://zyzhang.github.io/"/>
+  <updated>2014-09-05T12:01:07+08:00</updated>
+  <id>http://zyzhang.github.io/</id>
+  <author>
+    <name><![CDATA[张振宇]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Lambda表达式]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression/"/>
+    <updated>2013-06-18T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/18/java8-preview-lambda-expression</id>
+    <content type="html"><![CDATA[<p>我在和别人结对写C#代码的时候，只要有可能，我都会用list的forEach方法写循环，而不是用for-loop。同伴很不解，我打趣地说：“这完全是一个Java程序员的恶趣味，因为在Java的世界里没有Lambda”。说实话，我非常喜欢Lambda表达式，它简洁、明确、非常优雅。幸运的是，经历了Java 7的跳票之后，Java 8终于很有诚意的包含Lambda了。</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Lambda_expression">Lambda表达式</a>其实就是匿名函数，它可以作为参数传递给<a href="http://en.wikipedia.org/wiki/Higher-order_function">高阶函数</a>供其调用。</p>
+
+<!-- more -->
+
+
+<p>Lambda表达式由三部分组成:</p>
+
+<ul>
+<li>参数列表</li>
+<li>Lambda操作符</li>
+<li>表达式或语句块</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Method Reference]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference/"/>
+    <updated>2013-06-15T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/15/java8-preview-method-reference</id>
+    <content type="html"><![CDATA[<p>先看一个Lambda表达式的例子：</p>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Windows</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Mac</span> <span class="n">OSX</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;).</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">x</span><span class="o">));</span></code></pre></div></p>
+
+<p>既然Lambda表达式<code>x-&gt;System.out.println(x)</code>相当于匿名函数（接受一个String类型的参数，无返回值），那么对于其使用者<code>forEach</code>而言，传给它一个匿名函数还是有名字的函数其实没有区别，只要这个函数满足<code>forEach</code>的参数规约即可。而且很多时候有名字的函数反而可读性更好并且更利于代码重用。如此说来，Java 8 引入方法引用（Method Reference）也就顺理成章了。上面的代码用方法引用可以写成：</p>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Windows</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Mac</span> <span class="n">OSX</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;).</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span></code></pre></div></p>
+
+<!-- more -->
+
+
+<p>下面列举了方法引用的几种使用方式，以书店（BookStore）作为示例：</p>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Double</span> <span class="n">price</span><span class="o">;</span>
+    <span class="c1">// 省略部分代码</span>
+<span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&gt;();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Book</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">list</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Book</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">filter</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Book</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&amp;</span><span class="n">gt</span><span class="o">;();</span>
+    <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span> <span class="o">});</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">// 省略部分代码</span>
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span></code></pre></div></p>
+
+<h3>静态方法引用</h3>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">booksOfMartinFowler</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Martin</span> <span class="n">Fowler</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;.</span><span class="na">equals</span><span class="o">(</span><span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="nl">BookFilter:</span><span class="o">:</span><span class="n">booksOfMartinFowler</span><span class="o">);</span></code></pre></div></p>
+
+<h3>实例方法引用（instance method reference）</h3>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">freeBooks</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">book</span><span class="o">.</span><span class="na">price</span> <span class="o">==</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">BookFilter</span> <span class="n">bookFilter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BookFilter</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="nl">bookFilter:</span><span class="o">:</span><span class="n">freeBooks</span><span class="o">);</span></code></pre></div></p>
+
+<h3>一个有趣的例子</h3>
+
+<p>Java的<a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Tutorial</a>还提供了一个很有意思的例子，很是让我费解了半天。
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span><span class="o">[]</span> <span class="n">stringArray</span> <span class="o">=</span> <span class="o">{</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Barbara</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">James</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Mary</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">John</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span>
+    <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Patricia</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Robert</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Michael</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Linda</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;</span> <span class="o">};</span>
+<span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">compareToIgnoreCase</span><span class="o">);</span></code></pre></div></p>
+
+<p>问题来了，<code>compareToIgnoreCase</code>方法和<code>compare</code>方法从签名上看完全不匹配啊，编译器在解析方法引用的时候，是怎么判断二者匹配的呢？
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Arrays.sort</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="n">Comparator</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">c</span><span class="o">)</span>
+<span class="c1">// Comparator</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">T</span> <span class="n">o1</span><span class="o">,</span> <span class="n">T</span> <span class="n">o2</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// String::compareToIgnoreCase</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareToIgnoreCase</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">)</span></code></pre></div></p>
+
+<p>于是我展开了无耻的联想：）既然同样的方式可以用Lambda写也可以用方法引用写，那么编译器很可能将两种方式最终都转化成匿名函数，这样更简单。先把同样的功能用Lambda写一遍：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="o">(</span><span class="n">name1</span><span class="o">,</span> <span class="n">name2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">name1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">name2</span><span class="o">));&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// 更进一步</span>
+<span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="o">(</span><span class="n">name1</span><span class="o">,</span> <span class="n">name2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">name1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">name2</span><span class="o">);</span>
+<span class="o">};</span>
+<span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="n">comparator</span><span class="o">);</span></code></pre></div></p>
+
+<p>编译器最终交给<code>Arrays.sort</code>的很可能就是这样一个东西：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;{</span>
+    <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">String</span> <span class="n">s1</span><span class="o">,</span> <span class="n">String</span> <span class="n">s2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">s1</span><span class="o">.</span><span class="na">compareToIgnoreCase</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div></p>
+
+<p>编译器在解析<code>String::compareToIgnoreCase</code>时，会试图将<code>compareToIgnoreCase</code>作为<code>Foo.compare</code>的实现体。参数类型和方法引用中指定的类型都是String，返回值都要求是int，恰好匹配！（以上内容纯属猜测，不过帮助我理解了它的行为）</p>
+
+<p>同样的道理，下面的代码将会通过编译并且可以运行，只是结果不是我们期待的罢了：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">stringArray</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">indexOf</span><span class="o">);</span></code></pre></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Functional Interface]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface/"/>
+    <updated>2013-06-15T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/15/java8-preview-functional-interface</id>
+    <content type="html"><![CDATA[<p>在JDK的类库中，有很多只声明了一个方法的接口，比如<code>java.lang.Iterable&lt;T&gt;</code>和<code>java.lang.Runnable</code>。这些接口被称为单抽象方法接口（Single Abstract Method interfaces），它表达了一种逻辑上的单一功能约定。</p>
+
+<p>Java 8为这样的接口引入了一个新概念——函数式接口（<strong>Functional Interface</strong>），同时引入注解<code>@FunctionalInterface</code>以帮助编译器检查函数式接口的合法性。</p>
+
+<!-- more -->
+
+
+<h3>何为函数式接口</h3>
+
+<p><a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>中这样描述函数式接口:</p>
+
+<blockquote><p>A functional interface is an interface that has just one abstract method, and thus represents a single function contract. (In some cases, this &ldquo;single&rdquo; method may take the form of multiple abstract methods with override-equivalent signatures (8.4.2) inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)</p></blockquote>
+
+<p>函数式接口和所谓的Single Abstract Method interfaces一样，就是只包含一个抽象方法的接口，表达的是<strong>逻辑上</strong>的单一功能，例如：</p>
+
+<ul>
+<li><p><code>java.lang.Runnable</code>就是一个函数式接口, 因为它只有一个抽象方法：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div></p></li>
+<li><p><code>java.lang.Iterable&lt;T&gt;</code>虽然有两个方法，但它仍然是函数式接口，因为forEach方法是一个<a href="/blog/2013/06/13/java8previewdefaultmethod/">Default Method</a>，它有其默认实现，且不强制要求实现该接口的类或继承该接口的子接口重写（Override）该方法，因此，在逻辑上，<code>java.lang.Iterable&lt;T&gt;</code>仍然是只约定一个iterator方法的函数式接口。
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+  <span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// 省略实现代码</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div></p></li>
+</ul>
+
+
+<h3>函数式接口与Lambda</h3>
+
+<p>函数式接口的一个非常重要的用途就是对Lambda提供支持，看下面的例子：</p>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="n">price</span><span class="o">;</span>
+<span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&gt;();</span>
+<span class="o">}</span></code></pre></div></p>
+
+<p>现在我希望BookStore能够筛选出BookStore中符合某种条件书籍，筛选条件可能多种多样，比如，所有Martin Fowler的著作，或者价格大于某个金额的所有书籍，于是，我们新增了BookFilter接口，并且为BookStore添加了list方法：</p>
+
+<p><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookFilter</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="nf">test</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">);</span>
+<span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&gt;();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Book</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">list</span><span class="o">(</span><span class="n">BookFilter</span> <span class="n">filter</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Book</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&amp;</span><span class="n">gt</span><span class="o">;();</span>
+    <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span></code></pre></div></p>
+
+<p>现在，我们就可以在调用list方法时使用Lambda表达式了：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 筛选出所有价格大于15.0的书籍</span>
+<span class="n">bookStore</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="n">book</span><span class="o">.</span><span class="na">price</span> <span class="o">&gt;</span> <span class="mf">15.0</span><span class="o">)</span></code></pre></div></p>
+
+<p>因为BookFilter是一个函数式接口，只具有一个抽象方法，所以在编译期可以很容易推断Lambda表达式和BookFilter是否匹配，于是Lambda表达式的实现就简单了。</p>
+
+<h3>JDK提供的通用函数式接口</h3>
+
+<p>上面代码中的BookFilter实际上只是一个断言：如果Book符合某种条件则返回true，否则返回false。我们完全可以将这个概念抽象成<strong>Predicate</strong>供所有人使用，这样项目中就不会充斥过量的仅为Lambda服务的函数式接口了。Java 8的设计者同样考虑到了这个问题，于是新增了<strong>java.util.function</strong>包，提供通用的函数式接口。<code>Predicate&lt;T&gt;</code>就是其中之一。</p>
+
+<p>于是，上面的list方法使用Predicate就足够了，我们可以痛快的把BookFilter扔进回收站了。
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">list</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">predicate</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;&gt;();</span>
+    <span class="n">books</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">book</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">predicate</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">book</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 8 预览之Default Method]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod/"/>
+    <updated>2013-06-13T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/13/java8previewdefaultmethod</id>
+    <content type="html"><![CDATA[<p>打开JDK 8的源代码，你会发现很多接口中多了一些标记为<strong>default</strong>的方法。在Java的早期版本中，<strong>default</strong>关键字只在switch语句中使用，在方法上使用代表什么含义呢？让我们一起来看一下Java 8新特性：<strong>Default Method</strong>。</p>
+
+<h3>何为Default Method</h3>
+
+<p>默认方法（Default Method），又称虚拟扩展方法（Virtual Extension Methods）或保卫者方法（Defender Method），是<a href="http://www.jcp.org/en/jsr/detail?id=335">JSR 335</a>的一部分。让我们先看一下JDK中的实际例子：
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span></code></pre></div></p>
+
+<!-- more -->
+
+
+<p>default关键字标记的<code>forEach</code>方法即是所谓的Default Method，这里有几个有意思的地方：</p>
+
+<ul>
+<li><code>forEach</code>方法虽然定义在接口中，但是却有方法体和实现代码，这在Java 8 之前是无法通过编译的。</li>
+<li>即使<code>Iterable</code>接口定义了新方法<code>forEach</code>，其子接口<code>Collection</code>、以及实现这些接口的类（如ArrayList）却没有Override这个方法且无编译错误</li>
+</ul>
+
+
+<h3>为什么需要Default Method</h3>
+
+<p>看到了上面关于Default Method的描述，作为API设计者的你可能已经开始欢呼了。即使你的API已经发布出去了，你依然可以为接口添加新方法并且无需考虑向后兼容问题。Java 8引入Default Method也正是基于这个原因 <sup>注1</sup>。</p>
+
+<h3>Default Method将带给我们什么</h3>
+
+<p>Ruby的创造者松本行弘在<a href="http://book.douban.com/subject/6756090/">《松本行弘的程序世界》</a>中提到 <sup>注2</sup>：</p>
+
+<blockquote><p>其实继承包含两种含义。一种是“类都有哪些方法”，也就是说这个类都支持些什么操作，即规格的继承。</p>
+
+<p>另外一种是，“类中都用了什么数据结构和什么算法”，也就是实现的继承。</p>
+
+<p>静态语言中，这两者的区别很重要。Java就对这两者有很明确的区分，实现的继承用extends来继承父类，规格的继承用implements来实现接口。</p></blockquote>
+
+<p>引入Default Method后，Java接口就具有了“实现继承”的能力，从而更像是一种<a href="http://en.wikipedia.org/wiki/Mixin">mixin</a>，增加了代码重用的能力，同时也使面向对象设计更加灵活。</p>
+
+<hr />
+
+<ul>
+<li>注1： 可以想象，Java 8对Lambda的支持必然会影响JDK API中的接口，上面的forEach就是很好的例子，如果直接在接口中添加方法，就会导致所有实现该接口的类或接口无法通过编译，而有了Default Method，一切都变得容易了。</li>
+<li>注2： 摘自2.3.9 继承的两种含义</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ中Java8编译错误-‘source Release 8 Requires Target Release 1.8’]]></title>
+    <link href="http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8/"/>
+    <updated>2013-06-13T00:00:00+08:00</updated>
+    <id>http://zyzhang.github.io/blog/2013/06/13/intellij-java8-compile-require-target-1-8</id>
+    <content type="html"><![CDATA[<p>在IntelliJ的Java8项目中，尽管已经将Project SDK和Project Launguage Level设置为Java 8，编译测试时仍然会出现编译错误：</p>
+
+<blockquote><p>java: javacTask: source release 8 requires target release 1.8
+这里列出了两种解决方案&hellip;</p></blockquote>
+
+<!-- more -->
+
+
+<h3>环境：</h3>
+
+<ul>
+<li>JDK Version: 1.8.0-ea</li>
+<li>IDE: IntelliJ Idea 12.1.4</li>
+<li>IntelliJ SDK Setting: <img src="/assets/image/posts/idea-java8-setting.png" alt="IntelliJJava8Setting" /></li>
+<li>Maven Compiler Setting:
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>3.1<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;configuration&gt;</span>
+      <span class="nt">&lt;source&gt;</span>1.8<span class="nt">&lt;/source&gt;</span>
+      <span class="nt">&lt;target&gt;</span>1.8<span class="nt">&lt;/target&gt;</span>
+  <span class="nt">&lt;/configuration&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span></code></pre></div></li>
+</ul>
+
+
+<h3>问题描述</h3>
+
+<ul>
+<li>IntelliJ中无编译错误，运行测试时报错：<code>java: javacTask: source release 8 requires target release 1.8</code></li>
+<li>命令行运行<code>mvn test</code>无错误</li>
+</ul>
+
+
+<h3>解决方案：将<em>Target Bytecode Version</em>设为1.8。</h3>
+
+<ul>
+<li>方法1：在IntelliJ的【Preferences】->【Compiler】->【Java Compiler】中修改：<img src="/assets/image/posts/intellij-java-compiler-1-8.png" alt="IntelliJJavaCompiler8" /></li>
+<li>方法2：修改.idea/compiler.xml
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;bytecodeTargetLevel&gt;</span>
+<span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;Java8Preview&quot;</span> <span class="na">target=</span><span class="s">&quot;1.8&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bytecodeTargetLevel&gt;</span></code></pre></div></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
