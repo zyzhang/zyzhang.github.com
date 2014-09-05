@@ -10,6 +10,8 @@ category: 搭建博客
 tags: [Github Pages, Jekyll, Jekyll-Bootstrap]
 ---
 
+- Update: 本博客已使用[octopress](http://octopress.org/)取代Jekyll。
+
 ![blogging](/assets/image/posts/blogging.jpg)
 
 我以前用过csdn，iteye和cnblog的博客，始终不能令我满意。样式不喜欢，广告太多，富文本编辑器局限，等等等等问题，
