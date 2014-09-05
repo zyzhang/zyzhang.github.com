@@ -2,9 +2,27 @@
 // To give it a try, uncomment some of the lines below rebuild your blog, and see how it works. your sites's.
 // If you love to use Web Fonts, you also need to add some lines to source/_includes/custom/head.html
 
-$sans: sans-serif;
-$serif: serif;
-$mono: monospace;
-$heading-font-family: sans-serif;
-$header-title-font-family: sans-serif;
-$header-subtitle-font-family: sans-serif;
+$font-default: "proxima-nova-1", "proxima-nova-2", "Helvetica Neue", Arial, sans-serif;
+$font-mono: "proxima-nova-1", "proxima-nova-2", "Helvetica Neue", Arial, sans-serif;
+
+$font-icon: FontAwesome;
+$font-icon-path: "/fonts/fontawesome/fontawesome-webfont";
+
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('#{$font-icon-path}.eot');
+	src: url('#{$font-icon-path}.eot?#iefix') format('embedded-opentype'),
+		url('#{$font-icon-path}.woff') format('woff'),
+		url('#{$font-icon-path}.ttf') format('truetype'),
+		url('#{$font-icon-path}.svgz#FontAwesomeRegular') format('svg'),
+		url('#{$font-icon-path}.svg#FontAwesomeRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+// $sans: 'FontAwesome', sans-serif;
+// $serif: 'FontAwesome', serif;
+// $mono: 'FontAwesome', monospace;
+// $heading-font-family: 'FontAwesome', sans-serif;
+// $header-title-font-family: 'FontAwesome', sans-serif;
+// $header-subtitle-font-family: 'FontAwesome', sans-serif;
